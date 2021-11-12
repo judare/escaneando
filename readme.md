@@ -1,4 +1,4 @@
-# Binary IT Management
+# Escaneando
 
 ## Folders:
 
@@ -8,7 +8,7 @@ Documentation of project
 
 
 ## api:
-http://sandbox.bybinary.co/api/v1
+http://sandbox.escaneando.co/api/v1
 
 
 ### /electron
