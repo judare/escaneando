@@ -1,0 +1,93 @@
+{
+  "server.error": {
+    "en": "Something went wrong",
+    "es": "Algo ha salido mal"
+  },
+
+  "server.ok": {
+    "en": "Done",
+    "es": "Ok"
+  },
+
+
+  "users.notFound": {
+    "en": "User not found",
+    "es": "Usuario no encontrado"
+  },
+
+
+  "devices.notFound": {
+    "en": "Device not found",
+    "es": "Dispositivo no encontrado"
+  },
+
+  "company.notFound": {
+    "en": "Company not found",
+    "es": "Empresa no encontrada"
+  },
+  
+  
+
+
+  "validators.email.invalidEmail": {
+    "en": "Invalid email",
+    "es": "Correo Electronico invalido"
+  },
+
+  "validators.password.minLength": {
+    "en": "Invalid password",
+    "es": "Contraseña invalida"
+  },
+  "validators.name.minLength": {
+    "en": "Invalid name",
+    "es": "Nombre invalido"
+  },
+  "validators.cellphone.invalid": {
+    "en": "Invalid cellphone",
+    "es": "Celular invalido"
+  },
+  "validators.position.required": {
+    "en": "Invalid position",
+    "es": "Cargo invalido"
+  },
+  "validators.password.special": {
+    "en": "Password invalid",
+    "es": "Contraseña invalida"
+  },
+
+
+
+
+  "auth.user.notFound": {
+    "en": "User not found",
+    "es": "Usuario no encontrado"
+  },
+  "auth.user.blocked": {
+    "en": "User blocked",
+    "es": "Usuario bloqueado"
+  },
+  "auth.incorrectPassword": {
+    "en": "Invalid password",
+    "es": "Contraseña incorrecta"
+  },
+  "auth.user.exists": {
+    "en": "User exists",
+    "es": "El usuario ya existe"
+  },
+  "auth.user.invite.notFound": {
+    "en": "Invite not found",
+    "es": "Invitación no encontrada"
+  },
+
+
+  "backup.nouse": {
+    "en": "No use",
+    "es": "Sin usar"
+  },
+
+  "device.nouse": {
+    "en": "No use",
+    "es": "Sin usar"
+  }
+  
+}
