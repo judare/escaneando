@@ -15,7 +15,6 @@ import helmet from 'helmet';
 import response from "./helpers/response.js";
 import validateBodyMiddleware from "./middleware/_validate-body.js";
 import services from './ws';
-import test from "./routes/test";
 
 const clog = (st, text) => console.log(st, text);
 

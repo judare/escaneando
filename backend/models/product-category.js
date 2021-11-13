@@ -12,6 +12,7 @@ export default (sequelize, DataTypes) => {
 
   ProductCategory.associate = function(models) {
     models.ProductCategory.belongsTo(models.Commerce);
+    models.ProductCategory.hasMany(models.Product, { foreignKey: "categoryId" });
   };
   
   return ProductCategory;

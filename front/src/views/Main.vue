@@ -66,6 +66,12 @@ export default {
   methods: {
     enterMenu() {
       this.loading = true
+
+      let data = {
+        "cellphone": this.config.cellphone,
+        "commerce": this.$route.params.slug
+      }
+      
       setTimeout(() => { //TODO REQUEST
         this.$router.replace({ name: "options", params: { slug: this.$route.params.slug } });
       }, 600);
