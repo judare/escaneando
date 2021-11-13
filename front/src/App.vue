@@ -2,19 +2,29 @@
 
 <div class="page" :class="config.darkMode ? 'dark-mode' : ''">
 
-  <div class="toggles dark-mode-button">
-    <div class="options" :class="{ active: !config.darkMode }" @click="toggleDarkMode">
-      <div class="toggle-option left sun"/>
-      <div class="toggle-option right night"/>
+  <div class="page-mobile">
+    <div class="toggles dark-mode-button">
+      <div class="options" :class="{ active: !config.darkMode }" @click="toggleDarkMode">
+        <div class="toggle-option left sun"/>
+        <div class="toggle-option right night"/>
+      </div>
     </div>
-  </div>
 
-  <router-view/>
+    <button @click="toggleStyle" class="btn-style" type="button" v-if="$route.name == 'menu'">
+      <img :src="`/icons/${config.style}.png`">
+    </button>
+
+
+    <router-view/>
+
+    <app-footer/>
+  </div>
 </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import AppFooter from "@/components/AppFooter.vue"
 
 export default {
   computed: {
@@ -23,7 +33,13 @@ export default {
   methods: {
     toggleDarkMode() {
       this.config.darkMode = !this.config.darkMode;
+    },
+    toggleStyle() {
+      this.config.style = this.config.style == "list" ? "card" : "list";
     }
+  },
+  components: {
+    AppFooter
   },
   watch: {
     config: {
@@ -40,6 +56,15 @@ export default {
 * {
   font-family: 'Montserrat', sans-serif;
 }
+html {
+  scroll-behavior: smooth;
+}
+html, body {
+  overflow-x: hidden;
+}
+body {
+  background: #f5f5f5;
+}
 body, html, h1,h2,h3,h4,h5,h6 {
   margin: 0;
   padding: 0;
@@ -54,47 +79,94 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+a {
+  text-decoration: none;
+  color: #444;
+}
 
-.header {
-  .logo {
-    img {
-      max-height: 100px;
-      max-width: 200px;
+.w-100 {
+  width: 100%;
+}
+.mb-5 {
+  margin-bottom: 30px;
+}
+.v-align {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box-form {
+  margin-bottom: 20px;
+  label {
+    display: block;
+    font-weight: bold;
+  }
+  .box-input {
+    border: 2px solid transparent;
+    padding: 5px 20px;
+    font-size: 16px;
+    line-height: 2;
+    border-radius: 1rem;
+    margin-top: 5px;
+    box-sizing: border-box;
+    background: #efefef;
+  }
+
+  .btn {
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid transparent;
+    transition: .3s;
+    color: white;
+    border-radius: .7rem;
+    cursor: pointer;
+    box-shadow: 0 5px 8px 10px rgb(0 0 0 / 5%);
+
+    &.btn-primary {
+      background: linear-gradient(45deg, #ff9800, #ff5722);
+      font-size: 16px;
+    }
+    &:disabled {
+      background: #ddd;
+    }
+  }
+
+  &.error {
+    .box-input {
+      border: 2px solid #f44336;
+    }
+    .form-error {
+      color: #f44336;
+      font-size: 12px;
+      margin-top: 10px;
     }
   }
 }
-.page {
-  min-height: 100vh;
-  &.dark-mode {
-    background: #1b1c21;
-    color: #838386;
-    .box, .product-box.card {
-      background: #25262b;
-    }
-  }
-  .dark-mode-button {
-    position: absolute;
-    top: 50px;
-    right: 50px;
-  }
-}
+
+
 .list-options {
   li {
     display: inline-block;
-    margin: 10px;
+    margin: 3px;
   }
 }
 
 .container {
-  max-width: 1000px;
+  padding: 0 20px;
   margin: 0 auto;
 }
 .box {
   box-shadow: 0 5px 8px 10px rgb(0 0 0 / 5%);
-  width: 150px;
   padding: 20px;
   border-radius: .7rem;
   display: inline-block;
+
+  &.sm {
+    padding: 10px;
+  }
+  
 }
 
 .box-check {
@@ -104,11 +176,13 @@ input::-webkit-inner-spin-button {
   input {
     display: none;
   }
-  input:checked ~ .box {
-    background: linear-gradient(45deg, #ff9800, #ff5722);
-    color: white;
-  }
 }
+
+input:checked ~ .box, .box.active, .box.optionable:hover {
+  background: linear-gradient(45deg, #ff9800, #ff5722)!important;
+  color: white!important;
+}
+
 .toggles {
   border-radius: 100rem 100rem 100rem 100rem;
   width: 100px;
@@ -147,6 +221,56 @@ input::-webkit-inner-spin-button {
         background-image: url(/icons/night.png);
       }
     }
+  }
+}
+.btn-style {
+  background: #555555;
+  border: none;
+  padding: 5px;
+  border-radius: 1rem;
+  position: absolute;
+  top: 20px;
+  right: 130px;
+  cursor: pointer;
+  img {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.page {
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+  min-height: 100vh;
+  background: #fff;
+  &.dark-mode {
+    background: #1b1c21;
+    color: #838386;
+    .box, .product-box.card {
+      background: #25262b;
+    }
+    .box-input {
+      color: white;
+      background: #31323a;
+    }
+    .btn:disabled {
+      background: #373d58;
+    }
+    .choose-option {
+      color: white;
+    }
+    .back img {
+      filter: invert(57%) sepia(6%) saturate(151%) hue-rotate(202deg) brightness(90%) contrast(82%);
+    }
+    .box-check a {
+      color: white;
+    }
+  }
+  .dark-mode-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
   }
 }
 </style>

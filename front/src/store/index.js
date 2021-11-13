@@ -5,8 +5,9 @@ let config = window.localStorage.getItem("config");
 export default createStore({
   state: {
     config: config ? JSON.parse(config) : {
-      style: "card",
-      darkMode: false,
+      style: "list",
+      darkMode: true,
+      cellphone: null
     }
   },
   getters: {

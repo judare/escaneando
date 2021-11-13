@@ -1,7 +1,7 @@
 <template>
 
   <div class="product-box" :class="style">
-    <div class="product-img">
+    <div class="product-img" v-if="product.image">
       <img :src="product.image" alt="">
     </div>
 
@@ -26,7 +26,8 @@ export default {
 
 <style lang="scss">
 .product-box {
-  margin: 10px;
+  user-select: none;
+  margin: 7px;
   flex-direction: column;
   justify-content: center;
   transition: .3s;
@@ -45,7 +46,7 @@ export default {
   &.card {
     background: #fff;
     box-shadow: 0 5px 8px 10px rgb(0 0 0 / 5%);
-    width: 150px;
+    width: 130px;
     border-radius: 1rem;
 
     .product-img {
@@ -55,6 +56,10 @@ export default {
         border-radius: 1rem 1rem 0 0;
       }
     }
+    .product-price {
+      margin: 20px 0;
+      font-size: 16px;
+    }
   }
 
   &.list {
@@ -63,13 +68,13 @@ export default {
       max-width: 200px;
       justify-content: center;
       img {
-        max-width: 120px;
-        max-height: 120px;
+        max-width: 100px;
+        max-height: 100px;
         border-radius: 1rem;
       }
     }
     .product-price {
-      max-width: 100px;
+      max-width: 80px;
     }
     .product-description {
       text-align: left;
