@@ -10,12 +10,14 @@ import Visit from './visit';
 import Review from './review';
 import ProductCategory from './product-category';
 import Product from './products';
+import Country from './Country';
 
 function Models() {
 
   this.models = {
     _QueryExecution,
     Commerce,
+    Country,
     User,
     Session,
     People,

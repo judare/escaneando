@@ -2,23 +2,27 @@ import response from "../helpers/response.js";
 
 export default function(app, db) {
   const {
-    Area
+    Commerce
   } = db;
 
   return async function(req, res, next) {
     try {
-      let queryBuilder = {
-        where: {
-          id: req.body.data.areaId,
-          companyId: req.user.companyId
-        }
-      };
-      let area = await Area.findOne(queryBuilder);
-      if (!area) {
-        return response(res, req)( null, { status: 404, code: "area.notFound" } );
+
+      if (!req.body.data.commerce) {
+        return response(res, req)( null, { status: 404, code: "commerce.notFound" } );
       }
 
-      req.area = area;
+      let queryBuilder = {
+        where: {
+          slug: req.body.data.commerce
+        }
+      };
+      let commerce = await Commerce.findOne(queryBuilder);
+      if (!commerce) {
+        return response(res, req)( null, { status: 404, code: "commerce.notFound" } );
+      }
+
+      req.commerce = commerce;
       // Invoke next middleware
       next();
     } catch (err) {

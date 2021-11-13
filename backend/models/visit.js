@@ -1,3 +1,5 @@
+import moment from "moment";
+
 function inet_ntoa(num){
   var nbuffer = new ArrayBuffer(4);
   var ndv = new DataView(nbuffer);
@@ -49,8 +51,36 @@ export default (sequelize, DataTypes) => {
 
   Visit.associate = function(models) {
     models.Visit.belongsTo(models.Commerce);
-    models.Visit.belongsTo(models.People);
+    // models.Visit.belongsTo(models.People);
   };
+
+  Visit.generateToken = async function() {
+    return Date.now();
+  }
+
+  Visit.visit = async function(people, commerce) {
+    let queryBuilder = {
+      where: {
+        commerceId: commerce.id,
+        peopleId: people.id,
+        date: moment().format("YYYY-MM-DD 00:00"),
+      }
+    }
+    let visit = await Visit.findOne(queryBuilder);
+    if (visit) {
+      await visit.increment("scans", { by: 1 })
+    } else {
+      visit = await Visit.create({
+        commerceId: commerce.id,
+        peopleId: people.id,
+        date: moment().format("YYYY-MM-DD 00:00"),
+        scans: 1,
+        token: await Visit.generateToken()
+      });
+    }
+
+    return visit;
+  }
   
   return Visit;
 };

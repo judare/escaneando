@@ -55,19 +55,7 @@ const runServer = () => {
 
   clog('\x1b[37m', 'Creating Controllers');
 
-  router.use('/alerts', routes.Alerts);
-  router.use('/auth', routes.Auth);
-  router.use('/bills', routes.Bills);
-  router.use('/devices', routes.Devices);
-  router.use('/tickets', routes.Tickets);
-  router.use('/users', routes.Users);
-  router.use('/devices-os', routes.DeviceOs);
-  router.use('/learning', routes.Learning);
-  router.use('/areas', routes.Areas);
-  router.use('/backup', routes.Backup);
-  router.use('/productivity', routes.Productivity);
-  router.use('/rols', routes.Rols);
-  router.use('/test', test(express, db, services));
+  router.use('/visitant', routes.Visitant);
 
   app.use('/api/v1', router);
 
