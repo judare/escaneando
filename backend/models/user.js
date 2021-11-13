@@ -8,11 +8,8 @@ export default (sequelize, DataTypes) => {
 		id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 		name: { type: DataTypes.STRING, allowNull: false },
 		image: { type: DataTypes.STRING, allowNull: false, defaultValue: "default.png"  },
-		position: { type: DataTypes.STRING, allowNull: false },
-    docType: { type: DataTypes.STRING, allowNull: true },
-    docNumber: { type: DataTypes.STRING, allowNull: true },
     cellphone: { type: DataTypes.STRING, allowNull: true },
-    companyId: { type: DataTypes.INTEGER, allowNull: true },
+    commerceId: { type: DataTypes.INTEGER, allowNull: true },
     email: { type: DataTypes.STRING, allowNull: false },
     password: {
       type: DataTypes.STRING,
@@ -23,23 +20,15 @@ export default (sequelize, DataTypes) => {
       }
     },
     blocked: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
-    rolId: { type: DataTypes.INTEGER, allowNull: true },
     restoreToken: { type: DataTypes.STRING, allowNull: true },
     restoreTokenExpiration: { type: DataTypes.STRING, allowNull: true },
-    twoFactorCode: { type: DataTypes.STRING, allowNull: true },
-    twoFactorConfirmed: { type: DataTypes.TINYINT, allowNull: true },
-    lastActivity: { type: DataTypes.DATE, allowNull: true },
-    areaId: { type: DataTypes.INTEGER, allowNull: true }
   }, 
   {
     paranoid: true,
     tableName: 'users',
   });
   User.associate = function(models) {
-    models.User.belongsTo(models.Company);
-    models.User.hasMany(models.Device);
-    models.User.belongsTo(models.Area);
-    models.User.belongsTo(models.Rol);
+    models.User.belongsTo(models.Commerce);
   };
   /**
   *Check Permission

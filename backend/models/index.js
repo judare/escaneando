@@ -2,65 +2,27 @@ import config from '../config/config.js';
 import Sequelize from 'sequelize';
 // Models
 import _QueryExecution from './_query-execution';
-import ActivityCategory from './activity-category';
-import Activity from './activity';
-import BillDetail from './bill-detail';
-import BillPayment from './bill-payment';
-import Bill from './bill';
-import CompanyParameter from './company-parameter';
-import Company from './company';
-import DeviceActivity from './device-activity';
-import DeviceBackup from './device-backup';
-import DeviceLog from './device-log';
-import DeviceLogStatus from './device-log-status';
-import DeviceMonitor from './device-monitor';
-import Device from './device';
-import RolPermission from './rol-permission';
-import RolPrivilege from './rol-privilege';
-import Rol from './rol';
 import Session from './session';
-import TicketLog from './ticket-log';
-import Ticket from './ticket';
-import TicketStatus from './ticket-status';
-import UserInvite from './user-invite';
 import User from './user.js';
-import Train from './train';
-import TrainResource from './train-resource.js';
-import TrainUser from './train-user';
-import TrainUserResource from './train-resource-user';
-import Area from './area';
+import Commerce from './commerce';
+import People from './people';
+import Visit from './visit';
+import Review from './review';
+import ProductCategory from './product-category';
+import Product from './products';
 
 function Models() {
 
   this.models = {
     _QueryExecution,
-    ActivityCategory,
-    Activity,
-    Area,
-    BillDetail,
-    BillPayment,
-    Bill,
-    Company,
-    CompanyParameter,
-    DeviceActivity,
-    DeviceBackup,
-    DeviceLog,
-    DeviceLogStatus,
-    DeviceMonitor,
-    Device,
-    RolPermission,
-    RolPrivilege,
-    Rol,
-    Session,
-    TicketLog,
-    Ticket,
-    TicketStatus,
-    UserInvite,
+    Commerce,
     User,
-    Train,
-    TrainResource,
-    TrainUser,
-    TrainUserResource
+    Session,
+    People,
+    Visit,
+    Review,
+    ProductCategory,
+    Product
   };
 
   this.sequelize = null;

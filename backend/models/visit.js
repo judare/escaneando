@@ -23,13 +23,14 @@ function inet_aton(ip){
 
 export default (sequelize, DataTypes) => {
 
-	const DeviceMonitor = sequelize.define('DeviceMonitor', {
+	const Visit = sequelize.define('Visit', {
 		id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-		deviceId: { type: DataTypes.INTEGER, allowNull: true },
-    memory: { type: DataTypes.INTEGER, allowNull: true },
-    space: { type: DataTypes.INTEGER, allowNull: true },
-    processor: { type: DataTypes.INTEGER, allowNull: true },
-    battery: { type: DataTypes.INTEGER, allowNull: true },
+    token: { type: DataTypes.STRING, allowNull: true },
+    commerceId: { type: DataTypes.INTEGER, allowNull: true },
+    time: { type: DataTypes.TIME, allowNull: true },
+    date: { type: DataTypes.DATE, allowNull: true },
+    scans: { type: DataTypes.INTEGER, allowNull: true },
+    peopleId: { type: DataTypes.INTEGER, allowNull: true },
     ipAddress: {
       type: DataTypes.INTEGER,
       allowNull: true,
@@ -38,26 +39,18 @@ export default (sequelize, DataTypes) => {
       },
       set (valueToBeSet) {
         this.setDataValue('ipAddress', inet_aton(valueToBeSet))
-      }},
-    disks: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      get() {
-        return JSON.parse(this.getDataValue('disks')) || [];
-      },
-      set(value) {
-        this.setDataValue('disks', JSON.stringify(value));
       }
-    },
-    backupSize: { type: DataTypes.INTEGER, allowNull: true },
+    }
   }, 
   {
-    tableName: 'device_monitor',
+    paranoid: true,
+    tableName: 'visits',
   });
 
-  DeviceMonitor.associate = function(models) {
-    models.DeviceMonitor.belongsTo(models.Device);
-  }
-
-  return DeviceMonitor;
+  Visit.associate = function(models) {
+    models.Visit.belongsTo(models.Commerce);
+    models.Visit.belongsTo(models.People);
+  };
+  
+  return Visit;
 };

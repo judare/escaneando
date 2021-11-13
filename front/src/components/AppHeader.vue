@@ -15,7 +15,7 @@ export default {
   name: "app-header",
   methods: {
     back() {
-      this.$router.push({ name: "options" });
+      this.$router.push({ name: "options", params: { slug: this.$route.params.slug } });
     }
   }
 }

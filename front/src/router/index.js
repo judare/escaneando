@@ -5,17 +5,17 @@ import Options from '@/views/Options.vue'
 
 const routes = [
   {
-    path: '/',
+    path: '/:slug',
     name: 'Main',
     component: Main
   },
   {
-    path: '/options',
+    path: '/:slug/options',
     name: 'options',
     component: Options
   },
   {
-    path: '/menu',
+    path: '/:slug/menu',
     name: 'menu',
     component: Menu
   }

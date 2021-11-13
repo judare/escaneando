@@ -67,7 +67,7 @@ export default {
     enterMenu() {
       this.loading = true
       setTimeout(() => { //TODO REQUEST
-        this.$router.replace({ name: "options" });
+        this.$router.replace({ name: "options", params: { slug: this.$route.params.slug } });
       }, 600);
     },
     validateCellphone() {
