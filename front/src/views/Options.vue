@@ -7,7 +7,7 @@
       <div class="enter-page">
 
         <div class="logo">
-          <img src="https://olaclick.s3.amazonaws.com/companies/logos/cba9cbba-a3b6-4522-b4f0-eb9ddd51b2c1.JPG" alt="">
+          <img :src="visitant.Commerce.logo" alt="">
         </div>
 
         <h2 class="mb-5">Tenemos para ti</h2>
@@ -77,11 +77,13 @@
 <script>
 import { mapGetters } from "vuex";
 import AppModal from "@/components/AppModal.vue";
+import { postRequest } from "@/common/api.service.js";
+
 // @ is an alias to /src
 export default {
   name: 'Options',
   computed: {
-    ...mapGetters(["config"])
+    ...mapGetters(["config", "visitant"])
   },
   data() {
     return {
@@ -103,7 +105,15 @@ export default {
       this.$refs.payModal.show();
     },
     putOpinion() {
-
+      let data = {
+        "review": this.form.opinion,
+        "visitantToken": this.visitant.token,
+        "commerce": this.$route.params.slug
+      }
+      postRequest("visitant/createReview", data).then(result => {
+        this.$refs.reviewModal.hide();
+        alert("Ok!");
+      });
     },
     goToPay() {
 

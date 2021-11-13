@@ -5,18 +5,22 @@
 
     </div>
     <div class="logo">
-      <img src="https://olaclick.s3.amazonaws.com/companies/logos/cba9cbba-a3b6-4522-b4f0-eb9ddd51b2c1.JPG" alt="">
+      <img :src="visitant.Commerce.logo" alt="">
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters} from "vuex";
 export default {
   name: "app-header",
   methods: {
     back() {
       this.$router.push({ name: "options", params: { slug: this.$route.params.slug } });
     }
+  },
+  computed: {
+    ...mapGetters(["visitant"])
   }
 }
 </script>

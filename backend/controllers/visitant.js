@@ -20,7 +20,13 @@ export default function(app, db) {
       let visit = await Visit.visit(people, commerce);
 
       return response(res, req, next)({
-        token: visit.token
+        token: visit.token,
+        Commerce: {
+          id: commerce.id,
+          name: commerce.name,
+          cellphone: commerce.cellphone,
+          logo: commerce.logo,
+        }
       });
     },
 

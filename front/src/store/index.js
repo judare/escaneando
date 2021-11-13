@@ -8,16 +8,25 @@ export default createStore({
       style: "list",
       darkMode: true,
       cellphone: null
+    },
+    visitant: {
+      Commerce: {}
     }
   },
   getters: {
     config(state) {
       return state.config
+    },
+    visitant(state) {
+      return state.visitant;
     }
   },
   mutations: {
     setConfig(state, value) {
       state.config = value;
+    },
+    setVisitant(state, value) {
+      state.visitant = value;
     }
   },
   actions: {

@@ -5,11 +5,12 @@
 
     <div class="v-align">
 
+{{this.visitant}}
       <app-loader v-show="loading"/>
       <div class="enter-page" v-show="!loading">
 
         <div class="logo">
-          <img src="https://olaclick.s3.amazonaws.com/companies/logos/cba9cbba-a3b6-4522-b4f0-eb9ddd51b2c1.JPG" alt="">
+          <img :src="visitant.Commerce.logo">
         </div>
 
         <h2 class="mb-5">Queremos conocerte</h2>
@@ -48,6 +49,7 @@
 <script>
 import { mapGetters } from "vuex";
 import AppLoader from "@/components/AppLoader.vue";
+import { postRequest } from "@/common/api.service.js";
 // @ is an alias to /src
 export default {
   name: 'Main',
@@ -59,6 +61,7 @@ export default {
     }
   },
   mounted() {
+
     if (this.config.cellphone) {
       this.enterMenu();
     }
@@ -71,10 +74,12 @@ export default {
         "cellphone": this.config.cellphone,
         "commerce": this.$route.params.slug
       }
-      
-      setTimeout(() => { //TODO REQUEST
+
+      postRequest("visitant/registerVisitant", data).then(result => {
+        this.$store.commit("setVisitant", result.data);
         this.$router.replace({ name: "options", params: { slug: this.$route.params.slug } });
-      }, 600);
+      });
+      
     },
     validateCellphone() {
       let cellphone = "" + this.form.cellphone;
@@ -88,7 +93,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["config"])
+    ...mapGetters(["config", "visitant"])
   },
   components: {
     AppLoader

@@ -25,6 +25,7 @@
 <script>
 import { mapGetters } from "vuex";
 import AppFooter from "@/components/AppFooter.vue"
+import { postRequest } from "@/common/api.service.js";
 
 export default {
   computed: {
@@ -36,6 +37,16 @@ export default {
     },
     toggleStyle() {
       this.config.style = this.config.style == "list" ? "card" : "list";
+    },
+    getData() {
+      if (!this.$route.params || !this.$route.params.slug)  return;
+      let data = {
+        "cellphone": this.config.cellphone,
+        "commerce": this.$route.params.slug
+      }
+      postRequest("visitant/registerVisitant", data).then(result => {
+        this.$store.commit("setVisitant", result.data);
+      });
     }
   },
   components: {
@@ -47,6 +58,9 @@ export default {
       handler(a) {
         window.localStorage.setItem("config", JSON.stringify(a))
       }
+    },
+    "$route"() {
+      this.getData();
     }
   }
 }
