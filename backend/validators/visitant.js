@@ -18,6 +18,10 @@ export default function(app, db) {
       findCommerce
     ],
 
+    getCommerce: [
+      findCommerce
+    ],
+
     listProducts: [
       findCommerce
     ],

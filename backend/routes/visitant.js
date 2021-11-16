@@ -9,6 +9,7 @@ const Route = function(app, db, services) {
   // Including Auth Validator
   const validate = Validator(app, db);
 
+  router.post('/getCommerce', validate.getCommerce, isect(controller.getCommerce));
   router.post('/registerVisitant', validate.registerVisitant, isect(controller.registerVisitant));
   router.post('/listProducts', validate.listProducts, isect(controller.listProducts));
   router.post('/createReview', validate.createReview, isect(controller.createReview));

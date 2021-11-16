@@ -34,6 +34,9 @@ export default {
   computed: {
     ...mapGetters(["config"])
   },
+  mounted() {
+    this.getData();
+  },
   methods: {
     toggleDarkMode() {
       this.config.darkMode = !this.config.darkMode;
@@ -44,11 +47,10 @@ export default {
     getData() {
       if (!this.$route.params || !this.$route.params.slug)  return;
       let data = {
-        "cellphone": this.config.cellphone,
         "commerce": this.$route.params.slug
       }
-      postRequest("visitant/registerVisitant", data).then(result => {
-        this.$store.commit("setVisitant", result.data);
+      postRequest("visitant/getCommerce", data).then(result => {
+        this.$store.commit("setCommerce", result.data.Commerce);
       });
     }
   },

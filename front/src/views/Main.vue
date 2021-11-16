@@ -12,6 +12,9 @@
           <img :src="visitant.Commerce.logo">
         </div>
 
+        <h3 class="commerce-name" v-if="visitant && visitant.Commerce">{{visitant.Commerce.name}}</h3>
+
+
         <h2 class="mb-5">¡Queremos <br> conocerte!</h2>
 
 
@@ -113,6 +116,9 @@ export default {
       max-height: 100px;
       border-radius: 1rem;
     }
+  }
+  .commerce-name {
+    font-weight: 300;
   }
 }
 

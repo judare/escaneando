@@ -8,6 +8,11 @@
   </div>
 
   <div class="mb-5">
+
+    <div class="logo-right">
+      <img :src="visitant.Commerce.logo" alt="">
+    </div>
+
     <h3 v-if="visitant && visitant.Commerce">{{visitant.Commerce.name}}</h3>
     <h2>Nuestros productos</h2>
   </div>
@@ -86,6 +91,14 @@ export default {
 .back {
   cursor: pointer;
 }
-  
+.logo-right {
+  width: 70px;
+  height: 70px;
+  float: right;
+  img {
+    border-radius: 1rem;
+    max-width: 100%;
+  }
+}
 
 </style>

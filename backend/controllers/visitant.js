@@ -11,6 +11,21 @@ export default function(app, db) {
   } = db;
 
   const Controller = {
+    getCommerce: async function( req, res, next ) {
+
+      let { commerce } = req;
+
+      return response(res, req, next)({
+        Commerce: {
+          id: commerce.id,
+          name: commerce.name,
+          cellphone: commerce.cellphone,
+          logo: commerce.logo,
+        }
+      });
+    },
+
+
     registerVisitant: async function( req, res, next ) {
 
       let { commerce, body: { data: { cellphone } } } = req;

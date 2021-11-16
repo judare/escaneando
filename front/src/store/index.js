@@ -27,6 +27,9 @@ export default createStore({
     },
     setVisitant(state, value) {
       state.visitant = value;
+    },
+    setCommerce(state, value) {
+      state.visitant.Commerce = value;
     }
   },
   actions: {

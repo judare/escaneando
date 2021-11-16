@@ -9,7 +9,8 @@ const routes = [
     name: 'landing',
     component: () => import('@/views/Landing.vue'),
     meta: {
-      layout: "default"
+      layout: "default",
+      title: "Recolecta datos de tus clientes con solo un click"
     }
   },
   {
@@ -17,6 +18,7 @@ const routes = [
     name: 'main',
     component: Main,
     meta: {
+      title: "Poner número de celular",
       layout: "customer"
     }
   },
@@ -25,6 +27,7 @@ const routes = [
     name: 'options',
     component: Options,
     meta: {
+      title: "Escoger opción",
       layout: "customer"
     }
   },
@@ -33,6 +36,7 @@ const routes = [
     name: 'menu',
     component: Menu,
     meta: {
+      title: "Productos",
       layout: "customer"
     }
   }

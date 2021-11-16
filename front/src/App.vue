@@ -18,9 +18,19 @@ export default {
     CustomerLayout,
     DefaultLayout
   },
+  methods: {
+    getTitle(r) {
+      document.title = `${r.meta.title}`;
+    }
+  },
   computed: {
     layout() {
       return this.$route.meta.layout + "-layout";
+    }
+  },
+  watch: {
+    "$route"(to) {
+      this.getTitle(to)
     }
   }
 }
@@ -67,7 +77,7 @@ a {
   margin-bottom: 30px;
 }
 .v-align {
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 250px);
   display: flex;
   align-items: center;
   justify-content: center;
