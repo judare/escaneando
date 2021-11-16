@@ -5,15 +5,14 @@
 
     <div class="v-align">
 
-{{this.visitant}}
       <app-loader v-show="loading"/>
       <div class="enter-page" v-show="!loading">
 
-        <div class="logo">
+        <div class="logo" v-if="visitant && visitant.Commerce">
           <img :src="visitant.Commerce.logo">
         </div>
 
-        <h2 class="mb-5">Queremos conocerte</h2>
+        <h2 class="mb-5">¡Queremos <br> conocerte!</h2>
 
 
         <div class="box-form" :class="{ error: !!formErrors.cellphone }">
@@ -105,9 +104,6 @@ export default {
 .enter-page {
   max-width: 320px;
   margin: 0 auto;
-  h2 {
-    text-align: center;
-  }
 
   .logo {
     text-align: center;

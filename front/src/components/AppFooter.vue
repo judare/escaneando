@@ -1,7 +1,7 @@
 <template>
 
-  <div class="footer">
-    <div @click="reload">Todos los derechos reservados</div>
+  <div class="footer section">
+    <div @click="reload">Geoda - Todos los derechos reservados</div>
   </div>
 </template>
 <script>
@@ -16,9 +16,9 @@ export default {
 </script>
 
 <style lang="scss">
-.footer {
+.footer.section {
   margin-top: 20px;
-  text-align: center;;
+  text-align: center;
   padding: 20px;
   border-top: 1px solid rgba(0,0,0,0.3);
 }

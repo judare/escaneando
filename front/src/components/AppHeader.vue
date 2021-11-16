@@ -1,10 +1,9 @@
 <template>
   <div class="header">
     <div class="back" @click="back">
-      <img src="/icons/back.svg">
-
+      <img src="/icons/back.png">
     </div>
-    <div class="logo">
+    <div class="logo" v-if="visitant && visitant.Commerce">
       <img :src="visitant.Commerce.logo" alt="">
     </div>
   </div>

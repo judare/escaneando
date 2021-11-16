@@ -3,11 +3,19 @@
 <div class="container text-center" >
 
 
-  <app-header/>
+  <div class="back mb-5" @click="back">
+    <img src="/icons/back.png">
+  </div>
+
+  <div class="mb-5">
+    <h3 v-if="visitant && visitant.Commerce">{{visitant.Commerce.name}}</h3>
+    <h2>Nuestros productos</h2>
+  </div>
+
 
   <ul class="list-options mb-5">
-    <li class="box-check" v-for="category in products" :key="category.id">
-      <a class="box sm optionable" :href="'#cat-' + category.id">{{category.name}}</a>
+    <li class="box-check" v-for="(category, i) in products" :key="category.id">
+      <a class="box sm optionable" :class="{active: i == 0}" :href="'#cat-' + category.id">{{category.name}}</a>
     </li>
 
   </ul>
@@ -26,7 +34,7 @@
 
 <script>
 import AppProduct from "@/components/AppProduct.vue";
-import AppHeader from "@/components/AppHeader.vue";
+// import AppHeader from "@/components/AppHeader.vue";
 import { mapGetters } from "vuex";
 import { postRequest } from "@/common/api.service.js";
 
@@ -47,13 +55,16 @@ export default {
       postRequest("visitant/listProducts", data).then(result => {
         this.products = result.data.Products;
       });
+    },
+    back() {
+      this.$router.push({ name: "options", params: { slug: this.$route.params.slug } });
     }
   },
   mounted() {
     this.getProducts();
   },
   components: {
-    AppHeader,
+    // AppHeader,
     AppProduct
   },
   computed: {
@@ -72,6 +83,9 @@ export default {
     flex-direction: row;
   }
 }
-
+.back {
+  cursor: pointer;
+}
+  
 
 </style>

@@ -10,21 +10,24 @@
           <img :src="visitant.Commerce.logo" alt="">
         </div>
 
-        <h2 class="mb-5">Tenemos para ti</h2>
+        <h2 class="mb-5">¡Tenemos para ti!</h2>
 
-        <div class="box optionable choose-option" @click="goToMenu">
-          <img src="/icons/menu.png">
-          <div>Carta</div>
+        <div class="box optionable choose-option active" @click="goToMenu">
+          <!-- <img src="/icons/menu.png"> -->
+          <div><strong>🍔 Nuestro Menú</strong></div>
+          <p>Aquí encontraras todos nuestros productos</p>
         </div>
 
-        <div class="box optionable choose-option" @click="review">
-          <img src="/icons/review.png">
-          <div>Reseña</div>
+        <div class="box optionable choose-option active" @click="pay">
+
+          <div><strong>💸 Realizar pago</strong></div>
+          <p>Procesa el pago de tus compras</p>
+
         </div>
 
-        <div class="box optionable choose-option" @click="pay">
-          <img src="/icons/pay.png">
-          <div>Pagar</div>
+        <div class="box optionable choose-option active" @click="review">
+          <div><strong>💬 Cuentanos tu experiencia</strong></div>
+          <p>Escribe aquí una reseña sobre que te piensas</p>
         </div>
 
       </div>
@@ -125,10 +128,16 @@ export default {
 <style lang="scss">
 .choose-option {
   display: inline-block;
-  margin: 5px;
-  box-sizing: content-box;
-  text-align: center;
+  margin: 5px 0;
+  text-align: left;
   cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+  p {
+    font-size: 13px;
+    margin: 0;
+  }
+
   img {
     width: 50px;
     margin-bottom: 10px;

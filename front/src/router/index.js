@@ -5,19 +5,36 @@ import Options from '@/views/Options.vue'
 
 const routes = [
   {
+    path: '/',
+    name: 'landing',
+    component: () => import('@/views/Landing.vue'),
+    meta: {
+      layout: "default"
+    }
+  },
+  {
     path: '/:slug',
-    name: 'Main',
-    component: Main
+    name: 'main',
+    component: Main,
+    meta: {
+      layout: "customer"
+    }
   },
   {
     path: '/:slug/options',
     name: 'options',
-    component: Options
+    component: Options,
+    meta: {
+      layout: "customer"
+    }
   },
   {
     path: '/:slug/menu',
     name: 'menu',
-    component: Menu
+    component: Menu,
+    meta: {
+      layout: "customer"
+    }
   }
 ]
 

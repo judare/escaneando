@@ -8,9 +8,11 @@
     <div class="product-description">
       <h4 class="product-name">{{product.name}}</h4>
       <p v-if="style == 'list'">{{product.description}}</p>
-    </div>
 
-    <h5 class="product-price">${{product.price}}</h5>
+      <h5 class="product-price">${{money(product.price)}}</h5>
+
+    </div>
+    
   </div>
 </template>
 <script>
@@ -27,7 +29,6 @@ export default {
 <style lang="scss">
 .product-box {
   user-select: none;
-  margin: 7px;
   flex-direction: column;
   justify-content: center;
   transition: .3s;
@@ -37,40 +38,49 @@ export default {
   align-items: center;
   justify-content: center;
   width: 100%;
+  font-weight: 300;
 
-  .product-img, .product-price, .product-description {
+  .product-img {
     display: flex;
     flex: 1;
   }
+  .product-description {
+    flex: 1;
+  }
+  .product-img {
+    img {
+      border-radius: 1rem;
+    }
+  }
 
   &.card {
-    background: #fff;
-    box-shadow: 0 5px 8px 10px rgb(0 0 0 / 5%);
-    width: 130px;
-    border-radius: 1rem;
+    width: 85px;
+    margin: 7px 14px;
 
     .product-img {
       margin-bottom: 20px;
       img {
         width: 100%;
-        border-radius: 1rem 1rem 0 0;
       }
     }
+    .product-name {
+      font-weight: 500;
+    }
     .product-price {
-      margin: 20px 0;
+      margin: 10px 0;
       font-size: 16px;
+      font-weight: 300;
     }
   }
 
   &.list {
     flex-direction: row;
+    margin: 7px 0;
     .product-img {
-      max-width: 200px;
-      justify-content: center;
+      max-width: 90px;
       img {
-        max-width: 100px;
-        max-height: 100px;
-        border-radius: 1rem;
+        max-width: 70px;
+        max-height: 70px;
       }
     }
     .product-price {
@@ -86,11 +96,12 @@ export default {
   .product-description {
     .product-name {
       line-height: 1;
-      font-size: 1rem;
+      font-size: .9rem;
       margin: 0;
     }
     p {
       font-size: 10px;
+      margin: 0;
     }
   }
   
