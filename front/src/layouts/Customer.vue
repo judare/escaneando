@@ -148,6 +148,7 @@ input:checked ~ .box, .box.active, .box.optionable:hover {
     bottom:0;
     border-radius: 8px; /*1*/
     border: 2px solid transparent; /*2*/
+    background: red;
     background:linear-gradient(89.98deg, #BBEC69 1.1%, rgba(155, 207, 173, 0.495063) 48.6%, #455DD1 95.16%) border-box; /*3*/
     -webkit-mask: /*4*/
       linear-gradient(#fff 0 0) padding-box, 
@@ -217,6 +218,10 @@ input:checked ~ .box, .box.active, .box.optionable:hover {
   margin: 0 auto;
   position: relative;
   min-height: 100vh;
+  .container {
+    padding: 0 20px;
+    margin: 0 auto;
+  }
   .logo-page {
     background-image: url(/icons/logo-black.png);
     background-repeat: no-repeat;

@@ -21,5 +21,6 @@ export default {
   text-align: center;
   padding: 20px;
   border-top: 1px solid rgba(0,0,0,0.3);
+  font-weight: 300;
 }
 </style>

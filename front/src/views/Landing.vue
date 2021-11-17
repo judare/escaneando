@@ -4,17 +4,16 @@
 
 
 
-  <nav class="flex items-center justify-between flex-wrap p-6 container pt-10">
+  <nav class="flex items-center justify-between flex-wrap py-10 container  mx-auto">
     <div class="flex items-center flex-shrink-0 text-white mr-6">
       <img src="/icons/landing/logo.svg" alt="">
-      <span class="font-semibold text-xl tracking-tight">GEODA</span>
     </div>
     <div class="block lg:hidden">
       <button class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
         <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
       </button>
     </div>
-    <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto text-center">
+    <div class="w-full font-light block flex-grow lg:flex lg:items-center lg:w-auto text-center mt-10 lg:mt-0">
       <div class="text-sm lg:flex-grow">
         <a href="#about" class="block mt-4 lg:inline-block lg:mt-0 hover:text-green-600 mr-4">
           ¿Quiénes somos?
@@ -24,23 +23,23 @@
         </a>
       </div>
       <div>
-        <a class="inline-block bg-black hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full md:w-44 text-center " href="#register">Regístrate</a>
+        <a class="inline-block bg-black hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full md:w-44 text-center mt-10 lg:mt-0" href="#register">Regístrate</a>
       </div>
     </div>
   </nav>
 
 
-<!-- <div class="bg-indigo-900 text-center py-4 lg:px-4">
-  <div class="p-2 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
-    <span class="flex rounded-full bg-indigo-500 uppercase px-2 py-1 text-xs font-bold mr-3">New</span>
-    <span class="font-semibold mr-2 text-left flex-auto">Get the coolest t-shirts from our brand new store</span>
-    <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
-  </div>
-</div> -->
+  <!-- <div class="bg-indigo-900 text-center py-4 lg:px-4">
+    <div class="p-2 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+      <span class="flex rounded-full bg-indigo-500 uppercase px-2 py-1 text-xs font-bold mr-3">New</span>
+      <span class="font-semibold mr-2 text-left flex-auto">Get the coolest t-shirts from our brand new store</span>
+      <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
+    </div>
+  </div> -->
 
 
-  <div class="section-page my-20">
-    <div class="section-1 container bg-center sm:bg-none bg-no-repeat text-right">
+  <div class="section-page mb-20">
+    <div class="section-1 container mx-auto bg-center sm:bg-none bg-no-repeat text-center md:text-right">
       
     
       <div class="right-float-section">
@@ -52,7 +51,7 @@
 
 
   <div class="section-page my-20" id="about">
-    <div class="container">
+    <div class="container mx-auto">
       <div class="md:grid md:grid-cols-12 md:gap-6">
         
         <div class="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 md:mt-6 aos-init aos-animate font-light	">
@@ -73,7 +72,7 @@
 
 
   <div class="section-page my-20 section-3 bg-no-repeat bg-right" id="offer">
-    <div class="container">
+    <div class="container mx-auto">
       <div class="md:grid md:grid-cols-12 md:gap-6">
 
         
@@ -103,17 +102,17 @@
   </div>
 
   <div class="section-page my-20">
-    <div class="container">
-      <div class="items-features font-light	">
-        <div class="box-feature box-decoration">
+    <div class="container mx-auto">
+      <div class="items-features font-light">
+        <div class="box-feature box-decoration right">
           En geoda sabemos la importancia y el potencial de los datos para el crecimiento de las empresas, por eso, a través de nuestra plataforma gratuita impulsamos a las empresas, comercios y microcomercios.
         </div>
 
-        <div class="box-feature box-decoration style-2 right">
+        <div class="box-feature box-decoration style-2 ">
           Nos preocupamos por el crecimiento de las empresas ofreciendo desarrollo tecnológico adaptable para todo tipo de industria, nos adaptamos a ti.
         </div>
 
-        <div class="box-feature box-decoration style-3">
+        <div class="box-feature box-decoration style-3 right">
           Aplicamos las principales áreas tecnológicas para el crecimiento de tu negocio: marketing basado en datos, desarrollo de Software y diseño UX/UI
         </div>
       </div>
@@ -123,14 +122,14 @@
 
   <div class="section-page-preview mb-5">
 
-    <div class="container block direction-column">
+    <div class="container mx-auto block direction-column">
       <h2 class="mb-5">Funcionalidades</h2>
 
       <div class="w-full block flex-grow lg:flex lg:items-center lg:justify-center lg:w-auto text-center">
-        <img src="/icons/landing/show-1.png">
+        <img src="/icons/landing/show-1.png" class="hidden md:block">
         <!-- <img src="/icons/landing/show-2.png"> -->
-        <img src="/icons/landing/show-4.png">
-        <img src="/icons/landing/show-3.png">
+        <img src="/icons/landing/show-4.png" class="">
+        <img src="/icons/landing/show-3.png" class="hidden md:block">
       </div>
       
     </div>
@@ -138,7 +137,7 @@
 
 
   <div class="section-page">
-    <div class="container">
+    <div class="container mx-auto">
       <div class="items-features font-light	">
         <div class="box-feature box-decoration style-small right">
           <strong>Evita descargas innecesarias de tu carta.</strong> Agiliza la visualización de tu menú con la funcionalidad vista previa.
@@ -162,12 +161,12 @@
 
   <div class="section-page my-20" id="register">
 
-    <div class="container font-light">
+    <div class="container  mx-auto font-light">
       <h2 class="mb-5">Regístrate</h2>
 
       <p class="mb-10">¡Permitenos conocerte y que nos conozcas!</p>
 
-      <div class="container block register">
+      <div class="block register">
      
         <div class="mb-5">
           <span>Hola, Mi nombre es </span>
@@ -181,11 +180,11 @@
 
         <div class="mb-5">
           <label>
-            <input type="checkbox" class="form-checkbox mr-10">
+            <input type="checkbox" class="form-checkbox mr-5">
             <span>Autorizo el uso de la información</span>
           </label>
         </div>
-        <button class="inline-block bg-black hover:bg-green-600 text-white  py-2 px-4 rounded-full">Continuar con el registro</button>
+        <button class="text-base inline-block bg-black hover:bg-green-600 text-white  py-2 px-4 rounded-full md:w-5/12">Continuar con el registro</button>
 
       </div>
 
@@ -199,15 +198,16 @@
 
 
 
-  <div class="footer mt-10 ">
-    <div class="container p-10 ">
+  <div class="footer mt-10 font-light">
+    <div class="container mx-auto py-10 ">
       <div class="w-100 flex-grow md:flex md:items-center md:justify-center">
-        <div class="flex flex-grow block text-left">
-          <img src="/icons/logo-black.png" alt="">
-        </div>
+        
 
         <div class="flex flex-grow block text-left">
-          <ul>
+          <div class="mr-5">
+            <img src="/icons/landing/logo-footer.svg" alt="">
+          </div>
+          <ul >
             <li>Geoda 2021</li>
             <li>Todos los derechos reservados</li>
           </ul>
@@ -241,9 +241,8 @@ export default {
 </script>
 <style lang="scss">
 @import url("https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css");
-.landing {
- 
 
+.landing {
   h2 {
     font-size: 3.3rem;
     line-height: 1;
@@ -263,8 +262,7 @@ export default {
         height: 20px;
         border-radius: 100px;
         border: 3px solid transparent;
-        background: linear-gradient( 
-    180deg, rgba(43, 86, 240, 0.9) 0%, #900bcfe6 99.24%) border-box;
+        background: linear-gradient(90deg, rgba(187, 236, 105, 0.9) 0.01%, rgba(155, 207, 173, 0.9) 49.15%, rgba(69, 93, 209, 0.9) 98.29%) border-box;
         -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
         -webkit-mask-composite: destination-out;
         mask-composite: exclude;
@@ -322,6 +320,8 @@ export default {
     &.style-small {
       padding-left: 30px;
       &:before {
+        top: -15px;
+        left: -5px;
         width: 20px;
       }
     }
@@ -338,10 +338,28 @@ export default {
     font-size: 19px;
     text-align: center;
     padding: 0 10px;
+    font-weight: 300;
     &:hover, &:active, &:focus {
       border-bottom: 2px solid #455DD1;
       outline: none;
     }
+  }
+}
+
+@media (max-width: 800px) {
+  .section-page {
+    .section-1 {
+      background: none!important;
+      height: auto!important;
+    }
+    &.section-3 {
+      background-image: none!important;
+    }
+  }
+}
+@media (min-width: 1123px) {
+  .container {
+    max-width: 1123px!important;
   }
 }
 

@@ -12,15 +12,17 @@
 <script>
 import CustomerLayout from "@/layouts/Customer.vue";
 import DefaultLayout from "@/layouts/Default.vue";
+import BackofficeLayout from "@/layouts/Backoffice.vue";
 
 export default {
   components: {
     CustomerLayout,
-    DefaultLayout
+    DefaultLayout,
+    BackofficeLayout
   },
   methods: {
     getTitle(r) {
-      document.title = `${r.meta.title}`;
+      document.title = `${r.meta.title} | GEODA`;
     }
   },
   computed: {
@@ -106,8 +108,5 @@ a {
       background: #ddd;
     }
   }
-.container {
-  padding: 0 20px;
-  margin: 0 auto;
-}
+
 </style>

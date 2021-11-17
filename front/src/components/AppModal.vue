@@ -1,7 +1,9 @@
 <template>
   <div class="modal" v-show="showing">
     <div class="modal-content">
-      <div class="close" @click="hide()" v-if="!noClose">X</div>
+      <div class="close" @click="hide()" v-if="!noClose">
+        <img src="/icons/close.svg">
+      </div>
       <slot></slot>
     </div>
   </div>
@@ -56,9 +58,6 @@ export default {
       width: 32px;
       height: 32px;
       text-align: center;
-      line-height: 32px;
-      background: #ddd;
-      border-radius: 100rem;
       cursor: pointer;
     }
   }
@@ -68,6 +67,9 @@ export default {
     background: rgb(255 255 255 / 52%);
     .modal-content {
       background: #16161a;
+      .close {
+        filter: invert(1);
+      }
     }
   }
 }

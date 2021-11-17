@@ -14,6 +14,15 @@ const routes = [
     }
   },
   {
+    path: '/backoffice',
+    name: 'backoffice',
+    component: () => import('@/views/Backoffice.vue'),
+    meta: {
+      layout: "backoffice",
+      title: "Backoffice"
+    }
+  },
+  {
     path: '/:slug',
     name: 'main',
     component: Main,

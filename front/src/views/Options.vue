@@ -6,11 +6,13 @@
     <div class="v-align">
       <div class="enter-page">
 
-        <div class="logo">
-          <img :src="visitant.Commerce.logo" alt="">
+        <div class="logo" v-if="visitant && visitant.Commerce">
+          <img :src="visitant.Commerce.logo">
         </div>
+        <h3 class="commerce-name" v-if="visitant && visitant.Commerce">{{visitant.Commerce.name}}</h3>
 
-        <h2 class="mb-5">¡Tenemos para ti!</h2>
+        <h2 class="mb-5" style="font-weight: 500;">¡Tenemos para ti!</h2>
+
 
         <div class="box optionable choose-option active" @click="goToMenu">
           <!-- <img src="/icons/menu.png"> -->
@@ -35,10 +37,13 @@
 
 
   <app-modal ref="reviewModal">
-     <div class="box-form" :class="{ error: !!formErrors.opinion }">
-      <label>Escribe tu opinión</label>
+     <div class="box-form font-light" :class="{ error: !!formErrors.opinion }">
+
+      <div class="text-center">👋🏻   💬   😄</div>
+      <h2>¿Qué tal estuvo tu experiencia?</h2>
+      <p>Cuentanos que tal te parecio nuestro lugar, nuestra comida y todo lo que nos quieras contar! Estamos felices de escucharte!</p>
       <textarea class="box-input w-100" v-model="form.opinion">
-        </textarea>
+      </textarea>
 
       <div class="form-error" v-if="formErrors.opinion">
         {{formErrors.opinion}}
@@ -47,7 +52,7 @@
 
      <div class="box-form">
       <button type="button" class="btn btn-primary w-100" @click="putOpinion" :disabled="!form.opinion">
-        OPINAR
+        Enviar opinión
       </button>
     </div>
   </app-modal>
@@ -55,9 +60,14 @@
 
 
   <app-modal ref="payModal">
+    
 
     <div class="box-form" :class="{ error: !!formErrors.amount }">
-      <label>Escribe el valor a pagar</label>
+
+      <div class="text-center">👋🏻   💸   💳</div>
+      <h2>Escribe el valor a pagar</h2>
+      <p>A contuniación serás redirigido a la pasarle de pagos para que completes el proceso de manera segura y rápida.</p>
+
       <input type="number" pattern="\d*"  inputmode="numeric" class="box-input w-100" v-model="form.amount">
 
       <div class="form-error" v-if="formErrors.amount">
@@ -67,7 +77,7 @@
 
      <div class="box-form">
       <button type="button" class="btn btn-primary w-100" @click="goToPay" :disabled="!form.amount">
-        IR A PAGAR
+        Completar el pago
       </button>
     </div>
 
@@ -141,6 +151,15 @@ export default {
   img {
     width: 50px;
     margin-bottom: 10px;
+  }
+}
+.box-form {
+  text-align: center;
+  h2  {
+    font-weight: 500;
+  }
+  p {
+    font-weight: 300;
   }
 }
 </style>

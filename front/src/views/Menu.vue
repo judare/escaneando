@@ -13,8 +13,8 @@
       <img :src="visitant.Commerce.logo" alt="">
     </div>
 
-    <h3 v-if="visitant && visitant.Commerce">{{visitant.Commerce.name}}</h3>
-    <h2>Nuestros productos</h2>
+    <h3 class="commerce-name" v-if="visitant && visitant.Commerce">{{visitant.Commerce.name}}</h3>
+    <h2 style="font-weight: 500;">Nuestros productos</h2>
   </div>
 
 
@@ -30,10 +30,28 @@
 
     <h3 class="mb-5">{{category.name}}</h3>
     <div class="products mb-5" :class="'products-' + config.style" >
-      <app-product v-for="p in category.Products" :key="p.id" :product="p" :style="config.style"/>
+      <app-product v-for="p in category.Products" :key="p.id" :product="p" :style="config.style" v-on:click-product="clickProduct"/>
     </div>
   </div>
 </div>
+
+<app-modal ref="showProduct">
+  <div v-if="product" class="product-modal">
+    <div class="top mb-5">
+      <div class="image">
+        <img :src="product.image" alt="">
+      </div>
+      <div class="desc">
+        <h2>{{product.name}}</h2>
+        <h3>${{money(product.price)}}</h3>
+      </div>
+    </div>
+    <div class="desc">{{product.description}}</div>
+  </div>
+
+</app-modal>
+
+
 </div>
 </template>
 
@@ -42,13 +60,15 @@ import AppProduct from "@/components/AppProduct.vue";
 // import AppHeader from "@/components/AppHeader.vue";
 import { mapGetters } from "vuex";
 import { postRequest } from "@/common/api.service.js";
+import AppModal from "@/components/AppModal.vue";
 
 // @ is an alias to /src
 export default {
   name: 'Home',
   data() {
     return {
-      products: []
+      products: [],
+      product: null
     }
   },
   methods: {
@@ -63,14 +83,18 @@ export default {
     },
     back() {
       this.$router.push({ name: "options", params: { slug: this.$route.params.slug } });
+    },
+    clickProduct(product) {
+      this.$refs.showProduct.show();
+      this.product = product;
     }
   },
   mounted() {
     this.getProducts();
   },
   components: {
-    // AppHeader,
-    AppProduct
+    AppProduct,
+    AppModal
   },
   computed: {
     ...mapGetters(["config", "visitant"])
@@ -98,6 +122,28 @@ export default {
   img {
     border-radius: 1rem;
     max-width: 100%;
+  }
+}
+.product-modal {
+  .top {
+    display: flex;
+    h2,h3 {
+      font-weight: 500;
+    }
+    .image, .desc {
+      flex: 1;
+    }
+    .image {
+      max-width: 100px;
+      margin-right: 20px;
+      img {
+        width: 100%;
+        border-radius: 1rem;
+      }
+    }
+  }
+  .desc {
+    font-weight: 300;
   }
 }
 

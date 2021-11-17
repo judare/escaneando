@@ -1,6 +1,6 @@
 <template>
 
-  <div class="product-box" :class="style">
+  <div class="product-box" :class="style" @click="$emit('click-product', product)">
     <div class="product-img" v-if="product.image">
       <img :src="product.image" alt="">
     </div>
@@ -54,8 +54,9 @@ export default {
   }
 
   &.card {
-    width: 85px;
-    margin: 7px 14px;
+    width: 33%;
+    padding: 7px 14px;
+    box-sizing: border-box;
 
     .product-img {
       margin-bottom: 20px;

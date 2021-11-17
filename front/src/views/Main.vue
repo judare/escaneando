@@ -15,7 +15,7 @@
         <h3 class="commerce-name" v-if="visitant && visitant.Commerce">{{visitant.Commerce.name}}</h3>
 
 
-        <h2 class="mb-5">¡Queremos <br> conocerte!</h2>
+        <h2 class="mb-5" style="font-weight: 500;">¡Queremos <br> conocerte!</h2>
 
 
         <div class="box-form" :class="{ error: !!formErrors.cellphone }">
@@ -109,17 +109,16 @@ export default {
   margin: 0 auto;
 
   .logo {
-    text-align: center;
-    margin-bottom: 20px;
+    text-align: left;
     img {
-      max-width: 100px;
-      max-height: 100px;
+      max-width: 50px;
+      max-height: 50px;
       border-radius: 1rem;
     }
   }
-  .commerce-name {
-    font-weight: 300;
-  }
+}
+.commerce-name {
+  font-weight: 300;
 }
 
 </style>

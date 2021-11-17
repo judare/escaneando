@@ -9,4 +9,5 @@ export default {
 }
 </script>
 <style lang="scss">
+// @import url("https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css");
 </style>
