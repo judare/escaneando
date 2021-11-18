@@ -19,7 +19,7 @@
 
 
         <div class="box-form" :class="{ error: !!formErrors.cellphone }">
-          <label>Escribe tu número de celular</label>
+          <label style="text-align: left">Escribe tu número de celular</label>
           <input type="number" pattern="\d*"  inputmode="numeric" class="box-input w-100" v-model="form.cellphone">
 
           <div class="form-error" v-if="formErrors.cellphone">

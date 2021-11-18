@@ -14,16 +14,58 @@ const routes = [
     }
   },
   {
-    path: '/backoffice',
-    name: 'backoffice',
-    component: () => import('@/views/Backoffice.vue'),
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/Login.vue'),
     meta: {
-      layout: "backoffice",
-      title: "Backoffice"
+      layout: "default",
+      title: "Iniciar sesión"
     }
   },
   {
-    path: '/:slug',
+    path: '/backoffice',
+    name: 'backoffice-home',
+    component: () => import('@/views/Backoffice/Home.vue'),
+    meta: {
+      layout: "backoffice",
+      title: "👋🏻  😄",
+      menuExpand: false
+    }
+  },
+  {
+    path: '/backoffice/products',
+    name: 'backoffice-products',
+    component: () => import('@/views/Backoffice/Products.vue'),
+    meta: {
+      layout: "backoffice",
+      title: "Productos",
+      menuExpand: true
+    }
+  },
+  {
+    path: '/backoffice/customers',
+    name: 'backoffice-customers',
+    component: () => import('@/views/Backoffice/Customers.vue'),
+    meta: {
+      layout: "backoffice",
+      title: "Clientes",
+      menuExpand: true
+    }
+  },
+  {
+    path: '/backoffice/reports',
+    name: 'backoffice-reports',
+    component: () => import('@/views/Backoffice/Reports.vue'),
+    meta: {
+      layout: "backoffice",
+      title: "Reportes",
+      menuExpand: true
+    }
+  },
+
+  
+  {
+    path: '/sitio/:slug',
     name: 'main',
     component: Main,
     meta: {
@@ -32,7 +74,7 @@ const routes = [
     }
   },
   {
-    path: '/:slug/options',
+    path: '/sitio/:slug/options',
     name: 'options',
     component: Options,
     meta: {
@@ -41,7 +83,7 @@ const routes = [
     }
   },
   {
-    path: '/:slug/menu',
+    path: '/sitio/:slug/menu',
     name: 'menu',
     component: Menu,
     meta: {

@@ -1,4 +1,6 @@
 <template>
+
+ <transition name="fade" appear>
   <div class="modal" v-show="showing">
     <div class="modal-content">
       <div class="close" @click="hide()" v-if="!noClose">
@@ -7,6 +9,7 @@
       <slot></slot>
     </div>
   </div>
+</transition>
 </template>
 <script>
 export default {
@@ -24,6 +27,7 @@ export default {
       this.showing = true;
     },
     hide() {
+      this.$emit("close");
       this.showing = false;
     }
   }
@@ -64,7 +68,7 @@ export default {
 }
 .dark-mode {
   .modal {
-    background: rgb(255 255 255 / 52%);
+    background: rgb(52 52 63 / 50%);
     .modal-content {
       background: #16161a;
       .close {
@@ -73,4 +77,5 @@ export default {
     }
   }
 }
+
 </style>

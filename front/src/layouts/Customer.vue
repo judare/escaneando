@@ -159,6 +159,8 @@ input:checked ~ .box, .box.active, .box.optionable:hover {
 }
 
 
+
+
 .toggles {
   border-radius: 100rem 100rem 100rem 100rem;
   width: 56px;

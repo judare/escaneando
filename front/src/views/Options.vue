@@ -59,27 +59,56 @@
 
 
 
-  <app-modal ref="payModal">
-    
+  <app-modal ref="payModal" v-on:close="backPay">
+  
+      <div class="text-center" style="text-align: center">👋🏻   💸   💳</div>
 
-    <div class="box-form" :class="{ error: !!formErrors.amount }">
+      <template v-if="stepPay == 1">
+        <div class="box-form" :class="{ error: !!formErrors.amount }">
+          <h2>Escribe el valor a pagar</h2>
+          <p></p>
 
-      <div class="text-center">👋🏻   💸   💳</div>
-      <h2>Escribe el valor a pagar</h2>
-      <p>A contuniación serás redirigido a la pasarle de pagos para que completes el proceso de manera segura y rápida.</p>
+          <input type="number" pattern="\d*"  inputmode="numeric" class="box-input w-100" v-model="form.amount" >
 
-      <input type="number" pattern="\d*"  inputmode="numeric" class="box-input w-100" v-model="form.amount">
+          <div class="form-error" v-if="formErrors.amount">
+            {{formErrors.amount}}
+          </div>
+        </div>
 
-      <div class="form-error" v-if="formErrors.amount">
-        {{formErrors.amount}}
-      </div>
-    </div>
+        <div class="box-form">
+          <button type="button" class="btn btn-primary w-100" @click="goToPay" :disabled="!form.amount">
+            Continuar el pago
+          </button>
+        </div>
+      </template>
+      <template v-else>
+        <div class="box-form" :class="{ error: !!formErrors.amount }">
 
-     <div class="box-form">
-      <button type="button" class="btn btn-primary w-100" @click="goToPay" :disabled="!form.amount">
-        Completar el pago
-      </button>
-    </div>
+          <div class="back" @click="backPay()" style="float: left">
+            <img src="/icons/back.png">
+          </div>
+
+          <h2>Escoge el medio de pago</h2>
+          <p>A contuniación serás redirigido a la pasarle de pagos para que completes el proceso de manera segura y rápida.</p>
+
+          <ul class="methods">
+            <li class="method-pay" v-for="method in methods" :key="method.id" :class="{ disabled: form.amount < method.valMin, active: form.payMethodId == method.id }" @click="selPayMethod(method)">
+              <div class="method-image">
+                <img :src="method.image" alt="">
+              </div>
+              <div class="method-name">{{method.name}}</div>
+              <div class="method-value">Val minimo ${{money(method.valMin)}}</div>
+            </li>
+          </ul>
+        </div>
+
+      
+        <div class="box-form">
+          <button type="button" class="btn btn-primary w-100" @click="goToPay" :disabled="!form.payMethodId">
+            Completar el pago
+          </button>
+        </div>
+      </template>
 
   </app-modal>
 
@@ -101,7 +130,32 @@ export default {
   data() {
     return {
       formErrors: {},
-      form: {}
+      form: {},
+      stepPay: 1,
+      methods: [{
+        id: 1,
+        image: "/icons/banks/bancolombia.png",
+        name: "Bancolombia DEBITO",
+        valMin: 10000
+      },
+      {
+        id: 2,
+        image: "/icons/banks/daviplata.png",
+        name: "Daviplata",
+        valMin: 0
+      },
+      {
+        id: 3,
+        image: "/icons/banks/nequi.png",
+        name: "Nequi",
+        valMin: 0
+      },
+      {
+        id: 4,
+        image: "/icons/banks/pse.png",
+        name: "PSE",
+        valMin: 40000
+      }]
     }
   },
   components: {
@@ -117,6 +171,14 @@ export default {
     pay() {
       this.$refs.payModal.show();
     },
+    backPay() {
+      this.stepPay = 1;
+      this.form.payMethodId = null;
+    },
+    selPayMethod(method) {
+      if (this.form.amount < method.valMin) return;
+      this.form.payMethodId = method.id;
+    },
     putOpinion() {
       let data = {
         "review": this.form.opinion,
@@ -129,7 +191,7 @@ export default {
       });
     },
     goToPay() {
-
+      this.stepPay = 2;
     }
   }
 }
@@ -160,6 +222,44 @@ export default {
   }
   p {
     font-weight: 300;
+  }
+}
+
+.methods {
+  border-radius: 1rem;
+  overflow: hidden;
+  .method-pay {
+    background: #fff;
+    color: #000;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    .method-image {
+      width: 100px;
+      img {
+        max-width: 80px;
+        max-height: 50px;
+      }
+    }
+    .method-name {
+      width: 120px;
+    }
+    .method-value {
+      font-size: 12px;
+      text-align: right;
+      flex: 1;
+    }
+    &.disabled {
+      color: #999;
+      filter: grayscale(1);
+      img {
+        opacity: .5;
+      }
+    }
+    &.active {
+      background: #b8e869;
+    }
   }
 }
 </style>

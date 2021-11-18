@@ -23,6 +23,7 @@
         </a>
       </div>
       <div>
+        <router-link class="inline-block  text-black py-2 px-4  md:w-44 text-center mt-10 lg:mt-0" :to="{ name: 'login' }">Iniciar sesión</router-link>
         <a class="inline-block bg-black hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full md:w-44 text-center mt-10 lg:mt-0" href="#register">Regístrate</a>
       </div>
     </div>
@@ -43,7 +44,7 @@
       
     
       <div class="right-float-section">
-        <h2>Haz crecer tu <br> negocio con nuestra <br> plataforma gratuita</h2>
+        <h2>Haz <span class="text-degree">crecer</span> tu <br> negocio con nuestra <br> plataforma gratuita</h2>
       </div>
     </div>
   </div>
@@ -82,11 +83,11 @@
           <ul class="pretty-list font-light	">
             <li>Recolecta datos de tus clientes con solo un click: obteniendo el teléfono.</li>
 
-            <li>Recibe pagos digitales con nuestra pasarela: pasarela de pagos propia con tasa de cobro menor al resto y al datáfono.</li>
+            <li>Recibe pagos digitales: Usa nuestra propia pasarela de pagos con tasa de cobro menor al resto y al datáfono.</li>
 
             <li>Automatiza campañas de Marketing móvil: envía mensajes personalizados a tus clientes más fieles o menos recurrentes, ¡Tú decides!</li>
 
-            <li>Identifica las mejores oportunidades: hazle seguimiento a tus clientes y tomas decisiones inteligentes para tu negocio basada en datos.</li>
+            <li>Identifica las mejores oportunidades: hazle seguimiento a tus clientes y toma decisiones inteligentes para tu negocio basada en datos.</li>
 
             <li>Entérate que piensan tus clientes de tu negocio: obtén retroalimentación a través de reseñas y comentarios de tus clientes.</li>
 
@@ -208,7 +209,7 @@
             <img src="/icons/landing/logo-footer.svg" alt="">
           </div>
           <ul >
-            <li>Geoda 2021</li>
+            <li>Geoda {{(new Date).getFullYear()}}</li>
             <li>Todos los derechos reservados</li>
           </ul>
         </div>
@@ -248,6 +249,11 @@ export default {
     line-height: 1;
     font-weight: 700;
   }
+  .text-degree {
+    background: linear-gradient(45deg, #8a2ec0, #6950e6 80%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
   .pretty-list {
     li {
       position: relative;
@@ -273,7 +279,8 @@ export default {
   .section-page {
  
     .section-1 {
-      background-image: url(/icons/landing/section-1.svg);
+      background-image: url(/icons/landing/section-1.1.svg);
+      background-size: 100%;
       height: 522px;
     }
     &.section-3 {

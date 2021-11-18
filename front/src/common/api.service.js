@@ -1,6 +1,7 @@
 
 
-const SERVER_URL = "http://192.168.0.3:8200/api/v1/"
+// const SERVER_URL = "http://192.168.0.2:8200/api/v1/"
+const SERVER_URL = "http://localhost:8200/api/v1/"
 export const postRequest = async function(endpoint, data) {
   let dataRequest = {
     data,

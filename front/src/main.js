@@ -108,6 +108,7 @@ vue.mixin({
   }
 });
 
+
 vue.use(store)
 .use(router)
 // .use(Scrollspy)
