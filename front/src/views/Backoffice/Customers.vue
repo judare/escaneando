@@ -26,13 +26,12 @@
             <tr v-for="(row, index) in [-30,90,35,45,95,-85,95,-15]" :key="index" >
               <td class="p-5 font-light" :class="{'bg-gray-100': index % 2 != 0}">
 
-                <div class="invisible hover:visible">hola</div>
               </td>
               <td class="p-5 font-light" :class="{'bg-gray-100': index % 2 != 0}">3222901435</td>
               <td class="p-5 font-light" :class="{'bg-gray-100': index % 2 != 0}">Ayer</td>
               <td class="p-5 font-light" :class="{'bg-gray-100': index % 2 != 0}">15</td>
               <td class="p-5 font-light rounded-r-2xl" :class="{'bg-gray-100': index % 2 != 0}">
-                <div class="font-medium text-center" :class="{ 'text-yellow-600': row < 0, 'text-green-600': row > 0 }">{{row}}%</div>
+                <div class="font-medium text-center" :class="{ 'text-yellow-500': row < 0, 'text-green-400': row > 0 }">{{row}}%</div>
               </td>
             </tr>
             
@@ -46,9 +45,21 @@
 
     <main class="main  m-3  col-span-6  ">
   
-      <div>
+      <div class="mb-10">
         <h2 class="text-2xl">Datos & Estadisticas</h2>
         <p class="font-light">Conoce datos especificios de tus clientes y utilizalos para tener una mejor visión de tu negocio.</p>
+      </div>
+      <div class="mb-10">
+
+
+        <h2 class="text-2xl">Edades</h2>
+      </div>
+      <div class="mb-10">
+        <h2 class="text-2xl">Sexos</h2>
+      </div>
+      <div class="mb-10">
+        <h2 class="text-2xl">Cuidades principales</h2>
+        <p class="font-light">Principales ciudades de visita</p>
       </div>
     </main>
   </div>
@@ -58,14 +69,32 @@
 </template>
 
 <script>
+
 export default {
   name: 'Customers',
   props: ["layoutProps"],
   data() {
     return {
+      chartData: {}
     }
   },
   methods: {
+  },
+  mounted() {
+    const data = {
+      labels: ['Paris', 'Nîmes', 'Toulon', 'Perpignan', 'Autre'],
+      datasets: [
+        {
+          data: [30, 40, 60, 70, 5],
+          backgroundColor: ['#77CEFF', '#0079AF', '#123E6B', '#97B0C4', '#A5C8ED'],
+        },
+      ],
+    };
+
+    this.chartData = data;
+
+  },
+  components: {
   }
 }
 </script>

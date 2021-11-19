@@ -13,12 +13,20 @@
     <template v-else-if="type == 'textarea'">
       <textarea :value="modelValue" @input="change" class="appearance-none bg-gray-200 rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" :id="id" :placeholder="label"/>
     </template>
+    <template v-else-if="type == 'money'">
+      
+       <input v-money="{ thousands: '.', decimal: ',', precision: 0, prefix: '$' }" :value="modelValue" @input="change" :precision="0" decimal="," thousands="." class="appearance-none bg-gray-200 rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" :id="id" :placeholder="label" ref="holi"/>
+    </template>
+
+   
     <template v-else>
       <input :value="modelValue" @input="change" class="appearance-none bg-gray-200 rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" :type="type" :id="id" :placeholder="label">
     </template>
   </div>
 </template>
 <script>
+import { Money3Directive } from 'v-money3'
+
 export default {
   name: "app-input",
   props: {
@@ -31,6 +39,8 @@ export default {
     name: { type: String, required: false, default: null }
   },
   emits: ['update:modelValue'],
+  directives: { money: Money3Directive },
+
   data() {
     return {
       id: "",
@@ -41,7 +51,11 @@ export default {
   },
   methods: {
     change(e) {
-      this.$emit('update:modelValue', e.target.value)
+      let value = e.target.value;
+      if (this.type == "money") {
+        value = value.replace("$", "").replaceAll(".", "")
+      }
+      this.$emit('update:modelValue', value);
     }
   }
 }

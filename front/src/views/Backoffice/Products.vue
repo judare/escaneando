@@ -34,9 +34,19 @@
     tag="transition-group"
     item-key="id">
     <template #item="{element}">
-      <div  class="cursor-pointer my-3 mr-5 rounded-xl overflow-hidden border border-transparent" :class="{ 'opacity-50': drag }" style="width: 160px!important;">
+      <div  class="cursor-pointer my-3 mr-5 rounded-xl overflow-hidden border border-transparent group" :class="{ 'opacity-50': drag }" style="width: 160px!important;">
+
+        
         <div class="grid grid-cols-1">
-            <div class="relative z-10 col-start-1 row-start-1 px-4 pt-28 pb-3 bg-gradient-to-t from-black" @click="showProduct(element)">
+            <div class="relative z-10 col-start-1 row-start-1 px-4 pt-28 pb-3 bg-gradient-to-t from-black relative" @click="showProduct(element)">
+
+              <div class="w-full absolute top-0 left-0 z-10 h-full show-hover custom-border active flex flex-row justify-center items-center">
+                <div>
+                  <img src="/icons/pencil.svg" class="mx-auto mb-5"/>
+                  <span class="font-light">Editar producto</span>
+                </div>
+              </div>
+
               <!-- <p class="text-sm font-medium text-white">Entire house</p> -->
               <div class="text-left  text-white">
                 <h2 class="font-medium h-12">{{element.name}}</h2>
@@ -75,7 +85,8 @@
 
   <app-input type="textarea" label="Descripción" v-model="product.description"/>
 
-  <app-input type="number" label="Precio" v-model="product.price"/>
+  <app-input type="money" label="Precio" v-model="product.price"/>
+
 
 
   <app-button variant="primary" class="mt-5">
@@ -250,5 +261,14 @@ export default {
 <style lang="scss">
 @import url("https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css");
 
+.show-hover {
+  background: #fff;
+  opacity: 0;
+  transition: .1s;
+
+  &:hover {
+    opacity: 1;
+  }
+}
 
 </style>

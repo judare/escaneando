@@ -5,7 +5,7 @@
    </div>
   <div  :class="{ 'md:pl-20 pl-5': menuExpand }">
     <div class="parent md:grid md:grid-cols-12">
-      <transition name="fade">
+      <transition name="slide-fade">
         <section v-show="!menuExpand || (menuExpand && showMenu)" class="sidebar   rounded-l-none md:rounded-3xl	text-black custom-border active p-10 lg:col-span-3 col-span-4  bg-white z-20" :class="{ 'fixed h-screen top-0 left-0': menuExpand }" >
           <img src="/icons/logo-backoffice.svg" alt="">
 
@@ -120,5 +120,16 @@ export default {
 }
 .bg-primary {
   background-image:linear-gradient(89.98deg, #BBEC69 1.1%, rgba(155, 207, 173, 0.495063) 48.6%, #455DD1 95.16%);
+}
+.slide-fade-enter-active {
+  transition: all .1s;
+}
+.slide-fade-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(-300px);
+  opacity: 0;
 }
 </style>

@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 // import Scrollspy from 'vue2-scrollspy';
-// import money from 'v-money'
+import {Money3Component} from 'v-money3'
 import  './index.css'
 
 import AppModal from "@/components/Backoffice/AppModal.vue";
@@ -117,6 +117,7 @@ vue.use(store)
 .component("app-modal", AppModal)
 .component("app-input", AppInput)
 .component("app-button", AppButton)
+.component("money", Money3Component)
 // .use(Scrollspy)
 // .use(money)
 .mount('#app')

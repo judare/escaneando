@@ -47,7 +47,6 @@ const runServer = () => {
   });
 
 
-
   app.use( LangHelper(express, db, services) );
   app.use(validateBodyMiddleware(express, db, services));
   app.use( AwsHelper(express, db, services) );
@@ -55,6 +54,10 @@ const runServer = () => {
   clog('\x1b[37m', 'Creating Controllers');
 
   router.use('/visitant', routes.Visitant);
+
+  router.use('/products', routes.Products);
+
+  router.use('/customers', routes.Customers);
 
   app.use('/api/v1', router);
 

@@ -1,19 +1,12 @@
-// import Areas from './areas.js';
-// import Auth from './auth.js';
-// import Bills from './bills';
-// import Devices from './devices';
-// import Tickets from './tickets';
-// import Users from './users';
-// import DeviceOs from './device-os';
 import Visitant from './visitant';
-// import Learning from './learning';
-// import Backup from './backup';
-// import Productivity from './productivity';
-// import Rols from './rols';
+import Customers from './customers';
+import Products from './products';
 
 function Routes(app, db, services) {
   this.routes = {
-    Visitant
+    Customers,
+    Visitant,
+    Products
   };
 
   this.associate = function() {
