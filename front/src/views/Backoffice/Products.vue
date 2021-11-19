@@ -8,14 +8,14 @@
     {{c.name}}
   </div>
 
-  <div class="custom-border px-10 py-3  inline-block mr-5 cursor-pointer active align-top" >
+  <div class="custom-border px-10 py-3  inline-block mr-5 cursor-pointer active align-top">
     <img src="/icons/plus.svg" style="height: 23px;">
   </div>
 </div>
 
 <div class="products">
 <div class="flex flex-wrap">
-  <div  class="mr-5 my-3 overflow-hidden custom-border flex flex-row justify-center	items-center cursor-pointer active " style="width: 160px!important;">
+  <div  class="mr-5 my-3 overflow-hidden custom-border flex flex-row justify-center	items-center cursor-pointer active " style="width: 160px!important;" @click="createProduct">
     <div class="">
 
       <img src="/icons/plus.svg" alt="" class="block mx-auto mb-5">
@@ -36,7 +36,7 @@
     <template #item="{element}">
       <div  class="cursor-pointer my-3 mr-5 rounded-xl overflow-hidden border border-transparent" :class="{ 'opacity-50': drag }" style="width: 160px!important;">
         <div class="grid grid-cols-1">
-            <div class="relative z-10 col-start-1 row-start-1 px-4 pt-28 pb-3 bg-gradient-to-t from-black" @click="showProduct">
+            <div class="relative z-10 col-start-1 row-start-1 px-4 pt-28 pb-3 bg-gradient-to-t from-black" @click="showProduct(element)">
               <!-- <p class="text-sm font-medium text-white">Entire house</p> -->
               <div class="text-left  text-white">
                 <h2 class="font-medium h-12">{{element.name}}</h2>
@@ -60,11 +60,30 @@
 
 </div>
 
+<app-modal ref="createProductModal" :title="product.id ? 'Editar producto' : 'Agregar producto'">
+  <app-input type="select" label="Categoria">
+    <option value="">Hola</option>
+  </app-input>
+
+  <app-input type="text" label="Nombre" v-model="product.name"/>
+
+  <app-input type="textarea" label="Descripción" v-model="product.name"/>
+
+  <app-input type="number" label="Precio" v-model="product.price"/>
+
+  <app-button variant="primary" class="mt-10">
+    Agregar producto
+  </app-button>
+
+</app-modal>
+
 </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import AppModal from "@/components/Backoffice/AppModal.vue";
+import AppInput from "@/components/Form/AppInput.vue";
+import AppButton from "@/components/Form/AppButton.vue";
 import draggable from 'vuedraggable'
 
 export default {
@@ -148,24 +167,33 @@ export default {
             "description":"Queso provolone asado, acompañado de jamón serrano, ensalada fresca de rúgula y cherry, pan baguette artesanal y chutney de uchuvas.",
             "price":10000
          }
-      ]
+      ],
    }
 ],
-      drag: false
+      drag: false,
+      product: {}
     }
   },
   mounted() {
   },
   methods: {
-    showProduct() {
-      alert("gola");
+    showProduct(product) {
+      this.product = product;
+      this.$refs.createProductModal.show();
     },
     selectCategory(i) {
       this.category = i;
-    }
+    },
+    createProduct() {
+      this.product = {};
+      this.$refs.createProductModal.show();
+    },
   },
   components: {
-    draggable
+    draggable,
+    AppModal,
+    AppInput,
+    AppButton
   }
 }
 </script>

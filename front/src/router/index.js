@@ -62,6 +62,16 @@ const routes = [
       menuExpand: true
     }
   },
+  {
+    path: '/backoffice/config',
+    name: 'backoffice-config',
+    component: () => import('@/views/Backoffice/Config.vue'),
+    meta: {
+      layout: "backoffice",
+      title: "Configuraciones",
+      menuExpand: true
+    }
+  },
 
   
   {

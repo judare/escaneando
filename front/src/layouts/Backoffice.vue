@@ -4,23 +4,26 @@
      <img src="/icons/logo-backoffice.svg" alt=""  @click="toggleMenu">
    </div>
   <div  :class="{ 'md:pl-20 pl-5': menuExpand }">
-    <div class="parent md:h-screen md:grid md:grid-cols-12">
+    <div class="parent md:grid md:grid-cols-12">
       <transition name="fade">
-        <section v-show="!menuExpand || (menuExpand && showMenu)" class="sidebar   rounded-l-none md:rounded-3xl	text-black custom-border active p-10 lg:col-span-2 col-span-3  bg-white z-20" :class="{ 'fixed h-screen top-0 left-0': menuExpand }" >
+        <section v-show="!menuExpand || (menuExpand && showMenu)" class="sidebar   rounded-l-none md:rounded-3xl	text-black custom-border active p-10 lg:col-span-3 col-span-4  bg-white z-20" :class="{ 'fixed h-screen top-0 left-0': menuExpand }" >
           <img src="/icons/logo-backoffice.svg" alt="">
 
           <ul class="menu mt-10 font-light">
-            <li class="p-5"><a :href="'/sitio/caverna-del-oso-pereira/options'" target="_blank">🖇️ Ver mi sitio</a></li>
+
             <li class="p-5"><router-link :to="{ name: 'backoffice-home' }">🏠 Inicio</router-link></li>
             <li class="p-5"><router-link :to="{ name: 'backoffice-customers' }">😍 Clientes</router-link></li>
-            <li class="p-5"><router-link :to="{ name: 'backoffice-reports' }">👍🏼 Reportes</router-link></li>
+            <li class="p-5"><router-link :to="{ name: 'backoffice-reports' }">💸 Transacciones</router-link></li>
             <li class="p-5"><router-link :to="{ name: 'backoffice-products' }">🍽 Productos</router-link></li>
+            <li class="p-5"><router-link :to="{ name: 'backoffice-config' }">⚙️ Configuración</router-link></li>
+
+            
 
             <li class="p-5"><div @click="closeSession">👌🏼 Cerrar sesión</div></li>
           </ul>
         </section>
       </transition>
-      <main class="main pt-10" :class="{ 'menu-expand col-span-12': menuExpand, 'lg:col-span-10 col-span-9': !menuExpand }" @click="clickOutside">
+      <main class="main pt-10" :class="{ 'menu-expand col-span-12': menuExpand, 'lg:col-span-9 col-span-8': !menuExpand }" @click="clickOutside">
 
         <div  class="mb-5">
           <img v-if="menuExpand" src="/icons/menu.svg" @click="toggleMenu" class="inline-block align-middle mr-5 cursor-pointer">
@@ -108,5 +111,14 @@ export default {
       border-bottom-left-radius: 0;
     }
   }
+  &.rounded-r-none {
+    &:before {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+}
+.bg-primary {
+  background-image:linear-gradient(89.98deg, #BBEC69 1.1%, rgba(155, 207, 173, 0.495063) 48.6%, #455DD1 95.16%);
 }
 </style>

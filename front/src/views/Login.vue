@@ -59,9 +59,6 @@ export default {
 .bg-login {
   background-image: url(/icons/login.svg)
 }
-.bg-primary {
-  background-image:linear-gradient(89.98deg, #BBEC69 1.1%, rgba(155, 207, 173, 0.495063) 48.6%, #455DD1 95.16%);
-}
 @media (max-width: 800px) {
   .bg-login {
     background-image: none;
