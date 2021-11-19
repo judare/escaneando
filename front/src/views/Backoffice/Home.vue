@@ -16,7 +16,8 @@
       
       <h2 class="text-4xl mb-5">¡Bienvenido!</h2>
 
-      <div class="rounded-3xl bg-green-200 p-10 mb-5" v-for="x in [1,2,3]" :key="x">
+      <h2 class="mb-3 text-xl ">Consejos Geoda</h2>
+      <div class="rounded-3xl custom-border active p-8 mb-5" v-for="x in [1,2]" :key="x">
         <h2 class="text-2xl">ConseGeos ✌🏼</h2>
         <p>¡Recuerdales cuanto extrañas a tus clientes! <br>
         <span class="font-light">Visita el apartado clientes en la sección de recurrencias y audita sus visitas!</span></p> 

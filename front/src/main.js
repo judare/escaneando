@@ -6,6 +6,9 @@ import store from './store'
 // import money from 'v-money'
 import  './index.css'
 
+import AppModal from "@/components/Backoffice/AppModal.vue";
+import AppInput from "@/components/Form/AppInput.vue";
+import AppButton from "@/components/Form/AppButton.vue";
 
 
 
@@ -111,6 +114,9 @@ vue.mixin({
 
 vue.use(store)
 .use(router)
+.component("app-modal", AppModal)
+.component("app-input", AppInput)
+.component("app-button", AppButton)
 // .use(Scrollspy)
 // .use(money)
 .mount('#app')

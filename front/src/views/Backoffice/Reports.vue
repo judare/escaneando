@@ -20,9 +20,9 @@
               </td>
               <td class="p-5">
                 <div>{{row.Bank.name}}</div>
-                <div>{{row.date}}</div>
+                <div class=" font-light">{{row.date}}</div>
               </td>
-              <td class="p-5">
+              <td class="p-5 font-light">
                 <div>
                   ${{money(row.amount)}} COP
                 </div>
@@ -38,8 +38,8 @@
     </section>
 
     <main class="main  m-3  col-span-6  ">
-      <div class="rounded-3xl bg-green-200 p-10 mb-10">
-        <h2 class="text-2xl">ConseGeos</h2>
+      <div class="rounded-3xl bg-advice p-10 mb-10">
+        <h2 class="text-xl">ConseGeos ✌🏼</h2>
         <p>¡Recuerdales cuanto extrañas a tus clientes! <br>
         <span class="font-light">Visita el apartado clientes en la sección de recurrencias y audita sus visitas!</span></p> 
       </div>
@@ -89,6 +89,22 @@ export default {
             name: "Bancolombia",
             image: "/icons/backoffice/banks/bancolombia.svg"
           }
+        },
+        {
+          amount: 7000,
+          date: "Sep 14, 2021 a las 9:35 pm",
+          Bank: {
+            name: "Bancolombia",
+            image: "/icons/backoffice/banks/bancolombia.svg"
+          }
+        },
+        {
+          amount: 7000,
+          date: "Sep 14, 2021 a las 9:35 pm",
+          Bank: {
+            name: "Bancolombia",
+            image: "/icons/backoffice/banks/bancolombia.svg"
+          }
         }
       ]
     }
@@ -101,5 +117,7 @@ export default {
 <style lang="scss">
 @import url("https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css");
 
-
+.bg-advice {
+  background: linear-gradient(266.88deg, rgba(249, 239, 91, 0.9) 1.79%, rgba(191, 240, 103, 0.9) 97.6%);
+}
 </style>

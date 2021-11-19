@@ -8,7 +8,7 @@
     {{c.name}}
   </div>
 
-  <div class="custom-border px-10 py-3  inline-block mr-5 cursor-pointer active align-top">
+  <div class="custom-border px-10 py-3  inline-block mr-5 cursor-pointer active align-top" @click="createCategory">
     <img src="/icons/plus.svg" style="height: 23px;">
   </div>
 </div>
@@ -61,18 +61,55 @@
 </div>
 
 <app-modal ref="createProductModal" :title="product.id ? 'Editar producto' : 'Agregar producto'">
-  <app-input type="select" label="Categoria">
-    <option value="">Hola</option>
+  <app-input type="select" label="Categoria" v-model="product.categoryId">
+    <option v-for="c in products" :key="c.id" :value="c.id">
+      {{c.name}}
+    </option>
+
   </app-input>
 
-  <app-input type="text" label="Nombre" v-model="product.name"/>
+  <app-input type="text" label="Nombre" v-model="product.name" />
 
-  <app-input type="textarea" label="Descripción" v-model="product.name"/>
+  <app-drag-file label="Fotos" class="mb-5"/>
+
+
+  <app-input type="textarea" label="Descripción" v-model="product.description"/>
 
   <app-input type="number" label="Precio" v-model="product.price"/>
 
-  <app-button variant="primary" class="mt-10">
+
+  <app-button variant="primary" class="mt-5">
     Agregar producto
+  </app-button>
+  <app-button variant="secondary" @click="deleteProduct" v-if="product.id">
+    Eliminar producto
+  </app-button>
+
+</app-modal>
+
+
+<app-modal ref="createCategoryModal" :title="categoryItem.id ? 'Editar categoria' : 'Agregar categoria'" position="bottom">
+
+  <app-input type="text" label="Nombre" v-model="categoryItem.name" />
+
+  <app-button variant="primary" class="mt-5">
+    Agregar categoria
+  </app-button>
+  <app-button variant="secondary" @click="deleteProduct" v-if="categoryItem.id">
+    Eliminar category
+  </app-button>
+
+</app-modal>
+
+
+
+
+<app-modal ref="deleteProductModal" position="bottom" title="Estas seguro de eliminar el producto?">
+  <div class="mb-5 font-light">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, amet reiciendis deserunt facilis voluptatem laboriosam recusandae dolore a distinctio laborum earum odit sequi aut. Incidunt amet numquam soluta nobis! Accusantium?
+  </div>
+  <app-button variant="primary" v-if="product.id">
+    Si, Eliminar
   </app-button>
 
 </app-modal>
@@ -81,9 +118,8 @@
 </template>
 
 <script>
-import AppModal from "@/components/Backoffice/AppModal.vue";
-import AppInput from "@/components/Form/AppInput.vue";
-import AppButton from "@/components/Form/AppButton.vue";
+
+import AppDragFile from "@/components/Form/AppDragFile.vue";
 import draggable from 'vuedraggable'
 
 export default {
@@ -92,6 +128,8 @@ export default {
   data() {
     return {
       category: 0,
+
+      categoryItem: {},
 
       products: [
    {
@@ -103,42 +141,48 @@ export default {
             "name":"Hamburguesa doble queso",
             "image":"https://qlickmenu.s3-us-west-1.amazonaws.com/companies/products/b3a30c33-5c31-424d-91db-a94fc9e654bd.jpeg",
             "description":"El cremoso de la casa! vive california, sueña californication Jack Daniel´s N°7 , Amaretto, Crema de Coco, Limón",
-            "price":10000
+            "price":10000,
+            "categoryId": 1
          },
          {
             "id":2,
             "name":"Club colombia dorada",
             "image":"https://qlickmenu.s3-us-west-1.amazonaws.com/companies/products/23029d8c-36b9-4958-a655-150ca4d80de2.jpeg",
             "description":"Queso provolone asado, acompañado de jamón serrano, ensalada fresca de rúgula y cherry, pan baguette artesanal y chutney de uchuvas",
-            "price":10000
+            "price":10000,
+            "categoryId": 1
          },
          {
             "id":3,
             "name":"Papas fritas",
             "image":"https://qlickmenu.s3-us-west-1.amazonaws.com/companies/products/6e9b794a-4c93-4f56-a6d8-37795e44de13.jpeg",
             "description":"Queso provolone asado, acompañado de jamón serrano, ensalada fresca de rúgula y cherry, pan baguette artesanal y chutney de uchuvas.",
-            "price":10000
+            "price":10000,
+            "categoryId": 1
          },
          {
             "id":5,
             "name":"Club colombia dorada",
             "image":"https://qlickmenu.s3-us-west-1.amazonaws.com/companies/products/23029d8c-36b9-4958-a655-150ca4d80de2.jpeg",
             "description":"Queso provolone asado, acompañado de jamón serrano, ensalada fresca de rúgula y cherry, pan baguette artesanal y chutney de uchuvas",
-            "price":10000
+            "price":10000,
+            "categoryId": 1
          },
          {
             "id":6,
             "name":"Club colombia dorada",
             "image":"https://qlickmenu.s3-us-west-1.amazonaws.com/companies/products/23029d8c-36b9-4958-a655-150ca4d80de2.jpeg",
             "description":"Queso provolone asado, acompañado de jamón serrano, ensalada fresca de rúgula y cherry, pan baguette artesanal y chutney de uchuvas",
-            "price":10000
+            "price":10000,
+            "categoryId": 1
          },
          {
             "id":7,
             "name":"Club colombia dorada",
             "image":"https://qlickmenu.s3-us-west-1.amazonaws.com/companies/products/23029d8c-36b9-4958-a655-150ca4d80de2.jpeg",
             "description":"Queso provolone asado, acompañado de jamón serrano, ensalada fresca de rúgula y cherry, pan baguette artesanal y chutney de uchuvas",
-            "price":10000
+            "price":10000,
+            "categoryId": 1
          },
          {
             "id":8,
@@ -177,6 +221,9 @@ export default {
   mounted() {
   },
   methods: {
+    deleteProduct() {
+      this.$refs.deleteProductModal.show();
+    },
     showProduct(product) {
       this.product = product;
       this.$refs.createProductModal.show();
@@ -188,12 +235,14 @@ export default {
       this.product = {};
       this.$refs.createProductModal.show();
     },
+    createCategory() {
+      this.categoryItem = {};
+      this.$refs.createCategoryModal.show();
+    }
   },
   components: {
     draggable,
-    AppModal,
-    AppInput,
-    AppButton
+    AppDragFile
   }
 }
 </script>
