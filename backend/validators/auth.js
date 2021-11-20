@@ -8,15 +8,14 @@ export default function(app, db) {
 
   const {
     User,
-    UserInvite
   } = db;
 
   return {
 
     login: [
-      check('data.email')
-        .isEmail()
-        .withMessage('validators.email.invalidEmail'),
+      check('data.cellphone')
+        .isLength({min: 10, max: 10})
+        .withMessage('validators.cellphone.invalid'),
 
       check('data.password')
         .isLength({min: 3})
@@ -25,9 +24,9 @@ export default function(app, db) {
       validOrAbort,
       async (req, res, next) => {
         const { body } = req;
-				const { email, password } = body.data;
+				const { cellphone, password } = body.data;
 				
-        let user = await User.findByEmail(email);
+        let user = await User.findByCellphone(cellphone);
         if ( !user ) return response(res)( null, { status: 500, code: "auth.user.notFound" } );
         if (user.blocked)  return response(res)( null, { status: 500, code: "auth.user.blocked" } );
 
@@ -55,10 +54,6 @@ export default function(app, db) {
         .isLength({min: 10, max: 10})
         .withMessage('validators.cellphone.invalid'),
 
-      check('data.username')
-        .isEmail()
-        .withMessage('validators.email.invalidEmail'),
-
       check('data.password')
         .isLength({min: 6, max: 191})
         .withMessage('validators.password.minLength'),
@@ -69,25 +64,19 @@ export default function(app, db) {
         .isEmail()
         .withMessage('validators.email.invalidEmail'),
       
-      check('data.position')
-        .isLength({min: 2})
-        .withMessage('validators.position.required'),
-
+      check('data.Business.name')
+        .isLength({min: 3, max: 191})
+        .withMessage('validators.business.name'),
+      
       validOrAbort,
 
       async (req, res, next) => {
         const { body } = req;
-        const { inviteId, inviteCode, email, cellphone, username } = body.data;
+        const { email, cellphone } = body.data;
 
-        let userExists = await User.exists(email, cellphone, username);
+        let userExists = await User.exists(email, cellphone);
         if ( userExists ) return response(res)( null, { status: 500, code: "auth.user.exists" } );
         
-        if (!inviteId)  return next();
-				
-        let invite = await UserInvite.search(inviteId, inviteCode);
-        if ( !invite ) return response(res)( null, { status: 500, code: "auth.user.invite.notFound" } );
-
-				req.invite = invite;
 				next();
 			}
     ],

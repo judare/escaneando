@@ -10,7 +10,13 @@ import Visit from './visit';
 import Review from './review';
 import ProductCategory from './product-category';
 import Product from './products';
-import Country from './Country';
+import Country from './country';
+import Business from './business';
+import Transaction from './transaction';
+import PaymentMethod from './payment-method';
+import Rol from './rol';
+import RolPermission from './rol-permission';
+import RolPrivilege from './rol-privilege';
 
 function Models() {
 
@@ -18,13 +24,19 @@ function Models() {
     _QueryExecution,
     Commerce,
     Country,
+    Business,
     User,
     Session,
     People,
     Visit,
     Review,
     ProductCategory,
-    Product
+    Product,
+    Transaction,
+    PaymentMethod,
+    RolPermission,
+    Rol,
+    RolPrivilege,
   };
 
   this.sequelize = null;

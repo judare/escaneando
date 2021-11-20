@@ -49,7 +49,7 @@
         <h2 class="text-2xl">Datos & Estadisticas</h2>
         <p class="font-light">Conoce datos especificios de tus clientes y utilizalos para tener una mejor visión de tu negocio.</p>
       </div>
-      <div class="mb-10">
+      <!-- <div class="mb-10">
 
 
         <h2 class="text-2xl">Edades</h2>
@@ -60,7 +60,7 @@
       <div class="mb-10">
         <h2 class="text-2xl">Cuidades principales</h2>
         <p class="font-light">Principales ciudades de visita</p>
-      </div>
+      </div> -->
     </main>
   </div>
 

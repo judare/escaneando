@@ -10,6 +10,9 @@ export default (sequelize, DataTypes) => {
 		image: { type: DataTypes.STRING, allowNull: false, defaultValue: "default.png"  },
     cellphone: { type: DataTypes.STRING, allowNull: true },
     commerceId: { type: DataTypes.INTEGER, allowNull: true },
+    businessId: { type: DataTypes.INTEGER, allowNull: true },
+    rolId: { type: DataTypes.INTEGER, allowNull: true },
+    owner: { type: DataTypes.TINYINT, allowNull: true },
     email: { type: DataTypes.STRING, allowNull: false },
     password: {
       type: DataTypes.STRING,
@@ -29,6 +32,7 @@ export default (sequelize, DataTypes) => {
   });
   User.associate = function(models) {
     models.User.belongsTo(models.Commerce);
+    models.User.belongsTo(models.Rol);
   };
   /**
   *Check Permission
@@ -100,10 +104,12 @@ export default (sequelize, DataTypes) => {
     return user;
   }
 
-  User.findByUsername = async function(email) {
+  
+
+  User.findByCellphone = async function(cellphone) {
     let queryBuilder = {
       where: {
-        email
+        cellphone
       }
     };
     let user = await User.findOne(queryBuilder);
@@ -219,13 +225,12 @@ export default (sequelize, DataTypes) => {
     }, queryBuilder);
   }
 
-  User.exists = async function(email, cellphone, username) {
+  User.exists = async function(email, cellphone) {
     let queryBuilder = {
       where: {
         [Op.or]: {
           email,
-          cellphone,
-          username
+          cellphone
         }
       }
     };

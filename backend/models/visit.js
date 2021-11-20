@@ -29,10 +29,11 @@ export default (sequelize, DataTypes) => {
 		id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     token: { type: DataTypes.STRING, allowNull: true },
     commerceId: { type: DataTypes.INTEGER, allowNull: true },
+    businessId: { type: DataTypes.INTEGER, allowNull: true },
     time: { type: DataTypes.TIME, allowNull: true },
     date: { type: DataTypes.DATE, allowNull: true },
     scans: { type: DataTypes.INTEGER, allowNull: true },
-    peopleId: { type: DataTypes.INTEGER, allowNull: true },
+    personId: { type: DataTypes.INTEGER, allowNull: true },
     ipAddress: {
       type: DataTypes.INTEGER,
       allowNull: true,
@@ -51,7 +52,7 @@ export default (sequelize, DataTypes) => {
 
   Visit.associate = function(models) {
     models.Visit.belongsTo(models.Commerce);
-    // models.Visit.belongsTo(models.People);
+    models.Visit.belongsTo(models.People);
   };
 
   Visit.generateToken = async function() {
@@ -62,7 +63,7 @@ export default (sequelize, DataTypes) => {
     let queryBuilder = {
       where: {
         commerceId: commerce.id,
-        peopleId: people.id,
+        personId: people.id,
         date: moment().format("YYYY-MM-DD 00:00"),
       }
     }
@@ -72,7 +73,8 @@ export default (sequelize, DataTypes) => {
     } else {
       visit = await Visit.create({
         commerceId: commerce.id,
-        peopleId: people.id,
+        businessId: commerce.businessId,
+        personId: people.id,
         date: moment().format("YYYY-MM-DD 00:00"),
         scans: 1,
         token: await Visit.generateToken()

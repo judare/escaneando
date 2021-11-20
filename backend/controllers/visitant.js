@@ -82,7 +82,7 @@ export default function(app, db) {
       let { visitant } = req;
 
       await Review.create({
-        peopleId: visitant.peopleId,
+        personId: visitant.peopleId,
         commerceId: visitant.commerceId,
         review: req.body.data.review,
       });

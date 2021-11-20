@@ -53,12 +53,13 @@ const runServer = () => {
 
   clog('\x1b[37m', 'Creating Controllers');
 
+  router.use('/auth', routes.Auth);
   router.use('/visitant', routes.Visitant);
-
   router.use('/products', routes.Products);
-
   router.use('/customers', routes.Customers);
+  router.use('/transactions', routes.Transactions);
 
+  
   app.use('/api/v1', router);
 
 

@@ -5,7 +5,8 @@ import moment from "moment";
 export default function(app, db, services) {
   const {
     User,
-    Session
+    Session,
+    Business
   } = db;
 
   const Controller = {
@@ -31,8 +32,16 @@ export default function(app, db, services) {
 
     register: async function( req, res, next ) {
       try {
-        let { name, cellphone, email, password, position, username } = req.body.data;
+        let { data } = req.body;
+        let { name, cellphone, email, password, username } = data;
         const ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+        let business = await Business.create({
+          name: data.Business.name,
+          cellphone,
+          email,
+          balance: 0,
+        });
 
         let user = await User.create({
           name,
@@ -40,10 +49,13 @@ export default function(app, db, services) {
           email,
           username,
           password,
-          companyId: req.invite ? req.invite.companyId : null,
+          commerceId: null,
+          businessId: business.id,
+          owner: 1,
           rolId: 1,
-          position
         });
+
+        await business.update({ userId: user.id })
 
         let session = await Session.createSession(user, ipAddress, "");
 

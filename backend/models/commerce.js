@@ -9,6 +9,7 @@ export default (sequelize, DataTypes) => {
     slug: { type: DataTypes.STRING, allowNull: true },
     userId: { type: DataTypes.INTEGER, allowNull: true },
     enabled: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
+    businessId: { type: DataTypes.INTEGER, allowNull: true },
   }, 
   {
     paranoid: true,
@@ -16,6 +17,7 @@ export default (sequelize, DataTypes) => {
   });
 
   Commerce.associate = function(models) {
+    models.Commerce.belongsTo(models.Business);
     models.Commerce.belongsTo(models.User);
     models.Commerce.hasMany(models.User);
   };
