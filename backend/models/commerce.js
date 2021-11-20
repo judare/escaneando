@@ -21,6 +21,11 @@ export default (sequelize, DataTypes) => {
     models.Commerce.belongsTo(models.User);
     models.Commerce.hasMany(models.User);
   };
+
+  Commerce.prototype.hasPermissions = function(user) {
+    return (this.id == user.commerceId || (this.businessId == user.businessId && user.owner));
+  }
+
   
   return Commerce;
 };

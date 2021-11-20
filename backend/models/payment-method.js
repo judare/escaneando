@@ -5,6 +5,7 @@ export default (sequelize, DataTypes) => {
       id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
       name: { type: DataTypes.STRING(50), allowNull: false },
       type: { type: DataTypes.STRING(45), allowNull: true },
+      image: { type: DataTypes.STRING(255), allowNull: true },
       images: {
         type: DataTypes.TEXT,
         get() {

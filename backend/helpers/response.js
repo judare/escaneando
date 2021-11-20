@@ -4,6 +4,14 @@ export default function(res, req, next = null) {
 
     if (error) {
       console.log(error.err);
+
+      if (error.err?.code) {
+        return res.status(error.status).json({
+          date: Date.now(),
+          errorCode: error.err.code,
+          message: req.translate(error.err.code),
+        });
+      }
       res.status(error.status).json({
         date: Date.now(),
         errorCode: error.code,

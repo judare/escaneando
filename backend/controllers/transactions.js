@@ -33,7 +33,7 @@ export default function(app, db) {
         PaymentMethod: {
           id: t.PaymentMethod.id,
           name: t.PaymentMethod.name,
-          images: t.PaymentMethod.images,
+          image: t.PaymentMethod.image,
         }
       }));
 

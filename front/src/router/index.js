@@ -16,10 +16,19 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('@/views/Login.vue'),
+    component: () => import('@/views/Backoffice/Auth/Login.vue'),
     meta: {
       layout: "default",
       title: "Iniciar sesión"
+    }
+  },
+  {
+    path: '/forgotPassword/:userId/:restoreToken',
+    name: 'forgotPassword',
+    component: () => import('@/views/Backoffice/Auth/ForgotPassword.vue'),
+    meta: {
+      layout: "default",
+      title: "Recuperar contraseña"
     }
   },
   {

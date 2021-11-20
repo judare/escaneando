@@ -13,22 +13,19 @@
         <div class=" flex md:h-screen md:mt-0 mt-10	flex-row justify-center	items-center	">
           <div class="md:w-6/12 w-10/12">
 
-            <h2 class="mb-4 text-3xl">👋🏻  😄 <br> ¡Hola! <br>
-              Bienvenido a Geoda</h2>
+            <h2 class="mb-4 text-3xl">👋🏻  😄 <br> Uyyy! <br>
+             Recupera tu contraseña</h2>
 
-            <app-input type="text" label="Número de teléfono" placeholder="Celular" class="mb-4"/>  
+            <app-input type="password" label="Contraseña" placeholder="**********" class="mb-6"/> 
 
-            <app-input type="password" label="Contraseña" placeholder="**********" class="mb-6"/>  
-        
+            <app-input type="password" label="Repetir contraseña" placeholder="**********" class="mb-6"/>
         
             <div class="">
 
-              <app-button variant="primary" class="mb-3" @click="login"> 
-                Iniciar Sesión
+              <app-button variant="primary" class="mb-3" @click="done"> 
+                Cambiar contraseña
               </app-button>
-              <a class="block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
-                Olvidaste la contraseña?
-              </a>
+
             </div>
           </div>
         </div>
@@ -41,9 +38,9 @@
 
 <script>
 export default {
-  name: "Login",
+  name: "ForgotPassword",
   methods: {
-    login() {
+    done() {
 
     }
   }

@@ -6,7 +6,8 @@ export default function(app, db, services) {
   const {
     User,
     Session,
-    Business
+    Business,
+    Commerce
   } = db;
 
   const Controller = {
@@ -55,7 +56,30 @@ export default function(app, db, services) {
           rolId: 1,
         });
 
-        await business.update({ userId: user.id })
+        await Commerce.create({
+          name: "Sede principal",
+          cellphone,
+          userId: user.id,
+          businessId: business.id,
+          email,
+          slug: Date.now() + encodeURIComponent(data.Business.name),
+          enabled: 1
+        });
+
+        await business.update({ userId: user.id });
+
+        await services.Mail.sendMail({
+          from: "hola@geoda.com.co",
+          fromName: "Geoda",
+          to: user.email,
+          subject: `Hola! Bienvenido al crecimiento de tu negocio - Geoda.com.co`
+        }, {
+          nameView: "user-welcome",
+          context: {
+            user
+          },
+          attachments: []
+        });
 
         let session = await Session.createSession(user, ipAddress, "");
 
