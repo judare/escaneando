@@ -44,29 +44,30 @@ export default function(app, db, services) {
           balance: 0,
         });
 
+        let commerce = await Commerce.create({
+          name: "Sede principal",
+          cellphone,
+          businessId: business.id,
+          email,
+          slug: Date.now() + encodeURIComponent(data.Business.name),
+          image: "/icons/backoffice/commerce-default.png",
+          enabled: 1
+        });
+
         let user = await User.create({
           name,
           cellphone,
           email,
           username,
           password,
-          commerceId: null,
+          commerceId: commerce.id,
           businessId: business.id,
           owner: 1,
           rolId: 1,
         });
 
-        await Commerce.create({
-          name: "Sede principal",
-          cellphone,
-          userId: user.id,
-          businessId: business.id,
-          email,
-          slug: Date.now() + encodeURIComponent(data.Business.name),
-          enabled: 1
-        });
-
         await business.update({ userId: user.id });
+        await commerce.update({ userId: user.id });
 
         await services.Mail.sendMail({
           from: "hola@geoda.com.co",
@@ -139,10 +140,10 @@ export default function(app, db, services) {
 
 
         await services.Mail.sendMail({
-          from: "noresponder@bybinary.co",
-          fromName: "ByBinary",
+          from: "noresponder@geoda.com.co",
+          fromName: "noresponder",
           to: user.email,
-          subject: `[ByBinary] Recuperación de contraseña`
+          subject: `[Geoda] Recuperación de contraseña`
         }, {
           nameView: "forgot-password",
           context: {

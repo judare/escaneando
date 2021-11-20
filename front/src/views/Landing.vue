@@ -30,13 +30,7 @@
   </nav>
 
 
-  <!-- <div class="bg-indigo-900 text-center py-4 lg:px-4">
-    <div class="p-2 bg-indigo-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
-      <span class="flex rounded-full bg-indigo-500 uppercase px-2 py-1 text-xs font-bold mr-3">New</span>
-      <span class="font-semibold mr-2 text-left flex-auto">Get the coolest t-shirts from our brand new store</span>
-      <svg class="fill-current opacity-75 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z"/></svg>
-    </div>
-  </div> -->
+
 
 
   <div class="section-page mb-20">
@@ -44,7 +38,7 @@
       
     
       <div class="right-float-section">
-        <h2>Haz <span class="text-degree">crecer</span> tu <br> negocio con nuestra <br> plataforma gratuita</h2>
+        <h2 class=" custom-title">Haz <span class="text-degree">crecer</span> tu <br> negocio con nuestra <br> plataforma gratuita</h2>
       </div>
     </div>
   </div>
@@ -78,7 +72,7 @@
 
         
         <div class="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6 md:mt-6 aos-init aos-animate">
-          <h2 class="mb-5">Herramienta <br>  todo en uno</h2>
+          <h2 class="mb-5 custom-title">Herramienta <br>  todo en uno</h2>
 
           <ul class="pretty-list font-light	">
             <li>Recolecta datos de tus clientes con solo un click: obteniendo el teléfono.</li>
@@ -124,7 +118,7 @@
   <div class="section-page-preview mb-5">
 
     <div class="container mx-auto block direction-column">
-      <h2 class="mb-5">Funcionalidades</h2>
+      <h2 class="mb-5 custom-title">Funcionalidades</h2>
 
       <div class="w-full block flex-grow lg:flex lg:items-center lg:justify-center lg:w-auto text-center">
         <img src="/icons/landing/show-1.png" class="hidden md:block">
@@ -163,29 +157,32 @@
   <div class="section-page my-20" id="register">
 
     <div class="container  mx-auto font-light">
-      <h2 class="mb-5">Regístrate</h2>
+      <h2 class="mb-5 custom-title">Regístrate</h2>
 
       <p class="mb-10">¡Permitenos conocerte y que nos conozcas!</p>
+
+      <app-errors ref="errors"/>
+
 
       <div class="block register">
      
         <div class="mb-5">
           <span>Hola, Mi nombre es </span>
-          <input type="text" class="input-inline" placeholder="Escribe aquí">
+          <input type="text" class="input-inline" placeholder="Escribe aquí" v-model="form.name">
           <span>pertenezco a la empresa</span>
-          <input type="text" class="input-inline" placeholder="Escribe aquí">
+          <input type="text" class="input-inline" placeholder="Escribe aquí" v-model="form.Business.name">
           podemos estar en contacto, a través del email
-          <input type="text" class="input-inline" placeholder="Escribe aquí"> o el número de teléfono 
-          <input type="text" class="input-inline" placeholder="Escribe aquí">
+          <input type="text" class="input-inline" placeholder="Escribe aquí" v-model="form.email"> o el número de teléfono 
+          <input type="text" class="input-inline" placeholder="Escribe aquí" v-model="form.cellphone">
         </div>
 
         <div class="mb-5">
           <label>
-            <input type="checkbox" class="form-checkbox mr-5">
+            <input type="checkbox" class="form-checkbox mr-5" v-model="form.terms" :value="true">
             <span>Autorizo el uso de la información</span>
           </label>
         </div>
-        <button class="text-base inline-block bg-black hover:bg-green-600 text-white  py-2 px-4 rounded-full md:w-5/12">Continuar con el registro</button>
+        <button class="text-base inline-block bg-black hover:bg-green-600 text-white  py-2 px-4 rounded-full md:w-5/12" type="button"  @click="register">Continuar con el registro</button>
 
       </div>
 
@@ -232,19 +229,81 @@
     </div>
   </div>
 
+  <app-modal ref="putPassword" position="right" title="Asigna una contraseña" classSection="flex-row justify-center	items-center flex">
+
+      <app-errors ref="errorsRegister"/>
+
+
+      <app-input type="password" v-model="form.password" label="Crea tu contraseña"/>
+      <app-input type="password" v-model="form.confirmPassword" label="Confirma tu contraseña" class="mb-10"/>
+      <app-button  variant="primary" @click="callRegister">
+        Crear cuenta
+      </app-button>
+  </app-modal>
+
 </div>
 </template>
 
 <script>
+import { postRequest } from "@/common/api.service.js";
+
 export default {
-  name: "Landing"
+  name: "Landing",
+  data() {
+    return {
+      form: {
+        Business: {}
+      },
+      formErrors: []
+    }
+  },
+  methods: {
+    validRegister() {
+      this.$refs.errors.clear();
+      if (!this.form.cellphone || this.form.cellphone.length != 10 || this.form.cellphone[0] != 3) {
+        this.$refs.errors.put("Celular incorrecto");
+      }
+      if (!this.form.name || this.form.cellphone.length < 3 ) {
+        this.$refs.errors.put("Nombres incorrecto");
+      }
+      if (!this.form.Business.name || this.form.Business.name.length < 3 ) {
+        this.$refs.errors.put("Nombre de empresa incorrecto");
+      }
+      if (!this.form.email) {
+        this.$refs.errors.put("Correo incorrecto");
+      }
+      if (!this.form.terms) {
+        this.$refs.errors.put("Debes aceptar las politicas de uso de información");
+      }
+    },
+    register() {
+      this.validRegister();
+      if(this.$refs.errors.hasErrors())  return;
+      this.$refs.putPassword.show();
+    },
+    callRegister() {
+      this.$refs.errorsRegister.clear();
+      if (this.form.password != this.form.confirmPassword) {
+        this.$refs.errorsRegister.put("Las contraseñas no coinciden");
+        return;
+      }
+      postRequest("auth/register", this.form).then(result => {
+        this.$refs.putPassword.hide();
+        this.$store.commit("setUser", result.data.User)
+        this.$router.replace({ name: "backoffice-home" });
+      })
+      .catch(err => {
+        this.$refs.errorsRegister.put(err.message);
+      });
+    }
+  },
 }
 </script>
 <style lang="scss">
 @import url("https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css");
 
 .landing {
-  h2 {
+  h2.custom-title {
     font-size: 3.3rem;
     line-height: 1;
     font-weight: 700;

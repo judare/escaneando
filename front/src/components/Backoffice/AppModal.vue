@@ -9,7 +9,8 @@
       class="rounded-3xl	text-black  p-8 fixed    bg-white z-20"
       :class="{
         'top-0 right-0 h-screen lg:w-4/12 md:rounded-r-none': position == 'right',
-        'md:left-1/4 md:w-2/4 mx-5 w-3/4 bottom-0 rounded-b-none': position == 'bottom'
+        'md:left-1/4 md:w-2/4 mx-5 w-3/4 bottom-0 rounded-b-none': position == 'bottom',
+        [classSection]: true
       }"
     >
     <div class="overflow-y-auto" style="max-height: 100vh">
@@ -30,6 +31,7 @@ export default {
   props: {
     title: { required: false, default: null, type: String },
     position: { required: false, default: "right", type: String },
+    classSection: { required: false, default: "", type: String },
   },
   data() {
     return {

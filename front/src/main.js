@@ -9,6 +9,7 @@ import  './index.css'
 import AppModal from "@/components/Backoffice/AppModal.vue";
 import AppInput from "@/components/Form/AppInput.vue";
 import AppButton from "@/components/Form/AppButton.vue";
+import AppError from "@/components/Form/AppError.vue";
 
 
 
@@ -118,6 +119,8 @@ vue.use(store)
 .component("app-input", AppInput)
 .component("app-button", AppButton)
 .component("money", Money3Component)
+.component("app-errors", AppError)
+
 // .use(Scrollspy)
 // .use(money)
 .mount('#app')

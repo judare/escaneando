@@ -30,10 +30,25 @@ export default {
       this.$emit("close");
       this.showing = false;
     }
+  },
+  watch: {
+    showing(a) {
+      let root = document.getElementsByTagName( 'html' )[0];
+      if (a) {
+        document.body.classList.add("overflow-y-hidden");
+        root.classList.add("overflow-y-hidden");
+      } else {
+        document.body.classList.remove("overflow-y-hidden");
+        root.classList.remove("overflow-y-hidden");
+      }
+    }
   }
 }
 </script>
 <style lang="scss">
+.overflow-y-hidden {
+  overflow-y: hidden;
+}
 .modal {
   position: fixed;
   top: 0;
@@ -42,27 +57,29 @@ export default {
   height: 100vh;
   background: #00000033;
   z-index: 1000;
-  display: flex;
-  align-content: center;
-  align-items: center;
-  justify-content: center;
+  overflow-y: auto;  
+  padding: 30px 0px;
 
   .modal-content {
+    margin: 0 15px;
     background: white;
     max-width: 450px;
-    min-width: 250px;
+    // min-width: 250px;
     padding: 20px;
     border-radius: 1rem;
     position: relative;
-    padding-top: 50px;
+    box-sizing: border-box;
     .close {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      width: 32px;
-      height: 32px;
+      top: 17px;
+      right: 17px;
+      width: 20px;
+      height: 20px;
       text-align: center;
       cursor: pointer;
+      img {
+        width: 100%;
+      }
     }
   }
 }

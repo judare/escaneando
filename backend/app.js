@@ -58,6 +58,7 @@ const runServer = () => {
   router.use('/products', routes.Products);
   router.use('/customers', routes.Customers);
   router.use('/transactions', routes.Transactions);
+  router.use('/commerces', routes.Commerces);
 
   
   app.use('/api/v1', router);

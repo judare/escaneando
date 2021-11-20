@@ -46,6 +46,7 @@ export default function(app, db) {
           image: p.image,
           description: p.description,
           price: p.price,
+          categoryId: p.categoryId,
         })),
       }));
 
@@ -58,7 +59,7 @@ export default function(app, db) {
       let { body: { data } } = req;
 
       await Product.create({
-        image: "",
+        image: "/icons/backoffice/default-product.png",
         name: data.name,
         description: data.description,
         price: data.price,

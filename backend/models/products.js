@@ -4,7 +4,7 @@ export default (sequelize, DataTypes) => {
 		id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 		name: { type: DataTypes.STRING, allowNull: false },
 		image: { type: DataTypes.STRING, allowNull: false },
-		description: { type: DataTypes.STRING, allowNull: false },
+		description: { type: DataTypes.STRING, allowNull: true },
     price: { type: DataTypes.DECIMAL, allowNull: true },
     discount: { type: DataTypes.INTEGER, allowNull: true },
     enabled: { type: DataTypes.TINYINT, allowNull: true },

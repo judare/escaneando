@@ -18,7 +18,7 @@
   </div>
 
 
-  <ul class="list-options mb-5">
+  <ul class="list-options menu-categories mb-5">
     <li class="box-check" v-for="(category, i) in products" :key="category.id">
       <a class="box sm optionable" :class="{active: i == 0}" :href="'#cat-' + category.id">{{category.name}}</a>
     </li>
@@ -145,6 +145,10 @@ export default {
   .desc {
     font-weight: 300;
   }
+}
+.menu-categories  {
+  display: flex;
+  overflow-x: scroll;
 }
 
 </style>

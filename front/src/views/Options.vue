@@ -67,8 +67,7 @@
         <div class="box-form" :class="{ error: !!formErrors.amount }">
           <h2>Escribe el valor a pagar</h2>
           <p></p>
-
-          <input type="number" pattern="\d*"  inputmode="numeric" class="box-input w-100" v-model="form.amount" >
+          <money inputmode="numeric" thousands='.' :precision="0" prefix="$" class="box-input w-100" v-model="form.amount"/>
 
           <div class="form-error" v-if="formErrors.amount">
             {{formErrors.amount}}
@@ -134,25 +133,25 @@ export default {
       stepPay: 1,
       methods: [{
         id: 1,
-        image: "/icons/banks/bancolombia.png",
+        image: "/icons/backoffice/banks/bancolombia.svg",
         name: "Bancolombia DEBITO",
         valMin: 10000
       },
       {
         id: 2,
-        image: "/icons/banks/daviplata.png",
+        image: "/icons/backoffice/banks/davivienda.svg",
         name: "Daviplata",
         valMin: 0
       },
       {
         id: 3,
-        image: "/icons/banks/nequi.png",
+        image: "/icons/backoffice/banks/nequi.svg",
         name: "Nequi",
         valMin: 0
       },
       {
         id: 4,
-        image: "/icons/banks/pse.png",
+        image: "/icons/backoffice/banks/pse.svg",
         name: "PSE",
         valMin: 40000
       }]
@@ -236,7 +235,7 @@ export default {
     cursor: pointer;
     padding: 10px;
     .method-image {
-      width: 100px;
+      width: 55px;
       img {
         max-width: 80px;
         max-height: 50px;
@@ -244,6 +243,7 @@ export default {
     }
     .method-name {
       width: 120px;
+      text-align: left;
     }
     .method-value {
       font-size: 12px;

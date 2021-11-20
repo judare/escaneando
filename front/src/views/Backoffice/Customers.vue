@@ -3,7 +3,6 @@
 
 
 
-
   <div class="md:grid md:grid-cols-12">
 
 
@@ -17,19 +16,29 @@
             <tr class="text-left custom-border-table relative">
               <th class="p-5 font-light text-sm">Nombre</th>
               <th class="p-5 font-light text-sm">Celular</th>
+              <th class="p-5 font-light text-sm">Primera visita</th>
               <th class="p-5 font-light text-sm">Última visita</th>
               <th class="p-5 font-light text-sm">Total visitas</th>
               <th class="p-5 font-light text-sm">Recurrencia</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(row, index) in [-30,90,35,45,95,-85,95,-15]" :key="index" >
+            <tr v-for="(customer, index) in customers" :key="customer.id" >
               <td class="p-5 font-light" :class="{'bg-gray-100': index % 2 != 0}">
 
               </td>
-              <td class="p-5 font-light" :class="{'bg-gray-100': index % 2 != 0}">3222901435</td>
-              <td class="p-5 font-light" :class="{'bg-gray-100': index % 2 != 0}">Ayer</td>
-              <td class="p-5 font-light" :class="{'bg-gray-100': index % 2 != 0}">15</td>
+              <td class="p-5 font-light" :class="{'bg-gray-100': index % 2 != 0}">
+                {{customer.cellphone}}
+              </td>
+              <td class="p-5 font-light" :class="{'bg-gray-100': index % 2 != 0}">
+                {{customer.firstVisit}}
+              </td>
+              <td class="p-5 font-light" :class="{'bg-gray-100': index % 2 != 0}">
+                {{customer.lastVisit}}
+              </td>
+              <td class="p-5 font-light" :class="{'bg-gray-100': index % 2 != 0}">
+                {{customer.totalVisits}}
+              </td>
               <td class="p-5 font-light rounded-r-2xl" :class="{'bg-gray-100': index % 2 != 0}">
                 <div class="font-medium text-center" :class="{ 'text-yellow-500': row < 0, 'text-green-400': row > 0 }">{{row}}%</div>
               </td>
@@ -69,32 +78,30 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { postRequest } from "@/common/api.service.js";
 
 export default {
   name: 'Customers',
   props: ["layoutProps"],
   data() {
     return {
-      chartData: {}
+      customers: []
     }
   },
   methods: {
+    list() {
+      let data = {};
+      postRequest("customers/list", data, this.user).then(result => {
+        this.customers = result.data.People;
+      });
+    }
   },
   mounted() {
-    const data = {
-      labels: ['Paris', 'Nîmes', 'Toulon', 'Perpignan', 'Autre'],
-      datasets: [
-        {
-          data: [30, 40, 60, 70, 5],
-          backgroundColor: ['#77CEFF', '#0079AF', '#123E6B', '#97B0C4', '#A5C8ED'],
-        },
-      ],
-    };
-
-    this.chartData = data;
-
+    this.list();
   },
-  components: {
+  computed: {
+    ...mapGetters(["user"])
   }
 }
 </script>

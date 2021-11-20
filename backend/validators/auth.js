@@ -160,10 +160,8 @@ export default function(app, db) {
       async (req, res, next) => {
         const { email } = req.body.data;
 
-        console.log(email);
-
         let user = await User.findByEmail(email);
-        if ( !user ) return response(res, req)( null, { status: 404, code: "auth.user.notExists" } );
+        if ( !user ) return response(res, req)( null);
 
 				req.user = user;
 				next();

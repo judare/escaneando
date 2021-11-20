@@ -19,9 +19,9 @@ export default function(app, db) {
     ],
 
     create: [
-      check('data.description')
-        .isLength({ min: 3, max: 1000 })
-        .withMessage('validators.description.invalid'),
+      // check('data.description')
+      //   .isLength({ min: 3, max: 1000 })
+      //   .withMessage('validators.description.invalid'),
 
       check('data.name')
         .isLength({ min: 3, max: 255 })
@@ -42,9 +42,9 @@ export default function(app, db) {
     ],
 
     update: [
-      check('data.description')
-        .isLength({ min: 3, max: 1000 })
-        .withMessage('validators.description.invalid'),
+      // check('data.description')
+      //   .isLength({ min: 3, max: 1000 })
+      //   .withMessage('validators.description.invalid'),
 
       check('data.name')
         .isLength({ min: 3, max: 255 })
@@ -70,6 +70,11 @@ export default function(app, db) {
     ],
 
     createCategory: [
+      check('data.name')
+        .isLength({ min: 1, max: 255 })
+        .withMessage('validators.name.invalid'),
+  
+      validOrAbort,
       checkAuth,
       commerceFind
     ],

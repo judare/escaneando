@@ -19,7 +19,7 @@
 
             
 
-            <li class="p-5"><div @click="closeSession">👌🏼 Cerrar sesión</div></li>
+            <li class="p-5"><div @click="closeSession" class="cursor-pointer">👌🏼 Cerrar sesión</div></li>
           </ul>
         </section>
       </transition>
@@ -45,6 +45,9 @@
  </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
+import { postRequest } from "@/common/api.service.js";
+
 export default {
   name: "backoffice-layout",
   data() {
@@ -56,8 +59,14 @@ export default {
   },
   mounted() {
     this.menuExpand = this.$route.meta.menuExpand;
+    this.getCommerces();
   },
   methods: {
+    getCommerces() {
+      postRequest("commerces/list", {}, this.user).then(result => {
+        this.$store.commit("setCommerces", result.data.Commerces);
+      });
+    },
     toggleMenu() {
       this.canClose = false;
       this.showMenu = !this.showMenu;
@@ -66,11 +75,16 @@ export default {
       }, 300);
     },
     closeSession() {
-      this.$router.replace({ name: "landing" })
+      postRequest("auth/logout", {}, this.user).then(result => {
+        this.$router.replace({ name: "landing" })
+      });
     },
     clickOutside() {
       if (this.menuExpand && this.showMenu && this.canClose) this.showMenu = false; 
     }
+  },
+  computed: {
+    ...mapGetters(["user"])
   },
   watch: {
     "$route"(to) {

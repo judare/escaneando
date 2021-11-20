@@ -15,20 +15,25 @@
             <h2 class="mb-4 text-3xl">👋🏻  😄 <br> ¡Hola! <br>
               Bienvenido a Geoda</h2>
 
-            <app-input type="text" label="Número de teléfono" placeholder="Celular" class="mb-4"/>  
+            <app-errors ref="errors"/>
 
-            <app-input type="password" label="Contraseña" placeholder="**********" class="mb-6"/>  
-        
-        
-            <div class="">
+            <form v-on:submit.prevent="login">
 
-              <app-button variant="primary" class="mb-3" @click="login"> 
-                Iniciar Sesión
-              </app-button>
-              <div class="block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 cursor-pointer" @click="forgot">
-                Olvidaste la contraseña?
+              <app-input type="number" label="Número de teléfono" placeholder="Celular" class="mb-4" v-model="form.cellphone"/>  
+
+              <app-input type="password" label="Contraseña" placeholder="**********" class="mb-6" v-model="form.password"/>  
+          
+          
+              <div class="">
+
+                <app-button variant="primary" class="mb-3" type="submit"> 
+                  Iniciar Sesión
+                </app-button>
+                <div class="block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 cursor-pointer" @click="forgot">
+                  Olvidaste la contraseña?
+                </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </main>
@@ -36,10 +41,12 @@
 
 
     <app-modal ref="forgotPassword" position="bottom" title="Recuperar contraseña">
+      <app-errors ref="errorsRecover"/>
+
       <div class="mb-5">
-        <app-input type="email" label="Correo" placeholder="Correo" /> 
+        <app-input type="email" label="Correo" placeholder="Correo" v-model="form.email" /> 
       </div>
-      <app-button variant="primary"  @click="login"> 
+      <app-button variant="primary"  @click="recoverPassword"> 
         Recuperar contraseña
       </app-button> 
     </app-modal>
@@ -49,14 +56,39 @@
 </template>
 
 <script>
+import { postRequest } from "@/common/api.service.js";
+
 export default {
   name: "Login",
+  data() {
+    return {
+      form: {}
+    }
+  },
   methods: {
     login() {
-
+      this.$refs.errors.clear();
+      postRequest("auth/login", this.form).then(result => {
+        this.$store.commit("setUser", result.data.User)
+        this.$router.replace({ name: "backoffice-home" });
+      })
+      .catch(err => {
+        this.$refs.errors.put(err.message);
+      });
     },
     forgot() {
       this.$refs.forgotPassword.show()
+    },
+    recoverPassword() {
+      this.$refs.errorsRecover.clear();
+
+      postRequest("auth/forgotPassword", this.form).then(result => {
+        this.$refs.forgotPassword.hide();
+        this.form = {};
+      })
+      .catch(err => {
+        this.$refs.errorsRecover.put(err.message);
+      });
     }
   }
 }

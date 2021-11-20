@@ -2,7 +2,7 @@ export default (sequelize, DataTypes) => {
 
 	const People = sequelize.define('People', {
 		id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-		name: { type: DataTypes.STRING, allowNull: false },
+		name: { type: DataTypes.STRING, allowNull: true },
     cellphone: { type: DataTypes.STRING, allowNull: true },
     countryId: { type: DataTypes.INTEGER, allowNull: true },
   }, 

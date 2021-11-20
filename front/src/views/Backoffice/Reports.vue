@@ -8,19 +8,19 @@
 
     <section class="	text-black m-3 col-span-6 "  >
       
-      <h2>Últimas transacciones</h2>
-      <div class="table w-full">
+      <h2 class="text-xl">Últimas transacciones</h2>
+      <div class="table w-full" v-if="transactions.length > 0">
         <table class="border-collapse	w-full">
           <tbody>
             <tr v-for="(row, index) in transactions" :key="index" >
               <td class="p-5 rounded-l-2xl">
                 <div class="custom-border active py-5"> 
-                  <img :src="row.Bank.image" class="mx-auto" style="height: 20px">
+                  <img :src="'/icons/backoffice/banks/' + row.PaymentMethod.image" class="mx-auto" style="height: 20px">
                 </div>
               </td>
               <td class="p-5">
-                <div>{{row.Bank.name}}</div>
-                <div class=" font-light">{{row.date}}</div>
+                <div>{{row.PaymentMethod.name}}</div>
+                <div class=" font-light">{{row.createdAt}}</div>
               </td>
               <td class="p-5 font-light">
                 <div>
@@ -31,6 +31,9 @@
             
           </tbody>
         </table>
+      </div>
+      <div v-else>
+        <h2 class="text-md font-light mt-5">Aún no tienes transacciones animate a empezar y generar mas ingresos en tu negocio</h2>
       </div>
 
 
@@ -60,56 +63,31 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { postRequest } from "@/common/api.service.js";
+
 export default {
   name: 'Reports',
   props: ["layoutProps"],
+
   data() {
     return {
-      transactions: [
-        {
-          amount: 25000,
-          date: "Sep 14, 2021 a las 9:35 pm",
-          Bank: {
-            name: "Nequi",
-            image: "/icons/backoffice/banks/nequi.svg"
-          }
-        },
-        {
-          amount: 10000,
-          date: "Sep 14, 2021 a las 9:35 pm",
-          Bank: {
-            name: "Daviplata",
-            image: "/icons/backoffice/banks/davivienda.svg"
-          }
-        },
-        {
-          amount: 7000,
-          date: "Sep 14, 2021 a las 9:35 pm",
-          Bank: {
-            name: "Bancolombia",
-            image: "/icons/backoffice/banks/bancolombia.svg"
-          }
-        },
-        {
-          amount: 7000,
-          date: "Sep 14, 2021 a las 9:35 pm",
-          Bank: {
-            name: "Bancolombia",
-            image: "/icons/backoffice/banks/bancolombia.svg"
-          }
-        },
-        {
-          amount: 7000,
-          date: "Sep 14, 2021 a las 9:35 pm",
-          Bank: {
-            name: "Bancolombia",
-            image: "/icons/backoffice/banks/bancolombia.svg"
-          }
-        }
-      ]
+      transactions: []
     }
   },
   methods: {
+    list() {
+      let data = {};
+      postRequest("transactions/list", data, this.user).then(result => {
+        this.transactions = result.data.Transactions;
+      });
+    }
+  },
+  mounted() {
+    this.list();
+  },
+  computed: {
+    ...mapGetters(["user"])
   }
 }
 </script>

@@ -37,7 +37,6 @@ export default function(app, db) {
       }
 
       let visits = await Visit.findAll(queryBuilder);
-      console.log(visits);
       let list = visits.map(v => ({
         id: v.Person.id,
         cellphone: v.Person.cellphone,
