@@ -1,11 +1,9 @@
 <template>
-  <div class="container mx-auto">
+  <div class=" mx-auto">
 
 
 
   <div class="md:grid md:grid-cols-12">
-
-
 
     <section class="	text-black m-3 col-span-6 "  >
       
@@ -24,7 +22,7 @@
           </thead>
           <tbody>
             <tr v-for="(customer, index) in customers" :key="customer.id" >
-              <td class="p-5 font-light" :class="{'bg-gray-100': index % 2 != 0}">
+              <td class="p-5 font-light rounded-l-2xl" :class="{'bg-gray-100': index % 2 != 0}">
 
               </td>
               <td class="p-5 font-light" :class="{'bg-gray-100': index % 2 != 0}">
@@ -49,15 +47,39 @@
       </div>
 
 
-
     </section>
 
     <main class="main  m-3  col-span-6  ">
   
       <div class="mb-10">
-        <h2 class="text-2xl">Datos & Estadisticas</h2>
-        <p class="font-light">Conoce datos especificios de tus clientes y utilizalos para tener una mejor visión de tu negocio.</p>
+        <h2 class="text-2xl">Reseñas</h2>
+        <p class="font-light">Conoce la opinión de tus clientes y utilizalos para tener una mejor visión de tu negocio.</p>
       </div>
+
+
+      <div class="table w-full">
+        <table class="border-collapse	w-full">
+          <thead>
+            <tr class="text-left custom-border-table relative">
+              <th class="p-5 font-light text-sm">Reseña</th>
+              <th class="p-5 font-light text-sm">Fecha</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(review, index) in reviews" :key="review.id" >
+
+              <td class="p-5 font-light rounded-l-2xl" :class="{'bg-gray-100': index % 2 != 0}">
+                {{review.review}}
+              </td>
+              <td class="p-5 font-light rounded-r-2xl" :class="{'bg-gray-100': index % 2 != 0}">
+                {{review.createdAt}}
+              </td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+
       <!-- <div class="mb-10">
 
 
@@ -86,7 +108,8 @@ export default {
   props: ["layoutProps"],
   data() {
     return {
-      customers: []
+      customers: [],
+      reviews: []
     }
   },
   methods: {
@@ -95,13 +118,23 @@ export default {
       postRequest("customers/list", data, this.user).then(result => {
         this.customers = result.data.People;
       });
+    },
+    listReviews() {
+      let data = {
+        commerceId: this.commerce.id
+      };
+      postRequest("customers/reviews", data, this.user).then(result => {
+        console.log(result.data.Reviews);
+        this.reviews = result.data.Reviews;
+      });
     }
   },
   mounted() {
+    this.listReviews();
     this.list();
   },
   computed: {
-    ...mapGetters(["user"])
+    ...mapGetters(["user", "commerce"])
   }
 }
 </script>
@@ -109,16 +142,5 @@ export default {
 <style lang="scss">
 @import url("https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css");
 
-.custom-border-table {
-  &::after {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 3px;
-    width: 100%;
-    content: "";
-    display:block;
-    background: linear-gradient(89.98deg, #BBEC69 1.1%, rgba(155, 207, 173, 0.495063) 48.6%, #455DD1 95.16%);
-  }
-}
+
 </style>

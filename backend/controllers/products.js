@@ -33,7 +33,8 @@ export default function(app, db) {
         }],
         where: {
           commerceId
-        }
+        },
+        order: [ ["id", "ASC"] ]
       }
       let products = await ProductCategory.findAll(queryBuilder);
 
@@ -59,7 +60,7 @@ export default function(app, db) {
       let { body: { data } } = req;
 
       await Product.create({
-        image: "/icons/backoffice/default-product.png",
+        image: data.image || "/icons/backoffice/default-product.png",
         name: data.name,
         description: data.description,
         price: data.price,
@@ -68,7 +69,6 @@ export default function(app, db) {
         creatorId: req.user.id,
         commerceId: req.commerce.id,
       });
-      // TODO INSERT IMAGES
       return response(res, req, next)(null);
     },
 
@@ -79,9 +79,9 @@ export default function(app, db) {
         name: data.name,
         description: data.description,
         price: data.price,
+        image: data.image || "/icons/backoffice/default-product.png",
         categoryId: data.categoryId
       });
-      // TODO INSERT IMAGES
       return response(res, req, next)(null);
     },
 
@@ -110,6 +110,16 @@ export default function(app, db) {
 
       await category.destroy();
       return response(res, req, next)(null);
+    },
+
+
+    uploadImage: async function( req, res, next ) {
+      let url = await req.uploadFile(`resources/` + Date.now() + req.file.originalname, req.file.buffer);
+      return response(res, req, next)({
+        Resource: {
+          url
+        }
+      });
     },
   }
 

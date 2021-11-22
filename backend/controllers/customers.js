@@ -6,7 +6,9 @@ export default function(app, db) {
   const {
     People,
     Visit,
-    Commerce
+    Commerce,
+    Review,
+    Business
   } = db;
 
   const Controller = {
@@ -47,6 +49,44 @@ export default function(app, db) {
       }));
 
       return response(res, req, next)({ People: list });
+    },
+
+
+
+
+    reviews: async function( req, res, next ) {
+
+      let queryBuilder = {
+        include: [
+        {
+          include: [{
+            model: Business,
+            required: true,
+            where: {
+              id: req.user.businessId
+            }
+          }],
+          model: Commerce,
+          required: true
+        }],
+        where: {},
+        order: [["id", "DESC"]],
+        limit: 100
+      }
+
+      if (!req.user.owner) {
+        queryBuilder.where.commerceId = req.user.commerceId;
+      }
+
+      let reviews = await Review.findAll(queryBuilder);
+      let list = reviews.map(v => ({
+        id: v.id,
+        review: v.review,
+        // cellphone: v.cellphone,
+        createdAt: moment(v.createdAt).format("DD/MM/YY HH:mm"),
+      }));
+
+      return response(res, req, next)({ Reviews: list });
     }
 
   }

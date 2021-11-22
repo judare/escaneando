@@ -11,7 +11,7 @@
       <label for="assetsFieldHandle" class="block cursor-pointer">
         <div class="text-center font-light text-sm">
           <p>Arrastra las imagenes aquí o <span class="font-medium">click aquí para buscar</span>  </p>
-          <p class="text-xs">Hasta 15 fotos de tu producto</p>
+          <p class="text-xs">{{labelBottom}}</p>
         </div>
       </label>
       
@@ -34,7 +34,11 @@
 <script>
 export default {
   name: "app-drag-file",
-  props: ["label"],
+  props: {
+    label: { required: false, default: "", type: String },
+    labelBottom: { required: false, default: "", type: String },
+    limit: { required: false, default: 1, type: Number }
+  },
   data() {
     return {
     filelist: [] // Store our uploaded files
@@ -42,10 +46,13 @@ export default {
   },
   methods: {
     onChange() {
-      this.filelist = [...this.filelist, ...this.$refs.file.files];
+
+      this.filelist = [...this.$refs.file.files, ...this.filelist].slice(0, this.limit);
     },
     remove(i) {
-      this.filelist.splice(i, 1);
+      let clone = this.filelist.slice(0);
+      clone.splice(i, 1);
+      this.filelist = clone;
     },
     dragover(event) {
       event.preventDefault();
@@ -65,6 +72,11 @@ export default {
       // Clean up
       event.currentTarget.classList.add('bg-gray-100');
       event.currentTarget.classList.remove('bg-green-300');
+    }
+  },
+  watch: {
+    filelist(a) {
+      this.$emit("change", a)
     }
   }
 }

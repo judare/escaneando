@@ -120,7 +120,7 @@ export default {
   border: 2px solid transparent;
 
   &.sm {
-    padding: 8px 20px;
+    padding: 5px 15px;
   }
   
 }
@@ -137,25 +137,21 @@ export default {
   }
 }
 
-input:checked ~ .box, .box.active, .box.optionable:hover {
-  background: transparent;
-  &:before {
-    content:"";
-    position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    border-radius: 8px; /*1*/
-    border: 2px solid transparent; /*2*/
-    background: red;
-    background:linear-gradient(89.98deg, #BBEC69 1.1%, rgba(155, 207, 173, 0.495063) 48.6%, #455DD1 95.16%) border-box; /*3*/
-    -webkit-mask: /*4*/
-      linear-gradient(#fff 0 0) padding-box, 
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: destination-out; /*5'*/
-    mask-composite: exclude; /*5*/
-  }
+.border-custom {
+  background: white;
+  border: 0px transparent;
+  border-radius: .8rem;
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  padding: 2px;
+  display:block;
+
+  &.active {
+    background-image: linear-gradient(#fff,#fff ), radial-gradient(circle at top left, #BBEC69,#455DD1);
+    .box.sm {
+      padding: 3px 15px;
+    }
+  } 
 }
 
 
@@ -182,7 +178,6 @@ input:checked ~ .box, .box.active, .box.optionable:hover {
       height: 30px;
       display: inline-block;
       background-position: center;
-      background-size: 19px 16px;
       background-repeat: no-repeat;
       &.right {
         border-radius: 0 1rem 1rem 0;
@@ -235,6 +230,9 @@ input:checked ~ .box, .box.active, .box.optionable:hover {
   &.dark-mode {
     background: #323740;
     color: #fff;
+    .border-custom.active {
+      background-image: linear-gradient(#323740,#323740),radial-gradient(circle at top left,#bbec69,#455dd1);
+    }
     .logo-page {
       background-image: url(/icons/logo-white.png);
     }

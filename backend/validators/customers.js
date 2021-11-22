@@ -11,6 +11,10 @@ export default function(app, db) {
       checkAuth,
     ],
 
+    reviews: [
+      checkAuth,
+    ],
+
     // create: [
     //   can("rols.create"),
     // ],

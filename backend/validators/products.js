@@ -4,6 +4,11 @@ import checkAuthMiddleware from '../middleware/check-auth';
 import findProductMiddleware from '../middleware/find-product';
 import findCommerceMiddleware from '../middleware/find-commerce';
 import findCategoryMiddleware from '../middleware/find-category';
+import multer from 'multer';
+
+const storage = multer.memoryStorage({
+  destination: (req, file, callback) => callback(null, ""),
+});
 
 export default function(app, db) {
   // const checkAuth = checkAuthMiddleWare(app, db);
@@ -12,6 +17,13 @@ export default function(app, db) {
   const commerceFind = findCommerceMiddleware(app, db);
   const categoryFind = findCategoryMiddleware(app, db);
 
+  const upload = multer({
+    storage,
+    limits:{
+      fileSize: 3 * 1024 * 1024 // 3mb
+    }
+  });
+
   return {
 
     list: [
@@ -19,13 +31,9 @@ export default function(app, db) {
     ],
 
     create: [
-      // check('data.description')
-      //   .isLength({ min: 3, max: 1000 })
-      //   .withMessage('validators.description.invalid'),
-
       check('data.name')
         .isLength({ min: 3, max: 255 })
-        .withMessage('validators.description.invalid'),
+        .withMessage('validators.name.invalid'),
       
       check('data.price')
         .isLength({ min: 1, max: 15 })
@@ -42,13 +50,9 @@ export default function(app, db) {
     ],
 
     update: [
-      // check('data.description')
-      //   .isLength({ min: 3, max: 1000 })
-      //   .withMessage('validators.description.invalid'),
-
       check('data.name')
         .isLength({ min: 3, max: 255 })
-        .withMessage('validators.description.invalid'),
+        .withMessage('validators.name.invalid'),
       
       check('data.price')
         .isLength({ min: 1, max: 15 })
@@ -83,5 +87,10 @@ export default function(app, db) {
       checkAuth,
       categoryFind
     ],
+
+    uploadImage: [
+      checkAuth,
+      upload.single('file'),
+    ]
   };
 }

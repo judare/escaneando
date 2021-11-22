@@ -221,7 +221,7 @@
           <div class="block">
             <div class="inline-block mr-2.5 social-network"><img src="/icons/landing/social/fb.svg" alt=""></div>
             <div class="inline-block mr-2.5 social-network"><img src="/icons/landing/social/yt.svg" alt=""></div>
-            <div class="inline-block social-network"><img src="/icons/landing/social/lk.svg" alt=""></div>
+            <div class="inline-block social-network"><a href="https://www.linkedin.com/company/80679047/" target="_blank"><img src="/icons/landing/social/lk.svg" alt=""></a></div>
           </div>
         </div>
       </div>

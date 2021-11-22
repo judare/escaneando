@@ -4,6 +4,7 @@ import Products from './products';
 import Transactions from './transactions';
 import Auth from './auth';
 import Commerces from './commerces';
+import Test from './test';
 
 function Routes(app, db, services) {
   this.routes = {
@@ -12,7 +13,8 @@ function Routes(app, db, services) {
     Visitant,
     Products,
     Transactions,
-    Commerces
+    Commerces,
+    Test
   };
 
   this.associate = function() {

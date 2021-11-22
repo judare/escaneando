@@ -6,21 +6,23 @@
   <div  :class="{ 'md:pl-20 pl-5': menuExpand }">
     <div class="parent md:grid md:grid-cols-12">
       <transition name="slide-fade">
-        <section v-show="!menuExpand || (menuExpand && showMenu)" class="sidebar   rounded-l-none md:rounded-3xl	text-black custom-border active p-10 lg:col-span-3 col-span-4  bg-white z-20" :class="{ 'fixed h-screen top-0 left-0': menuExpand }" >
-          <img src="/icons/logo-backoffice.svg" alt="">
+        <section v-show="!menuExpand || (menuExpand && showMenu)" class="sidebar   rounded-l-none md:rounded-3xl	text-black custom-border active lg:col-span-3 col-span-4  bg-white z-20" :class="{ 'fixed h-screen top-0 left-0': menuExpand }" >
+          <div class="p-10">
+            <img src="/icons/logo-backoffice.svg" alt="">
 
-          <ul class="menu mt-10 font-light">
+            <ul class="menu mt-10 font-light">
 
-            <li class="p-5"><router-link :to="{ name: 'backoffice-home' }">🏠 Inicio</router-link></li>
-            <li class="p-5"><router-link :to="{ name: 'backoffice-customers' }">😍 Clientes</router-link></li>
-            <li class="p-5"><router-link :to="{ name: 'backoffice-reports' }">💸 Transacciones</router-link></li>
-            <li class="p-5"><router-link :to="{ name: 'backoffice-products' }">🍽 Productos</router-link></li>
-            <li class="p-5"><router-link :to="{ name: 'backoffice-config' }">⚙️ Configuración</router-link></li>
+              <li class="p-5"><router-link :to="{ name: 'backoffice-home' }">🏠 Inicio</router-link></li>
+              <li class="p-5"><router-link :to="{ name: 'backoffice-customers' }">😍 Clientes</router-link></li>
+              <li class="p-5"><router-link :to="{ name: 'backoffice-reports' }">💸 Transacciones</router-link></li>
+              <li class="p-5"><router-link :to="{ name: 'backoffice-products' }">🍽 Productos</router-link></li>
+              <li class="p-5"><router-link :to="{ name: 'backoffice-config' }">⚙️ Configuración</router-link></li>
 
-            
+              
 
-            <li class="p-5"><div @click="closeSession" class="cursor-pointer">👌🏼 Cerrar sesión</div></li>
-          </ul>
+              <li class="p-5"><div @click="closeSession" class="cursor-pointer">👌🏼 Cerrar sesión</div></li>
+            </ul>
+          </div>
         </section>
       </transition>
       <main class="main pt-10" :class="{ 'menu-expand col-span-12': menuExpand, 'lg:col-span-9 col-span-8': !menuExpand }" @click="clickOutside">
@@ -30,7 +32,7 @@
           <h2 class="font-light text-xl inline-block align-middle" :class="{ 'md:pl-5': !menuExpand }">{{$route.meta.title}}</h2>
         </div>
         
-        <div class="md:pl-5">
+        <div class="md:pl-5" style="min-height: 100vh">
           <slot :toggle="toggleMenu"></slot>
         </div>
       </main>
@@ -96,6 +98,26 @@ export default {
 <style lang="scss" >
 
 .custom-border {
+  // background: white;
+  border: 0px transparent;
+  border-radius: .8rem;
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+  padding: 2px;
+  display:block;
+  &.gray {
+    background-image: linear-gradient(#fff, #fff), linear-gradient(#ddd, #ddd);
+  }
+  &.active {
+    background-image: linear-gradient(#fff,#fff ), radial-gradient(circle at top left, #BBEC69,#455DD1);
+  }
+  .box.sm {
+    padding: 3px 15px;
+  }
+}
+
+
+.custom-border2 {
   position: relative;
   &:before {
     border-radius: 1rem;
@@ -134,6 +156,18 @@ export default {
 }
 .bg-primary {
   background-image:linear-gradient(89.98deg, #BBEC69 1.1%, rgba(155, 207, 173, 0.495063) 48.6%, #455DD1 95.16%);
+}
+.custom-border-table {
+  &::after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 100%;
+    content: "";
+    display:block;
+    background: linear-gradient(89.98deg, #BBEC69 1.1%, rgba(155, 207, 173, 0.495063) 48.6%, #455DD1 95.16%);
+  }
 }
 .slide-fade-enter-active {
   transition: all .1s;

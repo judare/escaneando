@@ -77,6 +77,9 @@ a {
 .w-100 {
   width: 100%;
 }
+.mb-2 {
+  margin-bottom: 15px;
+}
 .mb-5 {
   margin-bottom: 30px;
 }

@@ -3,7 +3,7 @@ export default function(res, req, next = null) {
   return function(response, error = null) {
 
     if (error) {
-      console.log(error.err);
+      console.log(error);
 
       if (error.err?.code) {
         return res.status(error.status).json({

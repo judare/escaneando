@@ -10,9 +10,11 @@
       <h2 class="text-4xl mb-5">¡Bienvenido!</h2>
 
       <h2 class="mb-3 text-xl ">ConseGeos ✌🏼</h2>
-      <div class="rounded-3xl custom-border active p-5 mb-5" v-for="x in [1,2]" :key="x">
-        <p>¡Recuerdales cuanto extrañas a tus clientes! <br>
-        <span class="font-light">Visita el apartado clientes en la sección de recurrencias y audita sus visitas!</span></p> 
+      <div class="custom-border active mb-5" v-for="x in [1,2]" :key="x">
+        <div class="p-5 " >
+          <p>¡Recuerdales cuanto extrañas a tus clientes! <br>
+          <span class="font-light">Visita el apartado clientes en la sección de recurrencias y audita sus visitas!</span></p> 
+        </div>
       </div>
 
       

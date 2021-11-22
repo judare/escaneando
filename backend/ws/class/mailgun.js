@@ -10,7 +10,13 @@ function Mailgun(mode, db) {
 Mailgun.prototype.sendMail = async function({from, fromName, to, subject}, { nameView, context, attachments }) {
   return new Promise((resolve, reject) => {
 
-    const templates = new EmailTemplates();
+    const templates = new EmailTemplates({
+      juice: {
+        webResources: {
+          images: false
+        }
+      }
+    });
 
     let templateDir = __dirname + `/templates`;
     if (config.ENV != "production") {

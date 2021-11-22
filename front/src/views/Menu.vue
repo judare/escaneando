@@ -20,7 +20,9 @@
 
   <ul class="list-options menu-categories mb-5">
     <li class="box-check" v-for="(category, i) in products" :key="category.id">
-      <a class="box sm optionable" :class="{active: i == 0}" :href="'#cat-' + category.id">{{category.name}}</a>
+      <a class="" :class="{'border-custom active': i == 0}" :href="'#cat-' + category.id">
+        <span class="box sm optionable">{{category.name}}</span>
+      </a>
     </li>
 
   </ul>
@@ -28,8 +30,8 @@
 
   <div v-for="category in products" :id="'cat-' + category.id" :key="category.id">
 
-    <h3 class="mb-5">{{category.name}}</h3>
-    <div class="products mb-5" :class="'products-' + config.style" >
+    <h3 class="mb-2">{{category.name}}</h3>
+    <div class="products mb-2" :class="'products-' + config.style" >
       <app-product v-for="p in category.Products" :key="p.id" :product="p" :style="config.style" v-on:click-product="clickProduct"/>
     </div>
   </div>
@@ -149,6 +151,11 @@ export default {
 .menu-categories  {
   display: flex;
   overflow-x: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 </style>

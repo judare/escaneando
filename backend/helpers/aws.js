@@ -1,7 +1,6 @@
 import AWS from 'aws-sdk';
 import config from '../config/config';
 import { PassThrough } from 'stream';
-import archiver from 'archiver';
 
 export default () => {
   const s3bucket = new AWS.S3({
@@ -26,23 +25,6 @@ export default () => {
     });
   };
 
-  const multiFilesStream = (infos) => {
-    const archive = archiver('zip', { zlib: { level: 5 } });
-    for (let i = 0; i < infos.length; i += 1) {
-      const passthrough = new PassThrough();
-
-      console.log(infos[i].file)
-      s3bucket
-        .getObject({
-          Bucket: config.aws.Bucket,
-          Key: infos[i].file
-        })
-        .createReadStream()
-        .pipe(passthrough);
-      archive.append(passthrough, { name: infos[i].name });
-    }
-    return archive;
-  };
   
 
   const createBucket = function(name) {
@@ -63,7 +45,6 @@ export default () => {
   return function(req, res, next) {
     req.uploadFile = uploadFile;
     req.createBucket = createBucket;
-    req.multiFilesStream = multiFilesStream;
     next();
   };
 };

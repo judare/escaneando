@@ -3,7 +3,7 @@ const nodeExternals = require('webpack-node-externals');
 
 module.exports = (env, argv) => ({
   entry: {
-    server: ['babel-polyfill', './backend/app.js'],
+    geoda: ['babel-polyfill', './backend/app.js'],
   },
   output: {
     path: path.join(__dirname, 'dist'),

@@ -21,6 +21,8 @@ export default function(app, db) {
           name: commerce.name,
           cellphone: commerce.cellphone,
           logo: commerce.logo,
+          facebook: commerce.facebook,
+          instagram: commerce.instagram,
         }
       });
     },

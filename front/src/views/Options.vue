@@ -14,22 +14,28 @@
         <h2 class="mb-5" style="font-weight: 500;">¡Tenemos para ti!</h2>
 
 
-        <div class="box optionable choose-option active" @click="goToMenu">
+        <div class="border-custom choose-option active" @click="goToMenu">
           <!-- <img src="/icons/menu.png"> -->
-          <div><strong>🍔 Nuestro Menú</strong></div>
-          <p>Aquí encontraras todos nuestros productos</p>
+          <div class="box optionable ">
+            <div><strong>🍔 Nuestro Menú</strong></div>
+            <p>Aquí encontraras todos nuestros productos</p>
+          </div>
         </div>
 
-        <div class="box optionable choose-option active" @click="pay">
-
-          <div><strong>💸 Realizar pago</strong></div>
-          <p>Procesa el pago de tus compras</p>
+        <div class="border-custom  choose-option active" @click="pay">
+          
+          <div class="box optionable">
+            <div><strong>💸 Realizar pago</strong></div>
+            <p>Procesa el pago de tus compras</p>
+          </div>
 
         </div>
 
-        <div class="box optionable choose-option active" @click="review">
-          <div><strong>💬 Cuentanos tu experiencia</strong></div>
-          <p>Escribe aquí una reseña sobre que te piensas</p>
+        <div class="border-custom  choose-option active" @click="review">
+          <div class="box optionable ">
+            <div><strong>💬 Cuentanos tu experiencia</strong></div>
+            <p>Escribe aquí una reseña sobre que te piensas</p>
+          </div>
         </div>
 
       </div>
@@ -42,7 +48,7 @@
       <div class="text-center">👋🏻   💬   😄</div>
       <h2>¿Qué tal estuvo tu experiencia?</h2>
       <p>Cuentanos que tal te parecio nuestro lugar, nuestra comida y todo lo que nos quieras contar! Estamos felices de escucharte!</p>
-      <textarea class="box-input w-100" v-model="form.opinion">
+      <textarea class="box-input w-100" v-model="form.opinion" id="inpReview">
       </textarea>
 
       <div class="form-error" v-if="formErrors.opinion">
@@ -67,7 +73,7 @@
         <div class="box-form" :class="{ error: !!formErrors.amount }">
           <h2>Escribe el valor a pagar</h2>
           <p></p>
-          <money inputmode="numeric" thousands='.' :precision="0" prefix="$" class="box-input w-100" v-model="form.amount"/>
+          <money inputmode="numeric" thousands='.' :precision="0" prefix="$" class="box-input w-100" v-model="form.amount" id="inpAmount"/>
 
           <div class="form-error" v-if="formErrors.amount">
             {{formErrors.amount}}
@@ -75,12 +81,12 @@
         </div>
 
         <div class="box-form">
-          <button type="button" class="btn btn-primary w-100" @click="goToPay" :disabled="!form.amount">
+          <button type="button" class="btn btn-primary w-100" @click="goToPay" :disabled="form.amount <= 0">
             Continuar el pago
           </button>
         </div>
       </template>
-      <template v-else>
+      <template v-else-if="stepPay == 2">
         <div class="box-form" :class="{ error: !!formErrors.amount }">
 
           <div class="back" @click="backPay()" style="float: left">
@@ -88,7 +94,7 @@
           </div>
 
           <h2>Escoge el medio de pago</h2>
-          <p>A contuniación serás redirigido a la pasarle de pagos para que completes el proceso de manera segura y rápida.</p>
+          <p></p>
 
           <ul class="methods">
             <li class="method-pay" v-for="method in methods" :key="method.id" :class="{ disabled: form.amount < method.valMin, active: form.payMethodId == method.id }" @click="selPayMethod(method)">
@@ -96,14 +102,85 @@
                 <img :src="method.image" alt="">
               </div>
               <div class="method-name">{{method.name}}</div>
-              <div class="method-value">Val minimo ${{money(method.valMin)}}</div>
+              <div class="method-value">Val. min ${{money(method.valMin)}}</div>
             </li>
           </ul>
         </div>
 
       
         <div class="box-form">
-          <button type="button" class="btn btn-primary w-100" @click="goToPay" :disabled="!form.payMethodId">
+          <button type="button" class="btn btn-primary w-100" @click="goToPayProcess" :disabled="!form.payMethodId">
+            Completar el pago
+          </button>
+        </div>
+      </template>
+
+      <template v-else-if="stepPay == 3">
+        <div class="box-form" :class="{ error: !!formErrors.amount }">
+
+          <div class="back" @click="backStepPay()" style="float: left">
+            <img src="/icons/back.png">
+          </div>
+
+          <h2>Completar información</h2>
+
+          <template v-if="form.payMethodId == 2 /*DAVIPLATA*/">
+
+            <p>Daviplata te enviará un codigo de seis digitos tan pronto dejes los datos de tu documento de identidad.</p>
+
+            <label for="docType" class="form-label">Tipo de documento</label>
+             <select class="box-input w-100 mb-2" v-model="form.docType" placeholder="Número de documento" id="docType">
+               <option value="cc">CEDULA DE CIUDADANIA</option>
+               <option value="ce">CEDULA DE EXTRANJERÍA</option>
+               <option value="x">NIT</option>
+               <option value="x">TARJETA DE IDENTIDAD</option>
+               <option value="x">TRJ. SEGURO SOCIAL EXTRANJERO</option>
+               <option value="x">RIF VENEZUELA</option>
+               <option value="x">REGISTRO CIVIL</option>
+               <option value="x">RUT</option>
+             </select>
+
+            <label for="docNumber" class="form-label">Número de documento</label>
+            <input id="docNumber" inputmode="numeric" class="box-input w-100" v-model="form.document" placeholder="Número de documento"/>
+          </template>
+          <template v-else-if="form.payMethodId == 3 /*NEQUI*/">
+            <p>Número de celular que tienes registrado en NEQUI.</p>
+
+            <label for="cellphoneForm" class="form-label">Número de celular</label>
+            <input id="cellphoneForm" inputmode="numeric" class="box-input w-100" v-model="form.cellphone" placeholder="Celular"/>
+          </template>
+          <template v-if="form.payMethodId == 4 /*PSE*/">
+
+            <p>Daviplata te enviará un codigo de seis digitos tan pronto dejes los datos de tu documento de identidad.</p>
+
+            <label for="typePerson" class="form-label">Tipo de persona</label>
+            <select class="box-input w-100 mb-2" v-model="form.typePerson"  id="typePerson">
+              <option :value="0">Natural</option>
+              <option :value="1">Jurídica</option>
+            </select>
+
+            <label for="name" class="form-label">Nombre</label>
+            <input id="name" inputmode="numeric" class="box-input w-100 mb-2" v-model="form.name" placeholder="Nombre"/>
+
+            <label for="docType" class="form-label">Tipo de documento</label>
+            <select class="box-input w-100 mb-2" v-model="form.docType" id="docType">
+              <option value="cc">CEDULA DE CIUDADANIA</option>
+              <option value="ce">CEDULA DE EXTRANJERÍA</option>
+            </select>
+
+            <label for="docNumber" class="form-label">Número de documento</label>
+            <input id="docNumber" inputmode="numeric" class="box-input w-100 mb-2" v-model="form.document" placeholder="Número de documento"/>
+
+            <label for="bank" class="form-label">Banco</label>
+            <select class="box-input w-100" v-model="form.bank" id="bank">
+              
+            </select>
+          </template>
+         
+        </div>
+
+        <div class="box-form">
+          <button type="button" class="btn btn-primary w-100" @click="sendPay" :disabled="!form.payMethodId">
             Completar el pago
           </button>
         </div>
@@ -166,13 +243,22 @@ export default {
     },
     review() {
       this.$refs.reviewModal.show();
+      setTimeout(() => {
+        document.getElementById("inpReview").focus();
+      }, 300)
     },
     pay() {
       this.$refs.payModal.show();
+      setTimeout(() => {
+        document.getElementById("inpAmount").focus();
+      }, 300)
     },
     backPay() {
       this.stepPay = 1;
       this.form.payMethodId = null;
+    },
+    backStepPay() {
+      this.stepPay -= 1;
     },
     selPayMethod(method) {
       if (this.form.amount < method.valMin) return;
@@ -191,6 +277,19 @@ export default {
     },
     goToPay() {
       this.stepPay = 2;
+    },
+    goToPayProcess() {
+      if (this.form.payMethodId == 1) {
+        return this.sendPay();
+      }
+      this.form.cellphone = this.config.cellphone;
+      this.form.docType = "cc";
+      this.form.typePerson = 1;
+      this.stepPay = 3;
+    },
+
+    sendPay() {
+      alert("enviando");
     }
   }
 }
@@ -261,5 +360,8 @@ export default {
       background: #b8e869;
     }
   }
+}
+.form-label {
+  text-align: left;
 }
 </style>

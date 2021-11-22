@@ -10,6 +10,8 @@ export default (sequelize, DataTypes) => {
     userId: { type: DataTypes.INTEGER, allowNull: true },
     enabled: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
     businessId: { type: DataTypes.INTEGER, allowNull: true },
+    facebook: { type: DataTypes.STRING, allowNull: true },
+    instagram: { type: DataTypes.STRING, allowNull: true },
   }, 
   {
     paranoid: true,

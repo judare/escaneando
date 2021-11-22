@@ -50,7 +50,7 @@ export default function(app, db, services) {
           businessId: business.id,
           email,
           slug: Date.now() + encodeURIComponent(data.Business.name),
-          image: "/icons/backoffice/commerce-default.png",
+          logo: "/icons/backoffice/commerce-default.png",
           enabled: 1
         });
 

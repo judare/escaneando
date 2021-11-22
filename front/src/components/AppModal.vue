@@ -61,10 +61,10 @@ export default {
   padding: 30px 0px;
 
   .modal-content {
-    margin: 0 15px;
+    max-width: 90%;
+    width: 350px;
+    margin: 0 auto;
     background: white;
-    max-width: 450px;
-    // min-width: 250px;
     padding: 20px;
     border-radius: 1rem;
     position: relative;

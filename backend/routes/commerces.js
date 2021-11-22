@@ -11,6 +11,10 @@ const Route = function(app, db, services) {
 
   router.post('/list', validate.list, isect(controller.list));
 
+  router.post('/create', validate.create, isect(controller.create));
+
+  router.post('/update', validate.update, isect(controller.update));
+
   return router;
 };
 

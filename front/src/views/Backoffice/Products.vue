@@ -4,12 +4,17 @@
 <h2 class="text-4xl mb-5">{{commerce.name}}</h2>
 
 <div class="categories mb-5">
-  <div v-for="(c, i) in products" :key="c.id" class="custom-border px-10 py-3 inline-block mr-5 cursor-pointer font-light align-top mb-5" @click="selectCategory(i)" :class="{ 'active': i == category }">
-    {{c.name}}
+
+  <div class="custom-border inline-block mb-5  align-top  mr-5 gray" :class="{ 'active': i == category }" v-for="(c, i) in products" :key="c.id">
+    <div  class=" px-10 py-3 cursor-pointer font-light" @click="selectCategory(i)">
+      {{c.name}}
+    </div>
   </div>
 
-  <div class="custom-border px-10 py-3  inline-block mr-5 cursor-pointer active align-top" @click="createCategory">
-    <img src="/icons/plus.svg" style="height: 23px;">
+  <div class="custom-border active align-top inline-block">
+    <div class=" px-10 py-3 cursor-pointer " @click="createCategory">
+      <img src="/icons/plus.svg" style="height: 23px;">
+    </div>
   </div>
 </div>
 
@@ -41,13 +46,12 @@
           <div class="grid grid-cols-1">
               <div class="relative z-10 col-start-1 row-start-1 px-4 pt-28 pb-3 bg-gradient-to-t from-black relative" @click="showProduct(element)">
 
-                <div class="w-full absolute top-0 left-0 z-10 h-full show-hover custom-border active flex flex-row justify-center items-center">
+                <div class="custom-border active absolute top-0 left-0 z-10 w-full  h-full show-hover flex flex-row justify-center items-center">
                   <div>
                     <img src="/icons/pencil.svg" class="mx-auto mb-5"/>
                     <span class="font-light">Editar producto</span>
                   </div>
                 </div>
-
                 <!-- <p class="text-sm font-medium text-white">Entire house</p> -->
                 <div class="text-left  text-white">
                   <h2 class="font-medium h-12">{{element.name}}</h2>
@@ -76,16 +80,25 @@
 
   <form v-on:submit.prevent="submitProduct">
     <app-errors ref="errorProduct"/>
-    
-    <app-input type="select" label="Categoria" v-model="product.categoryId">
-      <option v-for="c in products" :key="c.id" :value="c.id">
-        {{c.name}}
-      </option>
-    </app-input>
 
-    <app-input type="text" label="Nombre" v-model="product.name" />
+    <div :class="{'grid grid-cols-12': product.image}">
+      <div class="	text-black m-3 col-span-4"   v-if="product.image">
+        <img :src="product.image" class="rounded-xl">
+      </div>
+      <div :class="{'col-span-8': product.image}">
 
-    <app-drag-file label="Fotos" class="mb-5"/>
+        
+        <app-input type="select" label="Categoria" v-model="product.categoryId">
+          <option v-for="c in products" :key="c.id" :value="c.id">
+            {{c.name}}
+          </option>
+        </app-input>
+
+        <app-input type="text" label="Nombre" v-model="product.name" />
+      </div>
+    </div>
+
+    <app-drag-file v-on:change="uploadPhoto" label="Fotos" class="mb-5" labelBottom="Solo una foto de tu producto" :limit="1"/>
 
 
     <app-input type="textarea" label="Descripción" v-model="product.description"/>
@@ -93,12 +106,22 @@
     <app-input type="money" label="Precio" v-model="product.price"/>
 
 
-    <app-button variant="primary" class="mt-5" type="submit" v-if="!product.id">
-      Agregar producto
-    </app-button>
-    <app-button variant="primary" class="mt-5" type="submit" v-else>
-      Editar producto
-    </app-button>
+    <template v-if="loading">
+      <div class="text-center mx-auto">
+        <app-loader class="block mx-auto mb-3"/>
+      </div>
+      
+    </template>
+    <template v-else>
+      <app-button variant="primary" class="mt-5" type="submit" v-if="!product.id">
+        Agregar producto
+      </app-button>
+      <app-button variant="primary" class="mt-5" type="submit" v-else>
+        Editar producto
+      </app-button>
+    </template>
+    
+  
   </form>
   <app-button variant="secondary" @click="deleteProduct" v-if="product.id">
     Eliminar producto
@@ -127,9 +150,11 @@
 
 
 
-<app-modal ref="deleteProductModal" position="bottom" title="Estas seguro de eliminar el producto?">
+<app-modal ref="deleteProductModal" position="right" title="Estas seguro de eliminar el producto?">
   <div class="mb-5 font-light">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio, amet reiciendis deserunt facilis voluptatem laboriosam recusandae dolore a distinctio laborum earum odit sequi aut. Incidunt amet numquam soluta nobis! Accusantium?
+    ¿Estas seguro que deseas eliminar el producto? <br><br>
+    Recuerda que puedes editarlo si necesitas modificar algun tipo de información.<br><br>
+  Si deseas crear un nuevo, en el apartado crear platillo podrás realizarlo.
   </div>
   <app-button variant="primary" v-if="product.id" @click="confirmDeleteProduct">
     Si, Eliminar
@@ -145,7 +170,7 @@
 import AppDragFile from "@/components/Form/AppDragFile.vue";
 import draggable from 'vuedraggable'
 import { mapGetters } from 'vuex';
-import { postRequest } from "@/common/api.service.js";
+import { postRequest, postMultimedia } from "@/common/api.service.js";
 
 export default {
   name: 'Products',
@@ -158,7 +183,8 @@ export default {
 
       products: [],
       drag: false,
-      product: {}
+      product: {},
+      loading: false
     }
   },
   computed: {
@@ -175,7 +201,7 @@ export default {
       }
       postRequest("products/list", data, this.user).then(result => {
         this.products = result.data.Products;
-        this.category = 0;
+        if (this.category == null)  this.category = 0;
       });
     },
     deleteProduct() {
@@ -213,6 +239,7 @@ export default {
       this.$refs.viewProductModal.show();
     },
     confirmCreateProduct() {
+      this.loading = true;
       this.$refs.errorProduct.clear();
       postRequest("products/create", this.product, this.user).then(() => {
         this.getProducts();
@@ -220,9 +247,13 @@ export default {
       })
       .catch(err => {
         this.$refs.errorProduct.put(err.message);
+      })
+      .finally(() => {
+        this.loading = false;
       });
     },
     confirmUpdateProduct() {
+      this.loading = true;
       this.$refs.errorProduct.clear();
       let data = {
         ...this.product,
@@ -234,6 +265,9 @@ export default {
       })
       .catch(err => {
         this.$refs.errorProduct.put(err.message);
+      })
+      .finally(() => {
+        this.loading = false;
       });
     },
     createCategory() {
@@ -250,6 +284,33 @@ export default {
       })
       .catch(err => {
         this.$refs.errorCategory.put(err.message);
+      });
+    },
+    uploadPhoto(pics) {
+      this.$refs.errorProduct.clear();
+
+      if (pics.length == 0){
+        this.product.image = this.product._image;
+        this.product._image = null;
+        return;
+      }
+
+      if (!this.product._image) {
+        this.product._image = this.product.image;
+      }
+
+      this.loading = true;
+      let formData = new FormData();
+      formData.append("file", pics[0])
+
+      postMultimedia("products/uploadImage", formData, this.user).then(result => {
+        this.product.image = result.data.Resource.url;
+      })
+      .catch(err => {
+        this.$refs.errorProduct.put(err.message);
+      })
+      .finally(() => {
+        this.loading = false;
       });
     }
   },
@@ -269,7 +330,6 @@ export default {
 @import url("https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css");
 
 .show-hover {
-  background: #fff;
   opacity: 0;
   transition: .1s;
 

@@ -10,6 +10,7 @@ import AppModal from "@/components/Backoffice/AppModal.vue";
 import AppInput from "@/components/Form/AppInput.vue";
 import AppButton from "@/components/Form/AppButton.vue";
 import AppError from "@/components/Form/AppError.vue";
+import AppLoader from "@/components/AppLoader.vue";
 
 
 
@@ -120,6 +121,7 @@ vue.use(store)
 .component("app-button", AppButton)
 .component("money", Money3Component)
 .component("app-errors", AppError)
+.component("app-loader", AppLoader)
 
 // .use(Scrollspy)
 // .use(money)
