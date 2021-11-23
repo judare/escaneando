@@ -3,6 +3,7 @@ export default (sequelize, DataTypes) => {
 	const Commerce = sequelize.define('Commerce', {
 		id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 		name: { type: DataTypes.STRING, allowNull: false },
+		address: { type: DataTypes.STRING, allowNull: true },
 		logo: { type: DataTypes.STRING, allowNull: false, defaultValue: "default.png"  },
     cellphone: { type: DataTypes.STRING, allowNull: true },
     email: { type: DataTypes.STRING, allowNull: true },

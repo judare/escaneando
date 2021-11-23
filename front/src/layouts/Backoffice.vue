@@ -8,7 +8,15 @@
       <transition name="slide-fade">
         <section v-show="!menuExpand || (menuExpand && showMenu)" class="sidebar   rounded-l-none md:rounded-3xl	text-black custom-border active lg:col-span-3 col-span-4  bg-white z-20" :class="{ 'fixed h-screen top-0 left-0': menuExpand }" >
           <div class="p-10">
-            <img src="/icons/logo-backoffice.svg" alt="">
+
+            <div class="flex items-center justify-between">
+              <img src="/icons/logo-backoffice.svg" alt="">
+              <div class="percent-tasks  cursor-pointer font-light text-center" @click="openTasks">
+                <span class="text-2xl">{{tasks.percent}}%</span>
+                <div>Avance</div>
+              </div>
+            </div>
+
 
             <ul class="menu mt-10 font-light">
 
@@ -44,6 +52,16 @@
 
       
   </div>
+
+  <app-modal ref="taskModal" title="Avance del comercio">
+    <ul class="font-light">
+      <li class="mb-3" v-for="task in tasks.Tasks" :key="task.id">
+        <template v-if="task.done">✅</template>
+        <template v-else>❌</template>
+         {{task.name}}</li>
+    </ul>
+  </app-modal>
+
  </div>
 </template>
 <script>
@@ -56,18 +74,28 @@ export default {
     return {
       showMenu: false,
       menuExpand: false,
-      canClose: false
+      canClose: false,
+      tasks: {}
     }
   },
   mounted() {
     this.menuExpand = this.$route.meta.menuExpand;
     this.getCommerces();
+    this.getTasks();
   },
   methods: {
     getCommerces() {
       postRequest("commerces/list", {}, this.user).then(result => {
         this.$store.commit("setCommerces", result.data.Commerces);
       });
+    },
+    getTasks() {
+      postRequest("users/tasks", {}, this.user).then(result => {
+        this.tasks = result.data;
+      });
+    },
+    openTasks() {
+      this.$refs.taskModal.show();
     },
     toggleMenu() {
       this.canClose = false;

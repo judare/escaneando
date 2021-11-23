@@ -19,6 +19,26 @@
     </template>
 
    
+    <template v-else-if="type == 'file'">
+      <label>
+        <input ref="file" @change="changeFile" class="hidden" type="file" :id="id" :placeholder="label">
+
+        
+
+        <div class="md:grid md:grid-cols-12">
+          <div :class="{'col-span-8': !!modelValue, 'col-span-12': !modelValue}">
+            <div class="bg-gray-200 rounded-xl w-full py-2 px-3 text-gray-700 " >
+              Click para subir foto
+            </div>
+          </div>
+          <div class="col-span-4 ml-2" v-if="!!modelValue">
+            <app-button variant="secondary" @click="viewPhoto" size="sm">
+              Ver
+            </app-button>
+          </div>
+        </div>
+      </label>
+    </template>
     <template v-else>
       <input :value="modelValue" @input="change" class="appearance-none bg-gray-200 rounded-xl w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" :type="type" :id="id" :placeholder="label">
     </template>
@@ -47,15 +67,21 @@ export default {
     }
   },
   mounted() {
-    this.id = "e" + Date.now().toString().substr(-7);
+    this.id = (Math.random() + 1).toString(36).substring(7);
   },
   methods: {
+    changeFile() {
+      this.$emit("changeFile", this.$refs.file.files);
+    },
     change(e) {
       let value = e.target.value;
       if (this.type == "money") {
         value = value.replace("$", "").replaceAll(".", "")
       }
       this.$emit('update:modelValue', value);
+    },
+    viewPhoto() {
+      window.open(this.modelValue, '_blank').focus();
     }
   }
 }

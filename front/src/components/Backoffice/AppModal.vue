@@ -1,19 +1,19 @@
 <template>
 <div>
 
-  <div class="fixed bg-black bg-opacity-10 top-0 left-0 h-screen w-full z-20 " @click="hide" v-show="showing"/>
+  <div class="fixed bg-black bg-opacity-10 top-0 left-0 w-full z-20 h-screen " @click="hide" v-show="showing"/>
   
   <transition name="bounce">
     <section
       v-if="showing"
-      class="rounded-3xl	text-black  p-8 fixed    bg-white z-20"
+      class="rounded-3xl	text-black  p-8 fixed bg-white z-20"
       :class="{
         'top-0 right-0 h-screen lg:w-4/12 md:rounded-r-none': position == 'right',
         'md:left-1/4 md:w-2/4 mx-5 w-3/4 bottom-0 rounded-b-none': position == 'bottom',
         [classSection]: true
       }"
     >
-    <div class="overflow-y-auto" style="max-height: 100vh">
+    <div class="overflow-y-auto  " style="max-height: calc(100vh - 4rem)">
       <h2 class="text-2xl mb-5">{{title}}</h2>
     
       <slot></slot>

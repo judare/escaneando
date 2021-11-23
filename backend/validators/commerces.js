@@ -42,5 +42,28 @@ export default function(app, db) {
       commerceFind
     ],
 
+    getBusiness: [
+      checkAuth,
+      async (req, res, next) => {
+        let business = await req.user.getBusiness();
+        req.business = business;
+        next();
+      }
+    ],
+
+    updateBusiness: [
+      check('data.name')
+        .isLength({ min: 3, max: 255 })
+        .withMessage('validators.name.invalid'),
+      validOrAbort,
+      
+      checkAuth,
+      async (req, res, next) => {
+        let business = await req.user.getBusiness();
+        req.business = business;
+        next();
+      }
+    ],
+
   };
 }

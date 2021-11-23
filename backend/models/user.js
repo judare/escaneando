@@ -30,7 +30,9 @@ export default (sequelize, DataTypes) => {
     paranoid: true,
     tableName: 'users',
   });
+  
   User.associate = function(models) {
+    models.User.belongsTo(models.Business);
     models.User.belongsTo(models.Commerce);
     models.User.belongsTo(models.Rol);
   };

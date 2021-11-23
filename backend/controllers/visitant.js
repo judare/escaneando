@@ -7,12 +7,12 @@ export default function(app, db) {
     People,
     ProductCategory,
     Product,
-    Review
+    Review,
+    Insight
   } = db;
 
   const Controller = {
     getCommerce: async function( req, res, next ) {
-
       let { commerce } = req;
 
       return response(res, req, next)({
@@ -31,6 +31,8 @@ export default function(app, db) {
     registerVisitant: async function( req, res, next ) {
 
       let { commerce, body: { data: { cellphone } } } = req;
+
+      await Insight.register(commerce.businessId, "user.activity.firstScan");
 
       let people = await People.findOrCreate(cellphone);
 

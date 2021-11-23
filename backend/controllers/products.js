@@ -7,7 +7,8 @@ export default function(app, db) {
     Product,
     Business,
     Commerce,
-    ProductCategory
+    ProductCategory,
+    Insight
   } = db;
 
   const Controller = {
@@ -57,7 +58,9 @@ export default function(app, db) {
 
 
     create: async function( req, res, next ) {
-      let { body: { data } } = req;
+      let { body: { data }, user } = req;
+
+      await Insight.register(user.businessId, "user.activity.createProduct");
 
       await Product.create({
         image: data.image || "/icons/backoffice/default-product.png",
@@ -93,7 +96,9 @@ export default function(app, db) {
     },
 
     createCategory: async function( req, res, next ) {
-      let { commerce, body: { data: { name } } } = req;
+      let { commerce, body: { data: { name } }, user } = req;
+
+      await Insight.register(user.businessId, "user.activity.createCategory");
 
       await ProductCategory.create({
         commerceId: commerce.id,

@@ -128,16 +128,17 @@ export default {
 }
 .product-modal {
   .top {
-    display: flex;
+    // display: flex;
     h2,h3 {
       font-weight: 500;
     }
     .image, .desc {
-      flex: 1;
+      // flex: 1;
     }
     .image {
-      max-width: 100px;
+      max-width: 250px;
       margin-right: 20px;
+      margin: 0 auto;
       img {
         width: 100%;
         border-radius: 1rem;

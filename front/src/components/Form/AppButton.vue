@@ -3,8 +3,9 @@
   <button
     class="w-100"
     :class="{
-      'bg-primary text-black py-2 px-4 rounded-full focus:outline-none focus:shadow-outline font-light  mb-3 hover:bg-black': variant == 'primary',
-      'border-2 text-black py-2 px-4 rounded-full focus:outline-none focus:shadow-outline font-light border-black mb-3 ': variant == 'secondary'
+      'bg-primary text-black rounded-full focus:outline-none focus:shadow-outline font-light  mb-3 hover:bg-black': variant == 'primary',
+      'border-2 text-black rounded-full focus:outline-none focus:shadow-outline font-light border-black mb-3 ': variant == 'secondary',
+      [sizeValue]: true
     }"
     type="button"
   >
@@ -15,7 +16,7 @@
 <script>
 export default {
   name: "app-button",
-  props: [ "variant" ],
+  props: [ "variant", "size" ],
   data() {
     return {
       id: ""
@@ -23,6 +24,17 @@ export default {
   },
   mounted() {
     this.id = "e" + Date.now().toString().substr(-7);
+  },
+  computed: {
+    sizeValue() {
+      switch(this.size) {
+        case "sm": 
+          return "py-1 px-2";
+        default:
+          return "py-2 px-4";
+      }
+    }
+    
   }
 }
 </script>

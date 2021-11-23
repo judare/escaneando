@@ -17,11 +17,15 @@ import PaymentMethod from './payment-method';
 import Rol from './rol';
 import RolPermission from './rol-permission';
 import RolPrivilege from './rol-privilege';
+import Insight from './insight';
+import BusinessInsight from './insight-business';
 
 function Models() {
 
   this.models = {
     _QueryExecution,
+    Insight,
+    BusinessInsight,
     Commerce,
     Country,
     Business,

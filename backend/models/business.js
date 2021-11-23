@@ -17,6 +17,8 @@ export default (sequelize, DataTypes) => {
     nit: { type: DataTypes.STRING, allowNull: true },
     balance: { type: DataTypes.DECIMAL, allowNull: true },
     userId: { type: DataTypes.INTEGER, allowNull: true },
+    fileCommerce: { type: DataTypes.STRING, allowNull: true },
+    fileRut: { type: DataTypes.STRING, allowNull: true },
   }, 
   {
     paranoid: true,
