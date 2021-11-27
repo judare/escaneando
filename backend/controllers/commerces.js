@@ -107,6 +107,7 @@ export default function(app, db) {
           email: business.email,
           fileRut: business.fileRut,
           fileCommerce: business.fileCommerce,
+          showPayments: business.showPayments,
         }
       });
     },

@@ -11,10 +11,7 @@
 
             <div class="flex items-center justify-between">
               <img src="/icons/logo-backoffice.svg" alt="">
-              <div class="percent-tasks  cursor-pointer font-light text-center" @click="openTasks">
-                <span class="text-2xl">{{tasks.percent}}%</span>
-                <div>Avance</div>
-              </div>
+              
             </div>
 
 
@@ -22,7 +19,7 @@
 
               <li class="p-5"><router-link :to="{ name: 'backoffice-home' }">🏠 Inicio</router-link></li>
               <li class="p-5"><router-link :to="{ name: 'backoffice-customers' }">😍 Clientes</router-link></li>
-              <li class="p-5"><router-link :to="{ name: 'backoffice-reports' }">💸 Transacciones</router-link></li>
+              <li class="p-5" v-if="business.showPayments"><router-link :to="{ name: 'backoffice-reports' }">💸 Transacciones</router-link></li>
               <li class="p-5"><router-link :to="{ name: 'backoffice-products' }">🍽 Productos</router-link></li>
               <li class="p-5"><router-link :to="{ name: 'backoffice-config' }">⚙️ Configuración</router-link></li>
 
@@ -53,14 +50,7 @@
       
   </div>
 
-  <app-modal ref="taskModal" title="Avance del comercio">
-    <ul class="font-light">
-      <li class="mb-3" v-for="task in tasks.Tasks" :key="task.id">
-        <template v-if="task.done">✅</template>
-        <template v-else>❌</template>
-         {{task.name}}</li>
-    </ul>
-  </app-modal>
+
 
  </div>
 </template>
@@ -74,28 +64,24 @@ export default {
     return {
       showMenu: false,
       menuExpand: false,
-      canClose: false,
-      tasks: {}
+      canClose: false
     }
   },
   mounted() {
     this.menuExpand = this.$route.meta.menuExpand;
     this.getCommerces();
-    this.getTasks();
+    this.getBusiness();
   },
   methods: {
+    getBusiness() {
+      postRequest("commerces/getBusiness", {}, this.user).then(result => {
+        this.$store.commit("setBusiness", result.data.Business);
+      });
+    },
     getCommerces() {
       postRequest("commerces/list", {}, this.user).then(result => {
         this.$store.commit("setCommerces", result.data.Commerces);
       });
-    },
-    getTasks() {
-      postRequest("users/tasks", {}, this.user).then(result => {
-        this.tasks = result.data;
-      });
-    },
-    openTasks() {
-      this.$refs.taskModal.show();
     },
     toggleMenu() {
       this.canClose = false;
@@ -114,7 +100,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["user"])
+    ...mapGetters(["user", "business"])
   },
   watch: {
     "$route"(to) {

@@ -22,7 +22,7 @@
           </div>
         </div>
 
-        <div class="border-custom  choose-option active" @click="pay">
+        <div class="border-custom  choose-option active" @click="pay" v-if="visitant.Commerce.paymentsEnabled">
           
           <div class="box optionable">
             <div><strong>💸 Realizar pago</strong></div>
@@ -47,17 +47,25 @@
 
       <div class="text-center">👋🏻   💬   😄</div>
       <h2>¿Qué tal estuvo tu experiencia?</h2>
-      <p>Cuentanos que tal te parecio nuestro lugar, nuestra comida y todo lo que nos quieras contar! Estamos felices de escucharte!</p>
-      <textarea class="box-input w-100" v-model="form.opinion" id="inpReview">
-      </textarea>
+      <p style="font-size:12px">Cuentanos que tal te parecio nuestro lugar, nuestra comida y todo lo que nos quieras contar! Estamos felices de escucharte!</p>
 
-      <div class="form-error" v-if="formErrors.opinion">
-        {{formErrors.opinion}}
+      <div style="text-align:left">
+        <app-star class="mb-2" :stars="5" label="¿Qué tal nuestros productos?" v-model="form.product"/>
+        <app-star class="mb-2" :stars="5" label="¿Qué tal nuestra atención?"  v-model="form.attention"/>
+        <app-star class="mb-2" :stars="5" label="¿Qué tal nuestros precios?"  v-model="form.prices"/>
+
+        <label class="labelModal" for="inpReview">¿Quieres contarnos un poco más? </label>
+        <textarea class="box-input w-100" v-model="form.opinion" id="inpReview">
+        </textarea>
+
+        <div class="form-error" v-if="formErrors.opinion">
+          {{formErrors.opinion}}
+        </div>
       </div>
     </div>
 
      <div class="box-form">
-      <button type="button" class="btn btn-primary w-100" @click="putOpinion" :disabled="!form.opinion">
+      <button type="button" class="btn btn-primary w-100" @click="putOpinion">
         Enviar opinión
       </button>
     </div>
@@ -194,6 +202,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import AppStar from "@/components/AppStar.vue";
 import AppModal from "@/components/AppModal.vue";
 import { postRequest } from "@/common/api.service.js";
 
@@ -235,7 +244,8 @@ export default {
     }
   },
   components: {
-    AppModal
+    AppModal,
+    AppStar
   },
   methods: {
     goToMenu() {
@@ -243,9 +253,6 @@ export default {
     },
     review() {
       this.$refs.reviewModal.show();
-      setTimeout(() => {
-        document.getElementById("inpReview").focus();
-      }, 300)
     },
     pay() {
       this.$refs.payModal.show();
@@ -267,6 +274,9 @@ export default {
     putOpinion() {
       let data = {
         "review": this.form.opinion,
+        "prices": this.form.prices,
+        "attention": this.form.attention,
+        "product": this.form.product,
         "visitantToken": this.visitant.token,
         "commerce": this.$route.params.slug
       }
@@ -363,5 +373,8 @@ export default {
 }
 .form-label {
   text-align: left;
+}
+.labelModal {
+  font-size: 12px;
 }
 </style>

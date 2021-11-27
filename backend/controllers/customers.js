@@ -82,11 +82,22 @@ export default function(app, db) {
       let list = reviews.map(v => ({
         id: v.id,
         review: v.review,
-        // cellphone: v.cellphone,
+        product: v.product,
+        prices: v.prices,
+        attention: v.attention,
         createdAt: moment(v.createdAt).format("DD/MM/YY HH:mm"),
       }));
 
-      return response(res, req, next)({ Reviews: list });
+      let attention = list.filter(i => i.attention > 0);
+      let prices = list.filter(i => i.prices > 0);
+      let product = list.filter(i => i.product > 0);
+
+      return response(res, req, next)({
+        Reviews: list,
+        ReviewPrices: prices.reduce((ac, item) => ac += item.prices, 0) / prices.length,
+        ReviewAttention: attention.reduce((ac, item) => ac += item.attention, 0) / attention.length,
+        ReviewProduct: product.reduce((ac, item) => ac += item.product, 0) / product.length,
+      });
     }
 
   }

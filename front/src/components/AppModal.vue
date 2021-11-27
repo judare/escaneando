@@ -85,9 +85,9 @@ export default {
 }
 .dark-mode {
   .modal {
-    background: rgb(52 52 63 / 50%);
+    background: rgb(33 33 41 / 50%);
     .modal-content {
-      background: #16161a;
+      background: #323740;
       .close {
         filter: invert(1);
       }

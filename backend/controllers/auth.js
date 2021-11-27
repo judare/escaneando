@@ -37,11 +37,16 @@ export default function(app, db, services) {
         let { name, cellphone, email, password, username } = data;
         const ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
+        let country = await Country.findOne({ where: { id: 5 } }); // TODO
+
         let business = await Business.create({
           name: data.Business.name,
           cellphone,
           email,
           balance: 0,
+          countryId: country.id,
+          showPayments: country.showPayments,
+          paymentsEnabled: 0
         });
 
         let commerce = await Commerce.create({

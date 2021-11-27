@@ -3,23 +3,32 @@
 
 
   <div class="md:grid md:grid-cols-12">
-    <main class="main  m-3  col-span-4  ">
-
-      <h2 class="text-2xl mb-5">Datos del comercio</h2>
+    <div class="main  m-3  col-span-12  ">
 
       <form v-on:submit.prevent="saveBusiness">
-        <app-errors ref="errorBusiness"/>
+        <h2 class="text-2xl mb-5">Datos generales del comercio</h2>
 
-        <app-input type="text" v-model="business.name" label="Razón social"/>
-        <app-input type="text" v-model="business.nit" label="NIT"/>
-        <app-input type="text" v-model="business.email" label="Email"/>
-        <app-input type="file" v-on:changeFile="(p) => uploadDocument('fileCommerce', p)" v-model="business.fileCommerce" label="Camara y comercio"/>
-        <app-input type="file" v-on:changeFile="(p) => uploadDocument('fileRut', p)" v-model="business.fileRut" label="RUT"/>
+        <div class="md:grid md:grid-cols-12">
+          <div class="main  m-3  col-span-4  p-3">
 
-        <app-button class="mt-5" variant="primary" type="submit" >Guardar</app-button>
+
+            <app-errors ref="errorBusiness"/>
+
+            <app-input type="text" v-model="business.name" label="Razón social"/>
+            <app-input type="text" v-model="business.nit" label="NIT"/>
+            <app-input type="text" v-model="business.email" label="Email"/>
+              
+          </div>
+          <div class="col-span-4 p-3">
+            <app-input type="file" v-on:changeFile="(p) => uploadDocument('fileCommerce', p)" v-model="business.fileCommerce" label="Camara y comercio"/>
+            <app-input type="file" v-on:changeFile="(p) => uploadDocument('fileRut', p)" v-model="business.fileRut" label="RUT"/>
+
+            <app-button class="mt-5" variant="primary" type="submit" >Guardar cambios</app-button>
+          </div>
+        </div>
       </form>
-    </main>
-    <section class="	text-black m-3 col-span-8 "  >
+    </div>
+    <section class="	text-black m-3 col-span-12 "  >
       
 
       <div class="flex items-center justify-between">
@@ -138,19 +147,10 @@ export default {
   data() {
     return {
       commerceForm: {},
-      business: {},
       loading: false
     }
   },
-  mounted() {
-    this.getBusiness();
-  },
   methods: {
-    getBusiness() {
-      postRequest("commerces/getBusiness", {}, this.user).then(result => {
-        this.business = result.data.Business;
-      });
-    },
     list() {
       postRequest("commerces/list", {}, this.user).then(result => {
         this.$store.commit("setCommerces", result.data.Commerces);
@@ -259,7 +259,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["commerce", "commerces", "user"])
+    ...mapGetters(["commerce", "commerces", "user", "business"])
   }
 }
 </script>

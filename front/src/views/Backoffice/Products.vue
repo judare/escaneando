@@ -6,13 +6,14 @@
 <div class="categories mb-5">
 
   <div class="custom-border inline-block mb-5  align-top  mr-5 gray" :class="{ 'active': i == category }" v-for="(c, i) in products" :key="c.id">
-    <div  class=" px-10 py-3 cursor-pointer font-light" @click="selectCategory(i)">
-      {{c.name}}
+    <div  class=" pl-8 py-2 cursor-pointer font-light justify-between	 flex" @click="selectCategory(i)">
+      <div>{{c.name}}</div>
+      <div class="ml-4 pr-4 cursor-pointer" @click="editCategory(c)">✏️</div>
     </div>
   </div>
 
   <div class="custom-border active align-top inline-block">
-    <div class=" px-10 py-3 cursor-pointer " @click="createCategory">
+    <div class=" px-8 py-2 cursor-pointer " @click="createCategory">
       <img src="/icons/plus.svg" style="height: 23px;">
     </div>
   </div>
@@ -75,6 +76,17 @@
 </div>
 
 </div>
+<div v-else>
+  <img src="/icons/backoffice/no-products.svg" class="block mx-auto">
+
+  <div class="text-center mt-3">
+    <h2 class="">¡Aún no tienes productos!</h2>
+    <h3 class="text-lg font-light ">
+      Recuerda que puedes agregarlos desde el apartado ubicado en la parte superior izquierda.
+    </h3>
+  </div>
+
+</div>
 
 <app-modal ref="viewProductModal" :title="product.id ? 'Editar producto' : 'Agregar producto'">
 
@@ -130,18 +142,29 @@
 </app-modal>
 
 
-<app-modal ref="createCategoryModal" :title="categoryItem.id ? 'Editar categoria' : 'Agregar categoria'" position="bottom">
+<app-modal ref="viewCategoryModal" :title="categoryItem.id ? 'Editar categoria' : 'Agregar categoria'" position="right">
 
   <app-errors ref="errorCategory"/>
 
-  <form v-on:submit.prevent="confirmCreateCategory">
+  <form v-on:submit.prevent="submitCategory">
     <app-input type="text" label="Nombre" v-model="categoryItem.name" />
 
-    <app-button variant="primary" class="mt-5" type="submit">
-      Agregar categoria
-    </app-button>
+    <template v-if="loading">
+      <div class="text-center mx-auto">
+        <app-loader class="block mx-auto mb-3"/>
+      </div>
+    </template>
+    <template v-else>
+      <app-button variant="primary" class="mt-5" type="submit" v-if="!categoryItem.id">
+        Agregar categoria
+      </app-button>
+      <app-button variant="primary" class="mt-5" type="submit" v-else>
+        Editar categoria
+      </app-button>
+    </template>
+    
   </form>
-  <app-button variant="secondary" @click="deleteProduct" v-if="categoryItem.id">
+  <app-button variant="secondary" @click="deleteCategory" v-if="categoryItem.id">
     Eliminar categoria
   </app-button>
 
@@ -154,13 +177,32 @@
   <div class="mb-5 font-light">
     ¿Estas seguro que deseas eliminar el producto? <br><br>
     Recuerda que puedes editarlo si necesitas modificar algun tipo de información.<br><br>
-  Si deseas crear un nuevo, en el apartado crear platillo podrás realizarlo.
+  Si deseas crear un nuevo, en el apartado crear producto podrás realizarlo.
   </div>
   <app-button variant="primary" v-if="product.id" @click="confirmDeleteProduct">
     Si, Eliminar
   </app-button>
 
+
 </app-modal>
+
+
+<app-modal ref="deleteCategoryModal" position="right" title="Eliminar categoria">
+
+  <app-errors ref="errorDeleteCategory"/>
+
+  <div class="mb-5 font-light">
+    ¿Estas seguro que deseas eliminar esta categoria?<br><br>
+   Recuerda que puedes editarlo si necesitas modificar algun tipo de información. <br>
+Además toda la información contenida en esta categoria será eliminada <br>
+Si deseas crear una nueva categoria, en el apartado crear categoria podrás realizarlo.
+  </div>
+  <app-button variant="primary" v-if="categoryItem.id" @click="confirmDeleteCategory">
+    Si, Eliminar
+  </app-button>
+</app-modal>
+
+
 
 </div>
 </template>
@@ -194,6 +236,10 @@ export default {
     this.getProducts();
   },
   methods: {
+    editCategory(c) {
+      this.categoryItem = c;
+      this.$refs.viewCategoryModal.show();
+    },
     getProducts() {
       if (!this.commerce.id) return;
       let data = {
@@ -207,6 +253,9 @@ export default {
     deleteProduct() {
       this.$refs.deleteProductModal.show();
     },
+    deleteCategory() {
+      this.$refs.deleteCategoryModal.show();
+    },
     confirmDeleteProduct() {
       let data = {
         productId: this.product.id
@@ -215,6 +264,21 @@ export default {
         this.getProducts();
         this.$refs.deleteProductModal.hide();
         this.$refs.viewProductModal.hide();
+      });
+    },
+    confirmDeleteCategory() {
+      this.$refs.errorDeleteCategory.clear();
+      let data = {
+        categoryId: this.categoryItem.id
+      }
+      postRequest("products/deleteCategory", data, this.user).then(() => {
+        this.category = 0;
+        this.getProducts();
+        this.$refs.deleteCategoryModal.hide();
+        this.$refs.viewCategoryModal.hide();
+      })
+      .catch(err => {
+        this.$refs.errorDeleteCategory.put(err.message);
       });
     },
     showProduct(product) {
@@ -229,6 +293,13 @@ export default {
         this.confirmCreateProduct()
       } else {
         this.confirmUpdateProduct()
+      }
+    },
+    submitCategory() {
+      if (!this.categoryItem.id) {
+        this.confirmCreateCategory()
+      } else {
+        this.confirmUpdateCategory()
       }
     },
     createProduct() {
@@ -270,17 +341,35 @@ export default {
         this.loading = false;
       });
     },
+    confirmUpdateCategory() {
+      this.loading = true;
+      this.$refs.errorCategory.clear();
+      let data = {
+        ...this.categoryItem,
+        categoryId: this.categoryItem.id
+      }
+      postRequest("products/updateCategory", data, this.user).then(() => {
+        this.getProducts();
+        this.$refs.viewCategoryModal.hide();
+      })
+      .catch(err => {
+        this.$refs.errorCategory.put(err.message);
+      })
+      .finally(() => {
+        this.loading = false;
+      });
+    },
     createCategory() {
       this.categoryItem = {
         commerceId: this.commerce.id,
       };
-      this.$refs.createCategoryModal.show();
+      this.$refs.viewCategoryModal.show();
     },
     confirmCreateCategory() {
       this.$refs.errorCategory.clear();
       postRequest("products/createCategory", this.categoryItem, this.user).then(() => {
         this.getProducts();
-        this.$refs.createCategoryModal.hide();
+        this.$refs.viewCategoryModal.hide();
       })
       .catch(err => {
         this.$refs.errorCategory.put(err.message);

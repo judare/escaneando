@@ -15,6 +15,8 @@ export default function(app, db) {
     getCommerce: async function( req, res, next ) {
       let { commerce } = req;
 
+      let business = await commerce.getBusiness();
+
       return response(res, req, next)({
         Commerce: {
           id: commerce.id,
@@ -23,6 +25,7 @@ export default function(app, db) {
           logo: commerce.logo,
           facebook: commerce.facebook,
           instagram: commerce.instagram,
+          paymentsEnabled: business.paymentsEnabled
         }
       });
     },
@@ -89,6 +92,9 @@ export default function(app, db) {
         personId: visitant.peopleId,
         commerceId: visitant.commerceId,
         review: req.body.data.review,
+        product: req.body.data.product,
+        prices: req.body.data.prices,
+        attention: req.body.data.attention,
       });
 
       return response(res, req, next)(null);

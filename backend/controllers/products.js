@@ -117,6 +117,15 @@ export default function(app, db) {
       return response(res, req, next)(null);
     },
 
+    updateCategory: async function( req, res, next ) {
+      let { category } = req;
+
+      await category.update({
+        name: req.body.data.name
+      });
+      return response(res, req, next)(null);
+    },
+
 
     uploadImage: async function( req, res, next ) {
       let url = await req.uploadFile(`resources/` + Date.now() + req.file.originalname, req.file.buffer);

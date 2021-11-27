@@ -21,6 +21,8 @@ const Route = function(app, db, services) {
 
   router.post('/deleteCategory', validate.deleteCategory, isect(controller.deleteCategory));
 
+  router.post('/updateCategory', validate.updateCategory, isect(controller.updateCategory));
+
   router.post('/uploadImage', validate.uploadImage, isect(controller.uploadImage));
   
   return router;

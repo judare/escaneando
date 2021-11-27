@@ -3,6 +3,7 @@ export default (sequelize, DataTypes) => {
     "PaymentMethod",
     {
       id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+      countryId: { type: DataTypes.INTEGER, allowNull: false },
       name: { type: DataTypes.STRING(50), allowNull: false },
       type: { type: DataTypes.STRING(45), allowNull: true },
       image: { type: DataTypes.STRING(255), allowNull: true },
@@ -38,6 +39,10 @@ export default (sequelize, DataTypes) => {
       tableName: "payment_methods",
     }
   );
+
+  PaymentMethod.associate = function(models) {
+    models.PaymentMethod.belongsTo(models.Country);
+  }
 
   
   return PaymentMethod;

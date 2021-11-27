@@ -27,9 +27,9 @@ export default function(app, db) {
     ],
 
     createReview: [
-      check('data.review')
-        .isLength({ min: 3 })
-        .withMessage('validators.review.minLength'),
+      // check('data.review')
+      //   .isLength({ min: 3 })
+      //   .withMessage('validators.review.minLength'),
 
       validOrAbort,
       findCommerce,

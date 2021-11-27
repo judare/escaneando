@@ -88,6 +88,11 @@ export default function(app, db) {
       categoryFind
     ],
 
+    updateCategory: [
+      checkAuth,
+      categoryFind
+    ],
+
     uploadImage: [
       checkAuth,
       upload.single('file'),

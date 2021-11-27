@@ -33,7 +33,15 @@
         </table>
       </div>
       <div v-else>
-        <h2 class="text-md font-light mt-5">Aún no tienes transacciones animate a empezar y generar mas ingresos en tu negocio</h2>
+        <img src="/icons/backoffice/no-transactions.svg" class="block mx-auto">
+
+        <div class="text-center mt-3">
+          <h2 class="">¡Aún no tienes transacciones!</h2>
+          <h3 class="text-lg font-light ">
+            anímate a empezar y generar más ingresos en tu negocio
+          </h3>
+        </div>
+        
       </div>
 
 
@@ -47,9 +55,6 @@
         <span class="font-light">Visita el apartado clientes en la sección de recurrencias y audita sus visitas!</span></p> 
       </div>
 
-      <div>
-        <h2 class="text-2xl">Recurrencia</h2>
-      </div>
     </main>
   </div>
 
