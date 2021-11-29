@@ -38,6 +38,21 @@
           </div>
         </div>
 
+        <a v-if="visitant.Commerce.facebook" :href="visitant.Commerce.facebook">
+          <div class="border-custom  choose-option active">
+            <div class="box optionable ">
+              <p>Siguenos en facebook</p>
+            </div>
+          </div>
+        </a>
+        <a v-if="visitant.Commerce.instagram" :href="visitant.Commerce.instagram">
+          <div class="border-custom  choose-option active">
+            <div class="box optionable ">
+              <p>Siguenos en instagram</p>
+            </div>
+          </div>
+        </a>
+
       </div>
     </div>
 
@@ -65,9 +80,14 @@
     </div>
 
      <div class="box-form">
-      <button type="button" class="btn btn-primary w-100" @click="putOpinion">
-        Enviar opinión
-      </button>
+       <template v-if="!loading">
+        <button type="button" class="btn btn-primary w-100" @click="putOpinion">
+          Enviar opinión
+        </button>
+      </template>
+      <template v-else>
+        <app-loader style="margin: 0 auto;"/>
+      </template>
     </div>
   </app-modal>
 
@@ -105,7 +125,7 @@
           <p></p>
 
           <ul class="methods">
-            <li class="method-pay" v-for="method in methods" :key="method.id" :class="{ disabled: form.amount < method.valMin, active: form.payMethodId == method.id }" @click="selPayMethod(method)">
+            <li class="method-pay" v-for="method in methods" :key="method.id" :class="{ disabled: form.amount < method.valMin, active: form.paymentMethodId == method.id }" @click="selPayMethod(method)">
               <div class="method-image">
                 <img :src="method.image" alt="">
               </div>
@@ -117,8 +137,8 @@
 
       
         <div class="box-form">
-          <button type="button" class="btn btn-primary w-100" @click="goToPayProcess" :disabled="!form.payMethodId">
-            Completar el pago
+          <button type="button" class="btn btn-primary w-100" @click="goToPayProcess" :disabled="!form.paymentMethodId">
+            Continuar
           </button>
         </div>
       </template>
@@ -132,65 +152,7 @@
 
           <h2>Completar información</h2>
 
-          <template v-if="form.payMethodId == 2 /*DAVIPLATA*/">
-
-            <p>Daviplata te enviará un codigo de seis digitos tan pronto dejes los datos de tu documento de identidad.</p>
-
-            <label for="docType" class="form-label">Tipo de documento</label>
-             <select class="box-input w-100 mb-2" v-model="form.docType" placeholder="Número de documento" id="docType">
-               <option value="cc">CEDULA DE CIUDADANIA</option>
-               <option value="ce">CEDULA DE EXTRANJERÍA</option>
-               <option value="x">NIT</option>
-               <option value="x">TARJETA DE IDENTIDAD</option>
-               <option value="x">TRJ. SEGURO SOCIAL EXTRANJERO</option>
-               <option value="x">RIF VENEZUELA</option>
-               <option value="x">REGISTRO CIVIL</option>
-               <option value="x">RUT</option>
-             </select>
-
-            <label for="docNumber" class="form-label">Número de documento</label>
-            <input id="docNumber" inputmode="numeric" class="box-input w-100" v-model="form.document" placeholder="Número de documento"/>
-          </template>
-          <template v-else-if="form.payMethodId == 3 /*NEQUI*/">
-            <p>Número de celular que tienes registrado en NEQUI.</p>
-
-            <label for="cellphoneForm" class="form-label">Número de celular</label>
-            <input id="cellphoneForm" inputmode="numeric" class="box-input w-100" v-model="form.cellphone" placeholder="Celular"/>
-          </template>
-          <template v-if="form.payMethodId == 4 /*PSE*/">
-
-            <p>Daviplata te enviará un codigo de seis digitos tan pronto dejes los datos de tu documento de identidad.</p>
-
-            <label for="typePerson" class="form-label">Tipo de persona</label>
-            <select class="box-input w-100 mb-2" v-model="form.typePerson"  id="typePerson">
-              <option :value="0">Natural</option>
-              <option :value="1">Jurídica</option>
-            </select>
-
-            <label for="name" class="form-label">Nombre</label>
-            <input id="name" inputmode="numeric" class="box-input w-100 mb-2" v-model="form.name" placeholder="Nombre"/>
-
-            <label for="docType" class="form-label">Tipo de documento</label>
-            <select class="box-input w-100 mb-2" v-model="form.docType" id="docType">
-              <option value="cc">CEDULA DE CIUDADANIA</option>
-              <option value="ce">CEDULA DE EXTRANJERÍA</option>
-            </select>
-
-            <label for="docNumber" class="form-label">Número de documento</label>
-            <input id="docNumber" inputmode="numeric" class="box-input w-100 mb-2" v-model="form.document" placeholder="Número de documento"/>
-
-            <label for="bank" class="form-label">Banco</label>
-            <select class="box-input w-100" v-model="form.bank" id="bank">
-              
-            </select>
-          </template>
-         
-        </div>
-
-        <div class="box-form">
-          <button type="button" class="btn btn-primary w-100" @click="sendPay" :disabled="!form.payMethodId">
-            Completar el pago
-          </button>
+          <component :is="payComponent" :amount="form.amount"/>
         </div>
       </template>
 
@@ -205,47 +167,64 @@ import { mapGetters } from "vuex";
 import AppStar from "@/components/AppStar.vue";
 import AppModal from "@/components/AppModal.vue";
 import { postRequest } from "@/common/api.service.js";
+import AppPayDaviplata from "@/components/Pays/Daviplata.vue"
+import AppPayNequi from "@/components/Pays/Nequi.vue"
+import AppPayPse from "@/components/Pays/Pse.vue"
 
 // @ is an alias to /src
 export default {
   name: 'Options',
   computed: {
-    ...mapGetters(["config", "visitant"])
+    ...mapGetters(["config", "visitant"]),
+    payComponent() {
+      return `app-pay-${this.methodSel.component}`
+    }
   },
   data() {
     return {
       formErrors: {},
-      form: {},
+      form: {
+        People: {}
+      },
+      loading: false,
       stepPay: 1,
+      methodSel: null,
       methods: [{
         id: 1,
         image: "/icons/backoffice/banks/bancolombia.svg",
         name: "Bancolombia DEBITO",
-        valMin: 10000
+        valMin: 10000,
+        component: "bancolombia"
       },
       {
         id: 2,
-        image: "/icons/backoffice/banks/davivienda.svg",
+        image: "/icons/backoffice/banks/daviplata.png",
         name: "Daviplata",
-        valMin: 0
+        valMin: 0,
+        component: "daviplata"
       },
       {
         id: 3,
         image: "/icons/backoffice/banks/nequi.svg",
         name: "Nequi",
-        valMin: 0
+        valMin: 0,
+        component: "nequi"
       },
       {
         id: 4,
-        image: "/icons/backoffice/banks/pse.svg",
+        image: "/icons/banks/pse.png",
         name: "PSE",
-        valMin: 40000
+        valMin: 40000,
+        component: "pse"
       }]
     }
   },
   components: {
     AppModal,
-    AppStar
+    AppStar,
+    AppPayDaviplata,
+    AppPayNequi,
+    AppPayPse
   },
   methods: {
     goToMenu() {
@@ -262,16 +241,18 @@ export default {
     },
     backPay() {
       this.stepPay = 1;
-      this.form.payMethodId = null;
+      this.form.paymentMethodId = null;
     },
     backStepPay() {
       this.stepPay -= 1;
     },
     selPayMethod(method) {
       if (this.form.amount < method.valMin) return;
-      this.form.payMethodId = method.id;
+      this.methodSel = method;
+      this.form.paymentMethodId = method.id;
     },
     putOpinion() {
+      this.loading = true;
       let data = {
         "review": this.form.opinion,
         "prices": this.form.prices,
@@ -283,23 +264,16 @@ export default {
       postRequest("visitant/createReview", data).then(result => {
         this.$refs.reviewModal.hide();
         alert("Ok!");
+      })
+      .finally(() => {
+        this.loading = false;
       });
     },
     goToPay() {
       this.stepPay = 2;
     },
     goToPayProcess() {
-      if (this.form.payMethodId == 1) {
-        return this.sendPay();
-      }
-      this.form.cellphone = this.config.cellphone;
-      this.form.docType = "cc";
-      this.form.typePerson = 1;
       this.stepPay = 3;
-    },
-
-    sendPay() {
-      alert("enviando");
     }
   }
 }
@@ -342,11 +316,11 @@ export default {
     display: flex;
     align-items: center;
     cursor: pointer;
-    padding: 10px;
+    padding: 10px 5px;
     .method-image {
-      width: 55px;
+      width: 70px;
       img {
-        max-width: 80px;
+        max-width: 50px;
         max-height: 50px;
       }
     }

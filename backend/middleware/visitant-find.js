@@ -14,6 +14,10 @@ export default function(app, db) {
       }
 
       let queryBuilder = {
+        include: [{
+          model: People,
+          required: true
+        }],
         where: {
           token: req.body.data.visitantToken
         }

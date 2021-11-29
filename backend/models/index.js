@@ -19,6 +19,7 @@ import RolPermission from './rol-permission';
 import RolPrivilege from './rol-privilege';
 import Insight from './insight';
 import BusinessInsight from './insight-business';
+import TransactionStatus from './transaction-status';
 
 function Models() {
 
@@ -37,6 +38,7 @@ function Models() {
     ProductCategory,
     Product,
     Transaction,
+    TransactionStatus,
     PaymentMethod,
     RolPermission,
     Rol,

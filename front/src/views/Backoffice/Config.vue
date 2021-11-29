@@ -28,65 +28,46 @@
         </div>
       </form>
     </div>
-    <section class="	text-black m-3 col-span-12 "  >
-      
-
-      <div class="flex items-center justify-between">
+    <section class="text-black m-3 col-span-12">
       <h2 class="text-2xl mb-5">Sucursales</h2>
 
-      <div class="custom-border active">
-        <div class=" px-5 py-2 inline-block cursor-pointer font-light" @click="createCommerce">Crear sucursal</div>
-      </div>
+      <div class="flex flex-wrap">
+        <div  class="mr-5 my-3 overflow-hidden custom-border flex flex-row cursor-pointer active " style="width: 160px!important;" @click="createCommerce">
+          <div class="py-12 mx-auto">
 
-      </div>
+            <img src="/icons/plus.svg" alt="" class="block mx-auto mb-5">
 
-      <div class="table w-full">
-        <table class="border-collapse	w-full">
-          <thead>
-            <tr class="text-left custom-border-table relative">
-              <th class="p-5 font-light text-sm">Imagen</th>
-              <th class="p-5 font-light text-sm">Nombre</th>
-              <th class="p-5 font-light text-sm">Dirección</th>
-              <th class="p-5 font-light text-sm">Celular</th>
-              <th class="p-5 font-light text-sm">Correo</th>
-              <th class="p-5 font-light text-sm">Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(c, index) in commerces" :key="c.id" >
-              <td class="p-5 font-light rounded-l-2xl" :class="{'bg-gray-100': index % 2 != 0}">
-                <img :src="c.logo" style="max-height: 60px;" class="rounded-xl">
-              </td>
-              <td class="p-5 font-light" :class="{'bg-gray-100': index % 2 != 0}">
-                {{c.name}}
-              </td>
-              <td class="p-5 font-light" :class="{'bg-gray-100': index % 2 != 0}">
-                {{c.address}}
-              </td>
-              <td class="p-5 font-light" :class="{'bg-gray-100': index % 2 != 0}">
-                {{c.cellphone}}
-              </td>
-              <td class="p-5 font-light" :class="{'bg-gray-100': index % 2 != 0}">
-                {{c.email}}
-              </td>
-              <td class=" font-light rounded-r-2xl" :class="{'bg-gray-100': index % 2 != 0}" style="min-width: 140px">
-                <div class="inline-block custom-border active cursor-pointer text-center mr-2"  @click="viewCommerce(c)">
-                  <div class="px-2 py-1 font-light">Ver</div>
-                </div>
+            <div class="text-center font-light">Crear sucursal</div>
+          </div>
+        </div>
 
-                <router-link v-if="c.slug" :to="{ name: 'main', params: { slug: c.slug } }" class="float-right" target="_blank">
-                  <div class="inline-block custom-border active cursor-pointer text-center">
-                    <div class="px-2 py-1 font-light">Ver sitio</div>
+        <div  class="cursor-pointer my-3 mr-5 rounded-xl overflow-hidden border border-transparent group" style="width: 160px!important;" v-for="c in commerces" :key="c.id"  >
+          <div class="grid grid-cols-1">
+              <div class="relative z-10 col-start-1 row-start-1 px-4 pt-28 pb-3 bg-gradient-to-t from-black relative" @click="viewCommerce(c)">
+
+                <div class="custom-border active absolute top-0 left-0 z-10 w-full  h-full show-hover flex flex-row justify-center items-center">
+                  <div>
+                    <img src="/icons/pencil.svg" class="mx-auto mb-5"/>
+                    <span class="font-light">Editar sucursal</span>
                   </div>
-                </router-link>
-                
-              </td>
-            </tr>
-            
-          </tbody>
-        </table>
-      </div>
+                </div>
+                <!-- <p class="text-sm font-medium text-white">Entire house</p> -->
+                <div class="text-left  text-white">
+                  <h2 class="font-medium h-12">{{c.name}}</h2>
+                  <h3 class="font-light font-sm">{{c.cellphone}}</h3>
+                </div>
+              </div>
 
+              <div class="col-start-1 row-start-1 flex">
+                <div class="w-full grid grid-cols-3 grid-rows-2 gap-2">
+                  <div class="relative col-span-3 row-span-2">
+                    <img :src="c.logo" loading="lazy" alt="" class="absolute inset-0 w-full h-full object-cover bg-gray-100">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
     </section>
 

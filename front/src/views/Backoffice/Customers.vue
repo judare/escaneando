@@ -25,7 +25,7 @@
               <!-- <td class="p-5 font-light rounded-l-2xl" :class="{'bg-gray-100': index % 2 != 0}">
 
               </td> -->
-              <td class="p-5 font-light" :class="{'bg-gray-100': index % 2 != 0}">
+              <td class="p-5 font-light rounded-l-2xl" :class="{'bg-gray-100': index % 2 != 0}">
                 {{customer.cellphone}}
               </td>
               <td class="p-5 font-light" :class="{'bg-gray-100': index % 2 != 0}">
@@ -34,7 +34,7 @@
               <td class="p-5 font-light" :class="{'bg-gray-100': index % 2 != 0}">
                 {{customer.lastVisit}}
               </td>
-              <td class="p-5 font-light" :class="{'bg-gray-100': index % 2 != 0}">
+              <td class="p-5 font-light rounded-r-2xl" :class="{'bg-gray-100': index % 2 != 0}">
                 {{customer.totalVisits}}
               </td>
               <!-- <td class="p-5 font-light rounded-r-2xl" :class="{'bg-gray-100': index % 2 != 0}">

@@ -69,7 +69,6 @@ export default {
   name: 'Home',
   data() {
     return {
-      products: [],
       product: null
     }
   },
@@ -80,7 +79,7 @@ export default {
         "commerce": this.$route.params.slug
       }
       postRequest("visitant/listProducts", data).then(result => {
-        this.products = result.data.Products;
+        this.$store.commit("setVisitantProducts", result.data.Products);
       });
     },
     back() {
@@ -99,7 +98,7 @@ export default {
     AppModal
   },
   computed: {
-    ...mapGetters(["config", "visitant"])
+    ...mapGetters(["config", "visitant", "products"])
   }
 }
 </script>
@@ -128,12 +127,8 @@ export default {
 }
 .product-modal {
   .top {
-    // display: flex;
     h2,h3 {
       font-weight: 500;
-    }
-    .image, .desc {
-      // flex: 1;
     }
     .image {
       max-width: 250px;

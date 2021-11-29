@@ -1,4 +1,5 @@
 import response from "../helpers/response.js";
+import Apagar from "../ws/class/apagar"
 
 export default function(app, db) {
 
@@ -8,7 +9,8 @@ export default function(app, db) {
     ProductCategory,
     Product,
     Review,
-    Insight
+    Insight,
+    Transaction
   } = db;
 
   const Controller = {
@@ -99,6 +101,67 @@ export default function(app, db) {
 
       return response(res, req, next)(null);
     },
+
+
+    processPay: async function( req, res, next ) {
+
+      let { commerce, paymentMethod, visitant } = req;
+      await Insight.register(commerce.businessId, "user.activity.firstPay");
+
+      let business = await commerce.getBusiness();
+
+      let apagar = new Apagar.class();
+      apagar.setToken(business.meta.apagarToken);
+
+      let call = await apagar.createOrder({
+        amount: req.body.data.amount,
+        People: req.body.data.People
+      }, paymentMethod);
+
+      if (call.errorCode) {
+        return response(res, req, next)(null, {
+          status: call.status,
+          code: call.errorCode
+        });
+      }
+
+      let transaction = await Transaction.create({
+        commerceId: commerce.id,
+        businessId: business.id,
+        personId: visitant.Person.id,
+        transactionStatusId: 1,
+        costs: 0,
+        amount: req.body.data.amount,
+        codeProvider: `${call.data.Resource.id},${call.data.Resource.data}`,
+        paymentMethodId: paymentMethod.id
+      });
+
+      return response(res, req, next)({
+        ...call.data,
+        transactionId: transaction.id
+      });
+    },
+
+    confirmDaviplata: async function(req, res, next) {
+      let { commerce, transaction } = req;
+      let business = await commerce.getBusiness();
+      let apagar = new Apagar.class();
+      let code = transaction.codeProvider.split(",");
+
+      apagar.setToken(business.meta.apagarToken);
+
+      let call = await apagar.confirmDaviplata(req.body.data.otp, code[1]);
+      if (call.errorCode) {
+        return response(res, req, next)(null, {
+          status: call.status,
+          code: call.errorCode
+        });
+      }
+
+      await transaction.update({ transactionStatusId: 2 });
+
+      return response(res, req, next)();
+    }
   }
 
   return Controller;

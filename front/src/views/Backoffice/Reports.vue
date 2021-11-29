@@ -14,8 +14,10 @@
           <tbody>
             <tr v-for="(row, index) in transactions" :key="index" >
               <td class="p-5 rounded-l-2xl">
-                <div class="custom-border active py-5"> 
-                  <img :src="'/icons/backoffice/banks/' + row.PaymentMethod.image" class="mx-auto" style="height: 20px">
+                <div class="custom-border active">
+                  <div class="py-3">
+                    <img :src="'/icons/backoffice/banks/' + row.PaymentMethod.image" class="mx-auto" style="height: 20px">
+                  </div> 
                 </div>
               </td>
               <td class="p-5">
@@ -26,6 +28,8 @@
                 <div>
                   ${{money(row.amount)}} COP
                 </div>
+
+                <div class="border-2 rounded-xl p-1 inline-block mt-2 text-sm text-center" :style="'border-color: '+row.TransactionStatus.color + '; color: '+row.TransactionStatus.color + ' ;'">{{row.TransactionStatus.name}}</div>
               </td>
             </tr>
             

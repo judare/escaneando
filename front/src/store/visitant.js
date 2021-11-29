@@ -1,6 +1,5 @@
-import { createStore } from 'vuex'
-
 let config = window.localStorage.getItem("config");
+let visitant = window.localStorage.getItem("visitant");
 
 export default {
   state: {
@@ -9,9 +8,10 @@ export default {
       darkMode: true,
       cellphone: null
     },
-    visitant: {
+    visitant: visitant ? JSON.parse(visitant) : {
       Commerce: {}
-    }
+    },
+    products: []
   },
   getters: {
     config(state) {
@@ -19,13 +19,20 @@ export default {
     },
     visitant(state) {
       return state.visitant;
+    },
+    products(state) {
+      return state.products;
     }
   },
   mutations: {
+    setVisitantProducts(state, value) {
+      state.products = value;
+    },
     setConfig(state, value) {
       state.config = value;
     },
     setVisitant(state, value) {
+      window.localStorage.setItem("visitant", JSON.stringify(value));
       state.visitant = value;
     },
     setCommerce(state, value) {

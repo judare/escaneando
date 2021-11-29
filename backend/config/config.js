@@ -1,2 +1,2 @@
-import config from "./env/dev.conf.js";
+import config from "./env/prod.conf.js";
 export default config;

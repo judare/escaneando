@@ -194,4 +194,12 @@ export default {
   transform: translateX(-300px);
   opacity: 0;
 }
+.show-hover {
+  opacity: 0;
+  transition: .1s;
+
+  &:hover {
+    opacity: 1;
+  }
+}
 </style>

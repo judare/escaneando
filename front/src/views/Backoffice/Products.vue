@@ -418,13 +418,4 @@ export default {
 <style lang="scss">
 @import url("https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css");
 
-.show-hover {
-  opacity: 0;
-  transition: .1s;
-
-  &:hover {
-    opacity: 1;
-  }
-}
-
 </style>

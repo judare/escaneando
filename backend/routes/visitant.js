@@ -13,6 +13,9 @@ const Route = function(app, db, services) {
   router.post('/registerVisitant', validate.registerVisitant, isect(controller.registerVisitant));
   router.post('/listProducts', validate.listProducts, isect(controller.listProducts));
   router.post('/createReview', validate.createReview, isect(controller.createReview));
+  router.post('/processPay', validate.processPay, isect(controller.processPay));
+  router.post('/confirm/daviplata/button', validate.confirmDaviplata, isect(controller.confirmDaviplata));
+  
   
   return router;
 };

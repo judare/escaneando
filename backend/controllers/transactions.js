@@ -5,6 +5,7 @@ export default function(app, db) {
 
   const {
     Transaction,
+    TransactionStatus,
     PaymentMethod
   } = db;
 
@@ -15,8 +16,13 @@ export default function(app, db) {
         include: [{
           model: PaymentMethod,
           required: true
+        },
+        {
+          model: TransactionStatus,
+          required: true
         }],
-        where: {}
+        where: {},
+        order: [ ["id", "DESC"] ]
       }
       if (req.user.owner) {
         queryBuilder.where.businessId = req.user.businessId;
@@ -34,6 +40,10 @@ export default function(app, db) {
           id: t.PaymentMethod.id,
           name: t.PaymentMethod.name,
           image: t.PaymentMethod.image,
+        },
+        TransactionStatus: {
+          name: t.TransactionStatus.name,
+          color: t.TransactionStatus.color
         }
       }));
 
